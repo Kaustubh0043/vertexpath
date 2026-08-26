@@ -33,6 +33,9 @@ public class Document {
     @Column(name = "file_type", nullable = false)
     private String fileType; // e.g., "RESUME", "JD", "RAG_DOC"
 
+    @Column(name = "file_data", columnDefinition = "bytea")
+    private byte[] fileData;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

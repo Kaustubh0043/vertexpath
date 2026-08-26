@@ -83,7 +83,9 @@ public class DocumentServiceImpl implements DocumentService {
         String storageFilename = UUID.randomUUID().toString() + "_" + originalFilename;
         Path targetLocation = this.fileStorageLocation.resolve(storageFilename);
 
+        byte[] fileBytes;
         try {
+            fileBytes = file.getBytes();
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + originalFilename + ". Please try again!", ex);
@@ -94,6 +96,7 @@ public class DocumentServiceImpl implements DocumentService {
                 .filename(originalFilename)
                 .storageKey(storageFilename)
                 .fileType(fileType.toUpperCase())
+                .fileData(fileBytes)
                 .build();
 
         Document saved = documentRepository.save(document);
@@ -224,7 +227,17 @@ public class DocumentServiceImpl implements DocumentService {
         Path filePath = this.fileStorageLocation.resolve(document.getStorageKey());
 
         try {
-            byte[] fileBytes = Files.readAllBytes(filePath);
+            byte[] fileBytes;
+            if (Files.exists(filePath)) {
+                fileBytes = Files.readAllBytes(filePath);
+            } else if (document.getFileData() != null) {
+                fileBytes = document.getFileData();
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, fileBytes);
+                log.info("Self-healed missing file during JD comparison: {}", document.getFilename());
+            } else {
+                throw new java.io.FileNotFoundException("Physical file not found and no backup data in DB");
+            }
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
             ByteArrayResource resource = new ByteArrayResource(fileBytes) {
                 @Override
