@@ -36,6 +36,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final UserRepository userRepository;
     private final DocumentRepository documentRepository;
     private final RestClient restClient;
+    private final R2StorageService r2StorageService;
     private final Path fileStorageLocation;
 
     public DocumentServiceImpl(
