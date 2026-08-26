@@ -42,9 +42,11 @@ public class DocumentServiceImpl implements DocumentService {
             UserRepository userRepository,
             DocumentRepository documentRepository,
             @Value("${ai.service.url}") String aiServiceUrl,
-            @Value("${file.upload-dir:uploads}") String uploadDir) {
+            @Value("${file.upload-dir:uploads}") String uploadDir,
+            R2StorageService r2StorageService) {
         this.userRepository = userRepository;
         this.documentRepository = documentRepository;
+        this.r2StorageService = r2StorageService;
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .connectTimeout(java.time.Duration.ofSeconds(10))
