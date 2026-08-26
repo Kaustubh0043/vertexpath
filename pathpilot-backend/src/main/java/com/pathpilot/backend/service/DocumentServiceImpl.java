@@ -91,12 +91,22 @@ public class DocumentServiceImpl implements DocumentService {
             throw new RuntimeException("Could not store file " + originalFilename + ". Please try again!", ex);
         }
 
+        byte[] dbBackupBytes = fileBytes;
+        if (r2StorageService.isEnabled()) {
+            try {
+                r2StorageService.uploadFile(storageFilename, fileBytes, file.getContentType());
+                dbBackupBytes = null; // Do not bloat Database if R2 is active
+            } catch (Exception e) {
+                log.error("Failed to upload to Cloudflare R2, keeping local database backup", e);
+            }
+        }
+
         Document document = Document.builder()
                 .user(user)
                 .filename(originalFilename)
                 .storageKey(storageFilename)
                 .fileType(fileType.toUpperCase())
-                .fileData(fileBytes)
+                .fileData(dbBackupBytes)
                 .build();
 
         Document saved = documentRepository.save(document);
@@ -227,16 +237,30 @@ public class DocumentServiceImpl implements DocumentService {
         Path filePath = this.fileStorageLocation.resolve(document.getStorageKey());
 
         try {
-            byte[] fileBytes;
+            byte[] fileBytes = null;
             if (Files.exists(filePath)) {
                 fileBytes = Files.readAllBytes(filePath);
-            } else if (document.getFileData() != null) {
-                fileBytes = document.getFileData();
-                Files.createDirectories(filePath.getParent());
-                Files.write(filePath, fileBytes);
-                log.info("Self-healed missing file during JD comparison: {}", document.getFilename());
             } else {
-                throw new java.io.FileNotFoundException("Physical file not found and no backup data in DB");
+                // Try R2
+                if (r2StorageService.isEnabled()) {
+                    fileBytes = r2StorageService.downloadFile(document.getStorageKey());
+                    if (fileBytes != null) {
+                        Files.createDirectories(filePath.getParent());
+                        Files.write(filePath, fileBytes);
+                        log.info("Self-healed missing file from Cloudflare R2: {}", document.getFilename());
+                    }
+                }
+                // Try DB
+                if (fileBytes == null && document.getFileData() != null) {
+                    fileBytes = document.getFileData();
+                    Files.createDirectories(filePath.getParent());
+                    Files.write(filePath, fileBytes);
+                    log.info("Self-healed missing file from Database: {}", document.getFilename());
+                }
+            }
+            
+            if (fileBytes == null) {
+                throw new java.io.FileNotFoundException("Physical file not found and no backup data in R2 or DB");
             }
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
             ByteArrayResource resource = new ByteArrayResource(fileBytes) {

@@ -40,3 +40,9 @@ jwt:
 ai:
   service:
     url: ${AI_SERVICE_URL:http://localhost:8000}
+
+r2:
+  endpoint: ${R2_ENDPOINT:}
+  access-key: ${R2_ACCESS_KEY:}
+  secret-key: ${R2_SECRET_KEY:}
+  bucket-name: ${R2_BUCKET_NAME:}
