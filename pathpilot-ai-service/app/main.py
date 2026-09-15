@@ -38,6 +38,23 @@ async def validation_exception_handler(request, exc):
 
 
 # ==========================================
+# ROOT & HEALTH ENDPOINTS (For Keep-Alive & Monitoring)
+# ==========================================
+
+@app.get("/")
+def root():
+    return {
+        "status": "healthy",
+        "service": "VertexPath AI Engine",
+        "version": "2.0.0",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": "VertexPath AI Engine"}
+
+# ==========================================
 # REQUEST BODY SCHEMAS
 # ==========================================
 
@@ -67,9 +84,30 @@ class RagQueryRequest(BaseModel):
     userId: str
     query: str
 
+class BulletOptimizeRequest(BaseModel):
+    bullet: str
+    targetRole: Optional[str] = "Software Engineer"
+
+class DailyChallengeRequest(BaseModel):
+    careerPath: Optional[str] = "Full Stack Engineer"
+
 # ==========================================
 # API ROUTE HANDLERS
 # ==========================================
+
+@app.post("/api/ai/resume/optimize-bullet")
+def optimize_bullet(request: BulletOptimizeRequest):
+    try:
+        return ai_service.optimize_bullet_point(request.bullet, request.targetRole)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Bullet optimization failed: {str(e)}")
+
+@app.post("/api/ai/daily-challenge")
+def daily_challenge(request: DailyChallengeRequest):
+    try:
+        return ai_service.generate_daily_challenge(request.careerPath)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Daily challenge generation failed: {str(e)}")
 
 @app.post("/api/ai/chat")
 def chat(request: ChatRequest):

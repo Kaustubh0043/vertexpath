@@ -11,7 +11,10 @@ import {
   Square, 
   Loader2, 
   Clock, 
-  Calendar
+  Calendar,
+  Printer,
+  Download,
+  Share2
 } from 'lucide-react';
 
 export const Roadmaps: React.FC = () => {
@@ -298,8 +301,46 @@ export const Roadmaps: React.FC = () => {
             
             {/* Header Title / Description / Progress */}
             <div className="space-y-4 pb-6 border-b border-slate-900">
-              <p className="eyebrow-text">Syllabus Path</p>
-              <h3 className="text-2xl font-extrabold text-white tracking-tight">{roadmapDetails.title}</h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <p className="eyebrow-text">Syllabus Path</p>
+                  <h3 className="text-2xl font-extrabold text-white tracking-tight">{roadmapDetails.title}</h3>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      const content = `# ${roadmapDetails.title}\n\n${roadmapDetails.description}\n\n` +
+                        roadmapDetails.nodes.map((n: any, idx: number) => 
+                          `## Week ${idx + 1}: ${n.title}\n${n.description || ''}\n\n` +
+                          (n.tasks || []).map((t: any) => `- [${t.isCompleted ? 'x' : ' '}] ${t.title} (${t.estimatedHours || 1}h)`).join('\n')
+                        ).join('\n\n');
+                      const blob = new Blob([content], { type: 'text/markdown' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `${roadmapDetails.title.replace(/\s+/g, '_')}_Roadmap.md`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#11151D] hover:bg-[#1A202C] text-slate-300 text-xs font-bold rounded-md border border-slate-800 transition-all cursor-pointer"
+                    title="Export as Markdown"
+                  >
+                    <Download className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                    <span>Export MD</span>
+                  </button>
+
+                  <button
+                    onClick={() => window.print()}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#9B5CFF]/15 hover:bg-[#9B5CFF]/25 text-[#9B5CFF] text-xs font-bold rounded-md border border-[#9B5CFF]/30 transition-all cursor-pointer"
+                    title="Print or Save as PDF"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    <span>Print / PDF</span>
+                  </button>
+                </div>
+              </div>
+
               <p className="text-xs text-[#9299A8] leading-relaxed max-w-2xl">{roadmapDetails.description}</p>
               
               {/* Progress indicator */}

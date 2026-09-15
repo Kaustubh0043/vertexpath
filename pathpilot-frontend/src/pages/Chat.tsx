@@ -9,7 +9,10 @@ import {
   Trash2, 
   Loader2,
   Copy,
-  Check
+  Check,
+  Download,
+  Sparkles,
+  Bot
 } from 'lucide-react';
 
 export const Chat: React.FC = () => {
@@ -394,33 +397,39 @@ export const Chat: React.FC = () => {
       {/* Main Chat Terminal */}
       <div className="bg-[#0D1016] border border-slate-900 flex flex-col h-full md:col-span-3 rounded-lg overflow-hidden">
         
-        {/* Mobile Conversation Selector Header */}
-        <div className="md:hidden p-3 border-b border-slate-900 flex items-center justify-between gap-3 bg-[#07080C]">
-          <select
-            value={activeConvId || ''}
-            onChange={(e) => setActiveConvId(e.target.value)}
-            className="flex-1 bg-[#07080C] border border-slate-900 rounded py-1.5 px-3 text-xs text-[#9299A8] font-semibold"
-          >
-            {conversations && conversations.length > 0 ? (
-              conversations.map((conv: any) => (
-                <option key={conv.id} value={conv.id}>{conv.title}</option>
-              ))
-            ) : (
-              <option value="">No Active Chats</option>
+        {/* Desktop & Mobile Header Bar */}
+        <div className="p-3 border-b border-slate-900 flex items-center justify-between gap-3 bg-[#07080C]">
+          <div className="flex items-center gap-2">
+            <Bot className="w-4 h-4 text-[#9B5CFF]" />
+            <span className="text-xs font-bold text-[#F4F1EA]">
+              {conversations?.find((c: any) => c.id === activeConvId)?.title || "Career Coach Assistant"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {messages && messages.length > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  const title = conversations?.find((c: any) => c.id === activeConvId)?.title || "Chat_Session";
+                  const mdContent = `# VertexPath Career Coach Session: ${title}\n\n` +
+                    messages.map((m: any) => `### ${m.sender === 'USER' ? '👤 You' : '🤖 Career Coach'}\n${m.content}\n`).join('\n---\n\n');
+                  const blob = new Blob([mdContent], { type: 'text/markdown' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `${title.replace(/\s+/g, '_')}_Session.md`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-slate-400 hover:text-[#F4F1EA] bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 rounded transition-all cursor-pointer"
+                title="Export session as Markdown"
+              >
+                <Download className="w-3 h-3 text-[#9B5CFF]" />
+                <span className="hidden sm:inline">Export MD</span>
+              </button>
             )}
-          </select>
-          <button
-            type="button"
-            onClick={() => {
-              const title = prompt("Enter new chat title:");
-              if (title && title.trim()) {
-                createConvMutation.mutate(title.trim());
-              }
-            }}
-            className="px-3 py-1.5 bg-[#9B5CFF] text-[#07080C] rounded text-xs font-bold cursor-pointer shrink-0"
-          >
-            + New Chat
-          </button>
+          </div>
         </div>
 
         {/* Messages viewport */}
@@ -432,7 +441,7 @@ export const Chat: React.FC = () => {
               </div>
               <h4 className="text-base font-bold text-[#F4F1EA]">VertexPath Career Coach</h4>
               <p className="text-xs text-[#9299A8] max-w-xs leading-normal">
-                Select a conversation history from the sidebar or type a new message below to begin map planning.
+                Select a conversation history from the sidebar or start a new chat below to begin coaching.
               </p>
             </div>
           ) : loadingMessages ? (
@@ -440,9 +449,37 @@ export const Chat: React.FC = () => {
               <Loader2 className="w-6 h-6 animate-spin text-[#9B5CFF]" />
             </div>
           ) : !messages || messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center py-16">
-              <h5 className="text-xs font-bold text-[#F4F1EA]">Start the conversation</h5>
-              <p className="text-[11px] text-slate-500 mt-1">Ask questions about preparation targets, resumes, stack selections, etc.</p>
+            <div className="flex flex-col items-center justify-center h-full text-center py-12 space-y-4">
+              <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl w-fit mx-auto shadow-inner">
+                <Sparkles className="w-6 h-6 text-[#9B5CFF]" />
+              </div>
+              <div className="space-y-1">
+                <h5 className="text-sm font-bold text-[#F4F1EA]">Ask your Career Coach anything</h5>
+                <p className="text-[11px] text-[#9299A8] max-w-sm">Tap any prompt below to jumpstart your career strategy session:</p>
+              </div>
+
+              {/* Quick Prompt Chips */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-md w-full pt-2">
+                {[
+                  "⚡ Mock System Design Question for SDE 2",
+                  "🎯 How to optimize my resume for ATS parsers?",
+                  "💡 Recommend top 3 backend portfolio projects",
+                  "🚀 30-Day sprint plan for Spring Boot & Microservices"
+                ].map((promptText) => (
+                  <button
+                    key={promptText}
+                    type="button"
+                    onClick={() => {
+                      if (activeConvId) {
+                        sendMessageMutation.mutate({ convId: activeConvId, content: promptText });
+                      }
+                    }}
+                    className="p-3 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 hover:border-[#9B5CFF]/40 text-left text-[11px] text-[#F4F1EA] rounded-lg transition-all cursor-pointer shadow-sm hover:shadow-[#9B5CFF]/10"
+                  >
+                    {promptText}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
             messages.map((msg: any) => {
@@ -453,9 +490,9 @@ export const Chat: React.FC = () => {
                   className={`flex gap-3 items-start ${isAi ? 'justify-start' : 'justify-end'}`}
                 >
                   <div className={`
-                    max-w-[85%] rounded p-3.5 text-xs leading-relaxed border
+                    max-w-[85%] rounded-lg p-3.5 text-xs leading-relaxed border shadow-md
                     ${isAi 
-                      ? 'bg-[#07080C] border-slate-900 rounded-tl-none text-[#9299A8]' 
+                      ? 'bg-[#07080C] border-slate-800/80 rounded-tl-none text-[#F4F1EA]' 
                       : 'bg-[#11151D] border-slate-800 text-[#F4F1EA] rounded-tr-none'}
                   `}>
                     {renderMessageContent(msg.content, msg.id)}
@@ -468,9 +505,9 @@ export const Chat: React.FC = () => {
           {/* Pending response loader */}
           {sendMessageMutation.isPending && (
             <div className="flex gap-3 items-start justify-start">
-              <div className="bg-[#07080C] border border-slate-900 rounded rounded-tl-none p-3.5 flex items-center gap-2">
+              <div className="bg-[#07080C] border border-slate-800 rounded-lg rounded-tl-none p-3.5 flex items-center gap-2 shadow-md">
                 <Loader2 className="w-4 h-4 animate-spin text-[#9B5CFF]" />
-                <span className="text-[10px] text-slate-400 font-semibold">VertexPath is drafting...</span>
+                <span className="text-[11px] text-[#9B5CFF] font-semibold animate-pulse">VertexPath is thinking & formulating response...</span>
               </div>
             </div>
           )}
@@ -478,21 +515,21 @@ export const Chat: React.FC = () => {
 
         {/* Input Form Bar */}
         {activeConvId && (
-          <div className="p-4 border-t border-slate-900 bg-transparent">
+          <div className="p-4 border-t border-slate-900 bg-[#07080C]/50">
             <form onSubmit={handleSendMessage} className="flex gap-2">
               <input
                 type="text"
                 required
                 disabled={sendMessageMutation.isPending}
-                placeholder="Ask Career Coach coaching tips..."
+                placeholder="Ask Career Coach coaching tips or architectural tradeoffs..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 min-w-0 px-4 py-3 bg-[#07080C] border border-slate-900 rounded text-sm text-[#F4F1EA] focus:outline-none focus:border-[#9B5CFF]"
+                className="flex-1 min-w-0 px-4 py-3 bg-[#07080C] border border-slate-800 rounded-lg text-xs text-[#F4F1EA] focus:outline-none focus:border-[#9B5CFF] placeholder-slate-600"
               />
               <button 
                 type="submit" 
                 disabled={!inputText.trim() || sendMessageMutation.isPending}
-                className="px-6 py-3 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-sm shrink-0"
+                className="px-6 py-3 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-lg shadow-[#9B5CFF]/20 shrink-0"
               >
                 <span>Send</span>
               </button>

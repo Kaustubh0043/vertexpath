@@ -9,7 +9,15 @@ import {
   ArrowRight,
   PlusCircle,
   GraduationCap,
-  Sparkles
+  Sparkles,
+  Award,
+  CheckCircle2,
+  Share2,
+  Copy,
+  Check,
+  HelpCircle,
+  X,
+  Zap
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -19,6 +27,15 @@ export const Dashboard: React.FC = () => {
   const [showAddSkill, setShowAddSkill] = useState(false);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillProgress, setNewSkillProgress] = useState(50);
+  
+  // Daily Drill State
+  const [drillAnswered, setDrillAnswered] = useState(() => {
+    const today = new Date().toISOString().split('T')[0];
+    return localStorage.getItem(`daily_drill_${today}`) === 'completed';
+  });
+  const [selectedDrillOption, setSelectedDrillOption] = useState<number | null>(null);
+  const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [copiedBadge, setCopiedBadge] = useState(false);
 
   // Editable Career Goal from localStorage
   const [careerGoal, setCareerGoal] = useState(() => {
@@ -202,13 +219,23 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <button
-          onClick={() => incrementStreakMutation.mutate()}
-          className="self-start md:self-center flex items-center gap-2 px-4.5 py-2 bg-gradient-to-r from-[#9B5CFF]/10 to-[#FF6577]/10 hover:from-[#9B5CFF]/20 hover:to-[#FF6577]/20 border border-[#9B5CFF]/30 hover:border-[#9B5CFF]/60 text-[#F4F1EA] rounded-md text-xs font-bold transition-all duration-300 shadow-[0_0_15px_rgba(155,92,255,0.05)] hover:shadow-[0_0_20px_rgba(155,92,255,0.15)] cursor-pointer active:scale-95"
-        >
-          <Flame className="w-4 h-4 text-[#FF8A00] animate-pulse" />
-          <span>Sync Daily Log</span>
-        </button>
+        <div className="self-start md:self-center flex items-center gap-3 flex-wrap">
+          <button
+            onClick={() => setShowBadgeModal(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 hover:border-[#9B5CFF]/40 text-[#F4F1EA] rounded-md text-xs font-bold transition-all cursor-pointer shadow-sm"
+          >
+            <Award className="w-4 h-4 text-[#9B5CFF]" />
+            <span>Career Badge 🏆</span>
+          </button>
+
+          <button
+            onClick={() => incrementStreakMutation.mutate()}
+            className="flex items-center gap-2 px-4.5 py-2 bg-gradient-to-r from-[#9B5CFF]/10 to-[#FF6577]/10 hover:from-[#9B5CFF]/20 hover:to-[#FF6577]/20 border border-[#9B5CFF]/30 hover:border-[#9B5CFF]/60 text-[#F4F1EA] rounded-md text-xs font-bold transition-all duration-300 shadow-[0_0_15px_rgba(155,92,255,0.05)] hover:shadow-[0_0_20px_rgba(155,92,255,0.15)] cursor-pointer active:scale-95"
+          >
+            <Flame className="w-4 h-4 text-[#FF8A00] animate-pulse" />
+            <span>Sync Daily Log</span>
+          </button>
+        </div>
       </div>
 
       {/* Signature Career Route Visual Tracker (Point 24) */}
@@ -307,11 +334,94 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Split Grid (Whitespace offset composition) (Point 11) */}
+      {/* Main Split Grid (Whitespace offset composition) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column - Readiness & Next Move */}
-        <div className="lg:col-span-7 space-y-12">
+        {/* Left Column - Readiness & Next Move & Daily Drill */}
+        <div className="lg:col-span-7 space-y-10">
+          
+          {/* Daily 5-Minute Technical Drill Widget */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow-text">Daily Technical Drill</p>
+              <span className="flex items-center gap-1 text-[11px] font-mono text-[#9B5CFF] font-bold">
+                <Zap className="w-3.5 h-3.5 text-[#FF8A00] animate-pulse" />
+                +1 Streak Booster
+              </span>
+            </div>
+
+            <div className="bg-[#0D1016] border border-slate-800/80 p-6 rounded-xl space-y-4 shadow-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#9B5CFF]/15 text-[#9B5CFF] border border-[#9B5CFF]/30">
+                    {careerGoal} Drill
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-semibold uppercase">System Architecture</span>
+                </div>
+                {drillAnswered && (
+                  <span className="flex items-center gap-1 text-[11px] text-[#55D39A] font-bold">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Drill Completed Today!
+                  </span>
+                )}
+              </div>
+
+              <p className="text-xs font-bold text-[#F4F1EA] leading-relaxed">
+                "What is the primary architectural tradeoff when introducing a distributed caching layer (like Redis) in front of PostgreSQL?"
+              </p>
+
+              {/* 4 Options */}
+              <div className="space-y-2">
+                {[
+                  { text: "A. Caching guarantees ACID transactions across replicas", correct: false },
+                  { text: "B. Read latency decreases significantly, but cache invalidation & data staleness complexity increases", correct: true },
+                  { text: "C. It completely eliminates the need for database indexes", correct: false },
+                  { text: "D. Write operations become twice as fast without database writes", correct: false }
+                ].map((opt, oIdx) => {
+                  const isSelected = selectedDrillOption === oIdx;
+                  let optStyle = "bg-[#11151D] border-slate-800 text-[#cbd5e1] hover:border-[#9B5CFF]/50 hover:bg-[#1A202C]";
+                  
+                  if (drillAnswered || isSelected) {
+                    if (opt.correct) {
+                      optStyle = "bg-[#55D39A]/15 border-[#55D39A] text-[#55D39A] font-bold";
+                    } else if (isSelected && !opt.correct) {
+                      optStyle = "bg-[#FF6577]/15 border-[#FF6577] text-[#FF6577] font-semibold";
+                    }
+                  }
+
+                  return (
+                    <button
+                      key={oIdx}
+                      type="button"
+                      disabled={drillAnswered}
+                      onClick={() => {
+                        setSelectedDrillOption(oIdx);
+                        setDrillAnswered(true);
+                        const today = new Date().toISOString().split('T')[0];
+                        localStorage.setItem(`daily_drill_${today}`, 'completed');
+                        if (opt.correct) {
+                          incrementStreakMutation.mutate();
+                        }
+                      }}
+                      className={`w-full p-3 rounded-lg border text-left text-xs transition-all flex items-center justify-between cursor-pointer ${optStyle}`}
+                    >
+                      <span>{opt.text}</span>
+                      {drillAnswered && opt.correct && <CheckCircle2 className="w-4 h-4 text-[#55D39A] shrink-0 ml-2" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {drillAnswered && (
+                <div className="p-3.5 rounded-lg bg-[#07080C] border border-slate-800/80 text-[11px] text-[#9299A8] leading-relaxed animate-fade-in space-y-1">
+                  <span className="font-bold text-[#F4F1EA] block">💡 Engineering Takeaway:</span>
+                  <span>
+                    Redis stores in-memory key-value items providing sub-millisecond read access, but requires robust invalidation strategies (TTL, write-through, or cache-aside) to prevent serving stale data when the primary database updates.
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
           
           {/* Career Readiness Metrics (Point 22) */}
           <div className="space-y-4">
@@ -557,6 +667,120 @@ export const Dashboard: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Shareable Career Readiness Badge / Certificate Modal */}
+      {showBadgeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-[#0D1016] border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-[#9B5CFF]" />
+                <h4 className="text-sm font-bold text-[#F4F1EA]">Career Readiness Certificate</h4>
+              </div>
+              <button
+                onClick={() => setShowBadgeModal(false)}
+                className="text-slate-400 hover:text-[#F4F1EA] p-1 cursor-pointer transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Dark Mode Branded Certificate Card */}
+            <div className="p-6 bg-gradient-to-br from-[#11151D] via-[#07080C] to-[#151025] border-2 border-[#9B5CFF]/30 rounded-xl space-y-5 relative overflow-hidden shadow-inner">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#9B5CFF]/10 rounded-full blur-2xl pointer-events-none" />
+              
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-[#9B5CFF] uppercase">
+                  VERTEXPATH OFFICIAL BADGE
+                </span>
+                <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#55D39A]/15 text-[#55D39A] border border-[#55D39A]/30">
+                  VERIFIED CANDIDATE
+                </span>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-[10px] text-slate-400 uppercase font-semibold">Certified Candidate</p>
+                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight">
+                  {stats?.fullName || "Software Developer"}
+                </h3>
+                <p className="text-xs text-[#9B5CFF] font-semibold">
+                  Track: {careerGoal}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 pt-2 border-t border-slate-800/80">
+                <div className="bg-[#07080C] p-2.5 rounded-lg border border-slate-800 text-center">
+                  <span className="text-[9px] text-slate-500 font-bold uppercase block">Readiness</span>
+                  <span className="text-sm font-bold text-[#55D39A]">{pathProgress}%</span>
+                </div>
+                <div className="bg-[#07080C] p-2.5 rounded-lg border border-slate-800 text-center">
+                  <span className="text-[9px] text-slate-500 font-bold uppercase block">Active Streak</span>
+                  <span className="text-sm font-bold text-[#FF8A00]">{stats?.streakCount || 1} Days</span>
+                </div>
+                <div className="bg-[#07080C] p-2.5 rounded-lg border border-slate-800 text-center">
+                  <span className="text-[9px] text-slate-500 font-bold uppercase block">Curriculum</span>
+                  <span className="text-sm font-bold text-[#9B5CFF]">{totalRoadmaps} Paths</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-[9px] text-slate-500 font-mono pt-1">
+                <span>ID: VP-AUTH-{Math.random().toString(36).substring(2, 8).toUpperCase()}</span>
+                <span>vertexpath.vercel.app</span>
+              </div>
+            </div>
+
+            {/* Markdown Embed Snippet & Copy Action */}
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  GitHub README / Markdown Badge Code
+                </label>
+                <div className="p-2.5 bg-[#07080C] border border-slate-800 rounded text-[11px] font-mono text-slate-400 select-all overflow-x-auto">
+                  {`[![VertexPath Verified](https://img.shields.io/badge/VertexPath-${encodeURIComponent(careerGoal)}-9B5CFF?style=for-the-badge&logo=codeforces&logoColor=white)](https://vertexpath.vercel.app)`}
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const badgeCode = `[![VertexPath Verified](https://img.shields.io/badge/VertexPath-${encodeURIComponent(careerGoal)}-9B5CFF?style=for-the-badge&logo=codeforces&logoColor=white)](https://vertexpath.vercel.app)`;
+                    navigator.clipboard.writeText(badgeCode);
+                    setCopiedBadge(true);
+                    setTimeout(() => setCopiedBadge(false), 2000);
+                  }}
+                  className="flex-1 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-[#9B5CFF]/20"
+                >
+                  {copiedBadge ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Copied Badge Markdown!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy Badge for GitHub</span>
+                    </>
+                  )}
+                </button>
+
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=https://vertexpath.vercel.app`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 bg-[#11151D] hover:bg-[#1A202C] text-[#F4F1EA] text-xs font-bold rounded-lg border border-slate-800 transition-all cursor-pointer flex items-center gap-1.5"
+                >
+                  <Share2 className="w-3.5 h-3.5 text-[#55C8E8]" />
+                  <span>Share</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

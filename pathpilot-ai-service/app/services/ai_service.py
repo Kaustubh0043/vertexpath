@@ -7,7 +7,7 @@ from app.utils.vector_store import vector_store_manager
 # Initialize Chat Model
 def get_chat_model():
     return ChatGoogleGenerativeAI(
-        model="gemini-3.5-flash",
+        model="gemini-1.5-flash",
         google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3
     )
@@ -248,6 +248,63 @@ class AIService:
             "  \"missing_technologies\": [\"tech1\", \"tech2\"], // Technologies listed in JD but missing in resume\n"
             "  \"recommended_learning_path\": [\"step1\", \"step2\"], // Action steps to acquire the missing tech\n"
             "  \"interview_prep_topics\": [\"topic1\", \"topic2\"] // Suggested topics to review for an interview for this role\n"
+            "}"
+        )
+        return self._invoke_json(prompt)
+
+    def optimize_bullet_point(self, bullet: str, target_role: str = "") -> dict:
+        """Transforms a raw resume bullet point into 3 high-impact, metric-driven ATS alternatives."""
+        prompt = (
+            f"Original Resume Bullet Point:\n\"{bullet}\"\n"
+            f"Target Role (if any): {target_role or 'Software Engineer'}\n\n"
+            "Generate 3 distinct, production-grade, metric-driven ATS resume bullet point improvements.\n"
+            "Each must follow the Google XYZ formula: 'Accomplished [X] as measured by [Y], by doing [Z]'.\n"
+            "Include strong action verbs, technical specifics, and quantified business impact metrics.\n\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            "  \"original\": \"The original input bullet\",\n"
+            "  \"critique\": \"Brief 1-2 sentence critique explaining what was missing (e.g. lack of metrics, passive tone)\",\n"
+            "  \"variations\": [\n"
+            "    {\n"
+            "      \"label\": \"Metric & Performance Focused\",\n"
+            "      \"bullet\": \"High-impact bullet with speed/latency/throughput percentage improvements\",\n"
+            "      \"action_verb\": \"Architected\",\n"
+            "      \"metric_highlight\": \"reduced latency by 35%\"\n"
+            "    },\n"
+            "    {\n"
+            "      \"label\": \"Scale & Architecture Focused\",\n"
+            "      \"bullet\": \"Focus on architectural design patterns and handling high concurrency\",\n"
+            "      \"action_verb\": \"Engineered\",\n"
+            "      \"metric_highlight\": \"scaling to 100k+ DAU\"\n"
+            "    },\n"
+            "    {\n"
+            "      \"label\": \"Product & Business Impact\",\n"
+            "      \"bullet\": \"Focus on user adoption, cost savings, or business deliverables\",\n"
+            "      \"action_verb\": \"Spearheaded\",\n"
+            "      \"metric_highlight\": \"saving 20+ dev hours weekly\"\n"
+            "    }\n"
+            "  ]\n"
+            "}"
+        )
+        return self._invoke_json(prompt)
+
+    def generate_daily_challenge(self, career_path: str = "Full Stack Engineer") -> dict:
+        """Generates a quick 1-question technical drill for the daily streak."""
+        prompt = (
+            f"Career Path: {career_path}\n\n"
+            "Generate a quick, engaging 1-question multiple-choice technical drill testing core conceptual knowledge.\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            "  \"title\": \"Topic / Domain (e.g., PostgreSQL Indexing, React Hooks, System Design)\",\n"
+            "  \"question\": \"Clear, concise technical scenario question\",\n"
+            "  \"options\": [\n"
+            "    \"Option A text\",\n"
+            "    \"Option B text\",\n"
+            "    \"Option C text\",\n"
+            "    \"Option D text\"\n"
+            "  ],\n"
+            "  \"correct_index\": 1, // Integer 0 to 3 indicating the right answer\n"
+            "  \"explanation\": \"Concise 2-sentence explanation of why the correct answer is right and why other choices fail.\"\n"
             "}"
         )
         return self._invoke_json(prompt)

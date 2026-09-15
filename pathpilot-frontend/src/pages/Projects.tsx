@@ -8,7 +8,9 @@ import {
   FolderTree, 
   Loader2, 
   Copy,
-  Check
+  Check,
+  Download,
+  Sparkles
 } from 'lucide-react';
 
 export const Projects: React.FC = () => {
@@ -134,10 +136,34 @@ export const Projects: React.FC = () => {
           
           {/* Concept Overview Box */}
           <div className="bg-[#0D1016] border border-slate-900 p-6 rounded-lg md:col-span-2 space-y-3">
-            <h5 className="text-xs font-bold text-[#F4F1EA] flex items-center gap-2 border-b border-slate-800/60 pb-2">
-              <Cpu className="w-4.5 h-4.5 text-[#9B5CFF]" />
-              <span>Project Concept & Overview</span>
-            </h5>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/60 pb-3">
+              <h5 className="text-xs font-bold text-[#F4F1EA] flex items-center gap-2">
+                <Cpu className="w-4.5 h-4.5 text-[#9B5CFF]" />
+                <span>Project Concept & Overview</span>
+              </h5>
+
+              <button
+                onClick={() => {
+                  const content = `# Architecture Blueprint: ${stackInput}\n\n` +
+                    `## 💡 Concept & Ideas\n${result.ideas}\n\n` +
+                    `## 📁 Directory Structure\n\`\`\`\n${result.folder_structure}\n\`\`\`\n\n` +
+                    `## 🌐 REST Controllers Gateway\n\`\`\`\n${result.api_suggestions}\n\`\`\`\n\n` +
+                    `## 🗄️ Relational Schema (SQL / DDL)\n\`\`\`sql\n${result.database_design}\n\`\`\`\n`;
+                  const blob = new Blob([content], { type: 'text/markdown' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `Architecture_Blueprint_${stackInput.replace(/[^a-zA-Z0-9]/g, '_')}.md`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#9B5CFF]/15 hover:bg-[#9B5CFF]/25 text-[#9B5CFF] text-xs font-bold rounded-md border border-[#9B5CFF]/30 transition-all cursor-pointer w-fit"
+                title="Download Blueprint Scaffold"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Spec (.MD)</span>
+              </button>
+            </div>
             <p className="text-xs text-[#9299A8] leading-relaxed font-sans select-text">
               {result.ideas}
             </p>
