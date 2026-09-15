@@ -1,13 +1,13 @@
 # VertexPath - AI-Powered Career Development Platform
 
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot&logoColor=6DB33F)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot_3-F2F4F9?style=for-the-badge&logo=spring-boot&logoColor=6DB33F)](https://spring.io/projects/spring-boot)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75C2?style=for-the-badge&logo=google-gemini&logoColor=white)](https://ai.google.dev/)
 
-VertexPath is an all-in-one, microservice-ready AI Career Development Platform that helps students, freshers, and professionals optimize their career readiness using Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG).
+VertexPath is an all-in-one, microservice-ready AI Career Development Platform that helps students, freshers, and professionals accelerate their technical readiness through LLM-driven personalized roadmaps, mock voice interviews, ATS optimization, and code scaffolding.
 
 ---
 
@@ -16,27 +16,48 @@ VertexPath is an all-in-one, microservice-ready AI Career Development Platform t
 ### 🔑 Secure OTP Account Verification
 ![Authentication & Verification](screenshots/verification.png)
 
-### 📊 Gamified Skill Dashboard & Streak Tracker
+### 📊 Gamified Skill Dashboard & Daily Drill
 ![Dashboard](screenshots/dashboard.png)
 
-### 🗺️ AI-Generated Syllabus Roadmaps & Checklist Tasks
+### 🗺️ AI-Generated Syllabus Roadmaps & Printable PDF Export
 ![Syllabus Roadmap](screenshots/roadmap.png)
 
-### 🛠️ Developer Project Sandbox Generator
+### 🛠️ Developer Project Sandbox & Architecture Downloader
 ![Project Generator](screenshots/project_generator.png)
 
 ---
 
-## 🌟 Core Features
+## 🌟 Core Feature Suite
 
-1. **Gamified Dashboard & Skill Tracker**: Tracks study streaks, shows GitHub-like activity calendars, and maps skill progress.
-2. **AI Career Coach**: Interactive chat with role-based coaching guidelines and code snippet formatting.
-3. **ATS Resume Analyzer**: Calculates resume compatibility scores, highlights tech stack gaps, and drafts layout enhancements.
-4. **Job Description Matching (JD)**: Pastes descriptions and evaluates ATS alignment, detailing recommended preparations and missing tech.
-5. **RAG Context QA**: Uploads PDFs/DOCXs/PPTXs to index them in ChromaDB and chats strictly using document data.
-6. **AI Syllabus Roadmap**: Compiles custom week-by-week learning paths with hourly checklist tasks.
-7. **Developer Project Sandbox**: Models directories, schemas, and REST endpoints based on target stacks.
-8. **Interview Simulator**: Serves mock technical/HR questions, evaluates user answers with strict grading (assigning `0` for short/lazy replies), and suggests model answers.
+1. **🎙️ Voice-Powered Mock Interview Simulator**:
+   - **Text-to-Speech (AI Voice)**: Questions read aloud using browser-native Web Speech synthesis.
+   - **Speech-to-Text (Voice Dictation)**: Real-time voice answer transcription with live waveform cues.
+   - **Timed Simulator**: Toggleable 2-minute countdown timer for high-pressure technical screening.
+   - **Strict Evaluator**: Grades answers 0–100% with detailed architectural critiques and model reference solutions.
+
+2. **✨ AI Resume Bullet Point Optimizer (Google XYZ Formula)**:
+   - Transforms passive resume bullets into 3 production-grade, metric-quantified ATS alternatives (Performance-focused, Scale-focused, and Business-focused).
+
+3. **📦 1-Click Export Suite**:
+   - **Roadmaps**: Export personalized learning checklists as clean **Markdown (.MD)** or **Print / Save as PDF**.
+   - **Project Sandbox**: 1-click **"Download Spec (.MD)"** bundling folder layouts, normalized PostgreSQL schemas, and REST endpoint blueprints.
+   - **Career Coach**: Export full interactive coaching dialogues as Markdown study sheets.
+
+4. **🎮 Gamified Dashboard, Daily Drill & Shareable Career Badge**:
+   - **5-Minute Daily Technical Challenge**: Scenario-based technical multiple-choice drills that award XP and boost daily study streaks.
+   - **Shareable Career Readiness Certificate**: Dark-mode certified badge with 1-click Markdown embed code for GitHub READMEs and LinkedIn sharing.
+
+5. **📊 ATS Resume Analyzer & Cloudflare R2 / Neon Storage**:
+   - Computes ATS match scores, highlights missing technical keywords, and provides actionable formatting checklists.
+
+6. **🎯 Job Description (JD) Compatibility Match**:
+   - Evaluates resume alignment against pasted target job requirements, highlighting critical tech stack gaps and interview prep topics.
+
+7. **📚 RAG Context Q&A Sandbox**:
+   - Indexes user-uploaded PDFs, DOCXs, and PPTXs in ChromaDB to answer domain questions grounded strictly in document data.
+
+8. **🗺️ Interactive Weekly Curriculum Roadmaps**:
+   - Compiles personalized week-by-week syllabus tracks with estimated completion hours and interactive task checkboxes.
 
 ---
 
@@ -44,17 +65,18 @@ VertexPath is an all-in-one, microservice-ready AI Career Development Platform t
 
 ```mermaid
 graph TD
-    Client[Browser Frontend] -->|Vercel Host| ReactApp(Vite React UI)
+    Client[Browser Frontend - React 19 / Vite] -->|Vercel Host| ReactApp(Vite React UI)
     ReactApp -->|REST API Calls HTTP/1.1| SpringBoot(Java Spring Boot Core)
-    SpringBoot -->|Docker/Railway| PostgresDB[(PostgreSQL Database)]
-    SpringBoot -->|Internal Network| PythonAI(FastAPI Python AI Engine)
-    PythonAI -->|API Calls| GeminiAPI[Google Gemini API]
+    SpringBoot -->|Neon Cloud| PostgresDB[(PostgreSQL Database)]
+    SpringBoot -->|Internal REST Proxy| PythonAI(FastAPI Python Engine)
+    PythonAI -->|LangChain / Google SDK| GeminiAPI[Google Gemini 1.5 Flash]
+    PythonAI -->|Local Vector Engine| ChromaDB[(ChromaDB Embeddings)]
 ```
 
-- **Frontend**: React, Vite, TypeScript, Tailwind CSS, Lucide React, Axios, TanStack React Query.
-- **Backend Core**: Spring Boot, Java 21, Spring Data JPA, Spring Security, JWT, PostgreSQL.
-- **AI Microservice**: Python, FastAPI, LangChain, ChromaDB, Google Gemini API (native JSON mode).
-- **Orchestration**: Docker, Docker Compose, Nginx.
+- **Frontend**: React 19, Vite, TypeScript, Tailwind CSS, Lucide React, Axios, TanStack React Query.
+- **Backend Core**: Spring Boot 3, Java 21, Spring Data JPA, Spring Security, JWT, PostgreSQL (Neon.tech).
+- **AI Microservice**: Python 3.12, FastAPI, LangChain, ChromaDB, Google Gemini API.
+- **Orchestration & Hosting**: Docker, Docker Compose, Vercel, Render.
 
 ---
 
@@ -70,22 +92,21 @@ graph TD
    ```env
    GEMINI_API_KEY=your_gemini_api_key_here
    ```
-2. Build and boot all containers (PostgreSQL, Python AI Service, Spring Boot Backend, and React Frontend):
+2. Boot all containers (PostgreSQL, Python AI Service, Spring Boot Backend, and React Frontend):
    ```bash
    docker compose up --build -d
    ```
-3. Once starting successfully:
-   - **React Frontend**: Access at [http://localhost:3000](http://localhost:3000)
-   - **Spring Boot Backend**: REST Gateway at [http://localhost:8080](http://localhost:8080)
-   - **FastAPI AI Engine**: API docs at [http://localhost:8000/docs](http://localhost:8000/docs)
-   - **PostgreSQL Database**: Port mapped to `5439` (to avoid clashing with local Postgres service on 5432).
+3. Access your local services:
+   - **React Frontend**: [http://localhost:3000](http://localhost:3000)
+   - **Spring Boot Backend**: [http://localhost:8080](http://localhost:8080)
+   - **FastAPI AI Engine**: [http://localhost:8000/docs](http://localhost:8000/docs)
+   - **PostgreSQL Database**: Port mapped to `5439`
 
 ---
 
 ### 🔧 Option B: Running Services Individually (Without Docker)
 
 #### 1. Setup PostgreSQL Database
-Create a local database named `pathpilot`:
 ```sql
 CREATE DATABASE pathpilot;
 ```
@@ -104,7 +125,6 @@ python app/main.py
 ```
 
 #### 3. Start Spring Boot Backend
-Configure database credentials in `pathpilot-backend/src/main/resources/application.yml` and run:
 ```bash
 cd pathpilot-backend
 ./mvnw spring-boot:run
@@ -119,46 +139,9 @@ npm run dev
 
 ---
 
-## ☁️ Production Deployment Guide (Vercel & Cloud)
+## ☁️ Production Deployment (Vercel & Render)
 
-### 1. Deploy Free PostgreSQL Database (Neon.tech)
-Neon offers a perpetual free tier of Postgres.
-1. Sign up on [Neon.tech](https://neon.tech/) and create a project.
-2. Under **Connection Details**, copy your connection string (e.g. `postgresql://neondb_owner:npg_12345@ep-cool-fog-1234.us-east-2.aws.neon.tech/neondb?sslmode=require`).
-3. Convert this string to **JDBC Format** for the backend configuration:
-   * **`DATABASE_URL`**: `jdbc:postgresql://ep-cool-fog-1234.us-east-2.aws.neon.tech/neondb?sslmode=require`
-   * **`DATABASE_USERNAME`**: `neondb_owner`
-   * **`DATABASE_PASSWORD`**: `npg_12345`
-
----
-
-### 2. Deploy Python AI Service (Render / Railway)
-1. Deploy `pathpilot-ai-service` folder as a **Web Service** on Render or Railway.
-2. Add environment variable:
-   * `GEMINI_API_KEY`: Your Gemini API Key.
-3. Copy your live AI URL (e.g., `https://ai-service-prod.onrender.com`).
-
----
-
-### 3. Deploy Spring Boot Backend (Render / Railway)
-1. Deploy `pathpilot-backend` folder as a **Web Service** on Render or Railway.
-2. Add environment variables:
-   * **`DATABASE_URL`**: The JDBC string from Step 1.
-   * **`DATABASE_USERNAME`**: `neondb_owner`.
-   * **`DATABASE_PASSWORD`**: Your Neon password.
-   * **`AI_SERVICE_URL`**: Your live AI URL from Step 2.
-   * **`JWT_SECRET`**: A secure randomly generated hex key.
-   * **`CORS_ALLOWED_ORIGINS`**: Your live Vercel URL (e.g. `https://vertexpath.vercel.app` or `*`).
-3. Copy your live backend URL (e.g., `https://backend-prod.onrender.com`).
-
----
-
-### 4. Deploy React Frontend (Vercel)
-1. Log in to [Vercel](https://vercel.com/) and import your project repository.
-2. In **Build & Development Settings**:
-   * **Root Directory**: `pathpilot-frontend`
-   * **Build Command**: `npm run build`
-   * **Output Directory**: `dist`
-3. Add the following environment variable:
-   * **`VITE_API_BASE_URL`**: `https://backend-prod.onrender.com` (your live backend URL from Step 3).
-4. Click **Deploy**!
+1. **Database**: PostgreSQL on [Neon.tech](https://neon.tech/) (free perpetual tier).
+2. **AI Microservice**: Deploy `pathpilot-ai-service` on Render (Docker runtime) with `GEMINI_API_KEY`.
+3. **Backend Core**: Deploy `pathpilot-backend` on Render with `DATABASE_URL`, `AI_SERVICE_URL`, `JWT_SECRET`.
+4. **Frontend**: Deploy `pathpilot-frontend` on Vercel with `VITE_API_BASE_URL` pointing to the backend URL.
