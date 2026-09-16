@@ -17,6 +17,21 @@ public class EmailService {
     @Value("${spring.mail.username:}")
     private String fromEmail;
 
+    public String getFromEmail() {
+        return fromEmail;
+    }
+
+    public void sendTestEmail(String toEmail) {
+        log.info("Attempting synchronous test email to {} from {}", toEmail, fromEmail);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(toEmail);
+        message.setSubject("VertexPath.AI - Test Email Diagnostic");
+        message.setText("Hello! If you are reading this, your VertexPath Gmail SMTP integration is working perfectly.");
+        mailSender.send(message);
+        log.info("Test email sent successfully to {}", toEmail);
+    }
+
     public void sendVerificationEmail(String toEmail, String code) {
         log.info("--------------------------------------------------");
         log.info("VERIFICATION CODE FOR {}: {}", toEmail, code);
@@ -27,7 +42,7 @@ public class EmailService {
             return;
         }
 
-        // Send email asynchronously in a background thread to prevent blocking the signup response
+        // Send email in a background thread to prevent blocking signup API response
         new Thread(() -> {
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
@@ -42,7 +57,7 @@ public class EmailService {
                 mailSender.send(message);
                 log.info("Verification email sent successfully to {}", toEmail);
             } catch (Exception e) {
-                log.error("Failed to send verification email to {}: {}", toEmail, e.getMessage());
+                log.error("Failed to send verification email to {}: {}", toEmail, e.getMessage(), e);
             }
         }).start();
     }
@@ -57,7 +72,6 @@ public class EmailService {
             return;
         }
 
-        // Send asynchronously to avoid blocking the API response
         new Thread(() -> {
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
@@ -74,7 +88,7 @@ public class EmailService {
                 mailSender.send(message);
                 log.info("Contact email forwarded successfully to developer inbox.");
             } catch (Exception e) {
-                log.error("Failed to send contact email: {}", e.getMessage());
+                log.error("Failed to send contact email: {}", e.getMessage(), e);
             }
         }).start();
     }

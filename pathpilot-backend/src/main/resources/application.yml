@@ -19,10 +19,13 @@ spring:
         smtp:
           auth: true
           starttls:
-            enable: ${SMTP_STARTTLS_ENABLE:true}
-            required: ${SMTP_STARTTLS_REQUIRED:true}
+            enable: true
+            required: true
           ssl:
-            enable: ${SMTP_SSL_ENABLE:false}
+            trust: "*"
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
   jpa:
     hibernate:
       ddl-auto: update

@@ -77,6 +77,25 @@ public class AuthController {
     }
 
     @GetMapping("/test-connection")
+    
+    @GetMapping("/test-mail")
+    public ResponseEntity<Map<String, Object>> testMail(@org.springframework.web.bind.annotation.RequestParam(defaultValue = "kaustubhjabhav0043@gmail.com") String to) {
+        Map<String, Object> res = new HashMap<>();
+        try {
+            res.put("configuredFromEmail", emailService.getFromEmail());
+            emailService.sendTestEmail(to);
+            res.put("status", "SUCCESS");
+            res.put("message", "Test email sent successfully to " + to);
+        } catch (Exception e) {
+            res.put("status", "FAILED");
+            res.put("error", e.getMessage());
+            java.io.StringWriter sw = new java.io.StringWriter();
+            e.printStackTrace(new java.io.PrintWriter(sw));
+            res.put("stacktrace", sw.toString());
+        }
+        return ResponseEntity.ok(res);
+    }
+
     public ResponseEntity<Map<String, Object>> testConnection() {
         Map<String, Object> result = new HashMap<>();
         result.put("configuredAiServiceUrl", aiServiceUrl);
