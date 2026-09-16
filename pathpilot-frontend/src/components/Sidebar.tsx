@@ -40,6 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     },
     {
       title: 'YOUR PATH',
+      tourId: 'sidebar-your-path',
       items: [
         { name: 'Resume & ATS', path: '/dashboard/resume', icon: FileText },
         { name: 'Learning Paths', path: '/dashboard/roadmaps', icon: Map },
@@ -48,6 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     },
     {
       title: 'PREPARE & PRACTICE',
+      tourId: 'sidebar-practice',
       items: [
         { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck },
         { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal },
@@ -56,6 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     },
     {
       title: 'CAREER TOOLS',
+      tourId: 'sidebar-tools',
       items: [
         { name: 'Outreach Copilot', path: '/dashboard/outreach', icon: Mail },
         { name: 'Salary Negotiation', path: '/dashboard/compensation', icon: DollarSign },

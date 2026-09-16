@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, 
@@ -9,118 +9,119 @@ import {
   FileText, 
   Map, 
   Terminal, 
-  Mic, 
-  Send, 
   DollarSign, 
   Command, 
   CheckCircle2, 
-  UserCheck 
+  HelpCircle,
+  MousePointerClick
 } from 'lucide-react';
 
-export interface TourStep {
+interface TourStep {
+  targetSelector: string;
   title: string;
   badge: string;
   description: string;
-  icon: React.ReactNode;
-  highlightRoute?: string;
-  tips: string[];
+  tips: string;
+  preferredPlacement: 'top' | 'bottom' | 'left' | 'right';
+  targetRoute?: string;
 }
 
 export const ProductTour: React.FC = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
 
   const steps: TourStep[] = [
     {
-      title: 'Welcome to VertexPath',
-      badge: 'CAREER OPERATING SYSTEM',
-      description: 'Your complete AI-powered developer journey — from foundational resume benchmarking to salary negotiation and shareable public portfolios.',
-      icon: <Sparkles className="w-8 h-8 text-[#9B5CFF] animate-pulse" />,
-      tips: [
-        'Everything is interconnected to build your path to your dream engineering role.',
-        'Track daily streaks, XP, and milestone completions in real-time.'
-      ]
-    },
-    {
+      targetSelector: '[data-tour="route-tracker"]',
       title: 'Career Route Tracker',
       badge: 'LIVE MILESTONES',
-      description: 'Your personal career roadmap dynamically reflects real actions. As you upload resumes, build paths, solve challenges, and interview, the tracker automatically lights up.',
-      icon: <Compass className="w-8 h-8 text-[#55D39A]" />,
-      highlightRoute: '/dashboard',
-      tips: [
-        'Click directly on any node in the Route Tracker to jump straight into that module.',
-        'Edit your target role dynamically right from the top header.'
-      ]
+      description: 'This is your real-time career journey. Click on any milestone node to jump directly into Resume, Skills, Roadmaps, Projects, Interviews, Coding, or Outreach.',
+      tips: 'Nodes dynamically check off as you complete real actions in the platform.',
+      preferredPlacement: 'bottom',
+      targetRoute: '/dashboard'
     },
     {
-      title: 'Resume & ATS Optimization',
-      badge: 'STAGE 01 / PROFILE',
-      description: 'Run deep ATS audits against top tech company standards and use the Google XYZ Bullet Optimizer to transform raw bullets into high-impact, metrics-driven achievements.',
-      icon: <FileText className="w-8 h-8 text-[#9B5CFF]" />,
-      highlightRoute: '/dashboard/resume',
-      tips: [
-        'Get 3 instant variations: Performance, Scale, and Business impact.',
-        'Benchmark against job descriptions with the Job Match Audit tool.'
-      ]
+      targetSelector: '[data-tour="daily-drill"]',
+      title: 'Daily Technical Drill',
+      badge: 'STREAK & XP',
+      description: 'Practice high-yield engineering questions every day to boost your streak, earn XP, and test your system architecture readiness.',
+      tips: 'Completing the daily drill awards XP and increments your streak counter.',
+      preferredPlacement: 'top',
+      targetRoute: '/dashboard'
     },
     {
-      title: 'Learning Paths & Project Architect',
-      badge: 'STAGE 02 / FOUNDATION',
-      description: 'Generate customized week-by-week curriculum roadmaps with printable PDF exports, and scaffold complete full-stack project specs with database schemas and REST APIs.',
-      icon: <Map className="w-8 h-8 text-[#00E5FF]" />,
-      highlightRoute: '/dashboard/roadmaps',
-      tips: [
-        'Export roadmaps as Markdown or high-resolution printable PDFs.',
-        'Project Architect generates copy-paste ready directory trees & schemas.'
-      ]
-    },
-    {
-      title: 'Mock Interviews & Code Challenge IDE',
-      badge: 'STAGE 03 / PREPARATION',
-      description: 'Practice real-time voice-powered technical & behavioral interviews with strict scoring, and solve algorithmic challenges in our dark-mode Monaco-style IDE with automated Big-O complexity audits.',
-      icon: <Terminal className="w-8 h-8 text-[#FF8A00]" />,
-      highlightRoute: '/dashboard/coding',
-      tips: [
-        'Voice simulator features speech-to-text, questions read aloud, and 2-minute countdown timer.',
-        'Complexity analyzer breaks down Time O(N) & Space O(1) efficiency with optimal refactor solutions.'
-      ]
-    },
-    {
-      title: 'Outreach Copilot & Salary Negotiation',
-      badge: 'STAGE 04 / CONVERSION',
-      description: 'Generate 3 high-converting cold outreach pitches (Recruiter DM, Engineering Manager Deep Dive, Founder Pitch) and calculate market percentiles with automated counter-offer email scripts.',
-      icon: <DollarSign className="w-8 h-8 text-[#FF6577]" />,
-      highlightRoute: '/dashboard/outreach',
-      tips: [
-        'Craft tailored counter-offers for +10% to +20% increases with professional phrasing.',
-        'Share your public verified developer portfolio with recruiters at /p/:username.'
-      ]
-    },
-    {
+      targetSelector: '[data-tour="quick-actions"]',
       title: 'Global Command Palette (Ctrl + K)',
-      badge: 'PRODUCTIVITY SHORTCUT',
-      description: 'Press Ctrl + K (or ⌘K on macOS) at any time to instantly jump between tools, trigger actions, or copy your public portfolio link without touching your mouse.',
-      icon: <Command className="w-8 h-8 text-[#9B5CFF]" />,
-      tips: [
-        'Supports instant keyword search across all 10+ modules.',
-        'You can relaunch this interactive tour at any time from the Dashboard.'
-      ]
+      badge: 'SHORTCUTS',
+      description: 'Access the spotlight search at any time by clicking here or pressing Ctrl + K to instantly switch between modules and trigger actions.',
+      tips: 'Press ⌘K on macOS or Ctrl+K on Windows from anywhere.',
+      preferredPlacement: 'bottom'
+    },
+    {
+      targetSelector: '[data-tour="sidebar-your-path"]',
+      title: 'Your Path (Resume, Roadmaps, Projects)',
+      badge: 'STAGE 01 & 02',
+      description: 'Audit your resume with Google XYZ formulas, build 4-week syllabus roadmaps, and scaffold full-stack architectures with database schemas.',
+      tips: 'Export roadmaps as PDF or project specs as Markdown.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="sidebar-practice"]',
+      title: 'Mock Interviews & Live Code IDE',
+      badge: 'STAGE 03 / PREP',
+      description: 'Practice real-time voice interviews with Web Speech synthesis and solve algorithmic problems in our dark-mode IDE with automated Big-O complexity audits.',
+      tips: 'Evaluates Time & Space complexity ($O(N)$ / $O(1)$) with optimal refactor code.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="sidebar-tools"]',
+      title: 'Outreach & Salary Negotiation',
+      badge: 'STAGE 04 / CAREER TOOLS',
+      description: 'Generate high-converting recruiter DMs, calculate market percentiles, and craft professional counter-offer email scripts.',
+      tips: 'Includes 3 tailored pitch variations: Recruiter, Engineering Manager, Founder.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="career-badge"]',
+      title: 'Verified Career Badge & Public Portfolio',
+      badge: 'CERTIFIED BADGE',
+      description: 'Click here to preview your verified readiness certificate and copy your shareable public developer portfolio link (/p/:username).',
+      tips: 'Embed your live badge markdown directly into your GitHub README or LinkedIn bio.',
+      preferredPlacement: 'bottom',
+      targetRoute: '/dashboard'
     }
   ];
 
+  const updateTargetPosition = useCallback(() => {
+    if (!isOpen) return;
+    const current = steps[currentStep];
+    const el = document.querySelector(current.targetSelector);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      // Allow slight delay for smooth scroll to finish
+      setTimeout(() => {
+        const rect = el.getBoundingClientRect();
+        setTargetRect(rect);
+      }, 150);
+    } else {
+      setTargetRect(null);
+    }
+  }, [isOpen, currentStep]);
+
   useEffect(() => {
-    // Check if user has already completed tour
+    // Check if tour completed before
     const hasCompleted = localStorage.getItem('vertexpath_tour_completed');
     if (!hasCompleted) {
-      // Auto open on first visit with small delay for smooth mount
-      const timer = setTimeout(() => setIsOpen(true), 800);
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, []);
 
   useEffect(() => {
-    // Listener for manual tour triggering
     const handleStartTour = () => {
       setCurrentStep(0);
       setIsOpen(true);
@@ -129,6 +130,18 @@ export const ProductTour: React.FC = () => {
     window.addEventListener('startVertexTour', handleStartTour);
     return () => window.removeEventListener('startVertexTour', handleStartTour);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      updateTargetPosition();
+      window.addEventListener('resize', updateTargetPosition);
+      window.addEventListener('scroll', updateTargetPosition, true);
+      return () => {
+        window.removeEventListener('resize', updateTargetPosition);
+        window.removeEventListener('scroll', updateTargetPosition, true);
+      };
+    }
+  }, [isOpen, currentStep, updateTargetPosition]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -172,132 +185,210 @@ export const ProductTour: React.FC = () => {
     setIsOpen(false);
   };
 
-  const handleJumpToRoute = (route?: string) => {
-    if (route) {
-      setIsOpen(false);
-      localStorage.setItem('vertexpath_tour_completed', 'true');
-      navigate(route);
-    }
-  };
-
   if (!isOpen) return null;
 
   const current = steps[currentStep];
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#07080C]/85 backdrop-blur-md animate-in fade-in duration-300">
-      <div 
-        className="relative w-full max-w-xl bg-[#0D1016] border border-slate-800/90 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(155,92,255,0.18)] space-y-6 overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Glow ambient accent */}
-        <div className="absolute top-0 right-1/4 w-48 h-48 bg-[#9B5CFF]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[#00E5FF]/5 rounded-full blur-3xl pointer-events-none" />
+  // Calculate popover positioning with boundary clamping
+  const calculatePopoverStyle = () => {
+    if (!targetRect) {
+      return {
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        arrowPosition: 'none'
+      };
+    }
 
-        {/* Top Header Bar */}
-        <div className="flex items-center justify-between relative z-10">
+    const padding = 16;
+    const popoverWidth = Math.min(380, window.innerWidth - 32);
+    const popoverHeight = 260; // Estimated height
+
+    let top = 0;
+    let left = 0;
+    let arrowDir: 'top' | 'bottom' | 'left' | 'right' = 'top';
+
+    const placement = current.preferredPlacement;
+
+    if (placement === 'bottom') {
+      top = targetRect.bottom + padding;
+      left = targetRect.left + targetRect.width / 2 - popoverWidth / 2;
+      arrowDir = 'top'; // Arrow points UP towards the element above
+      if (top + popoverHeight > window.innerHeight) {
+        // Fallback to top
+        top = Math.max(padding, targetRect.top - popoverHeight - padding);
+        arrowDir = 'bottom';
+      }
+    } else if (placement === 'top') {
+      top = targetRect.top - popoverHeight - padding;
+      left = targetRect.left + targetRect.width / 2 - popoverWidth / 2;
+      arrowDir = 'bottom'; // Arrow points DOWN towards the element below
+      if (top < padding) {
+        top = targetRect.bottom + padding;
+        arrowDir = 'top';
+      }
+    } else if (placement === 'right') {
+      left = targetRect.right + padding;
+      top = targetRect.top + targetRect.height / 2 - popoverHeight / 2;
+      arrowDir = 'left'; // Arrow points LEFT towards sidebar element
+      if (left + popoverWidth > window.innerWidth) {
+        left = Math.max(padding, targetRect.left - popoverWidth - padding);
+        arrowDir = 'right';
+      }
+    } else {
+      left = targetRect.left - popoverWidth - padding;
+      top = targetRect.top + targetRect.height / 2 - popoverHeight / 2;
+      arrowDir = 'right';
+    }
+
+    // Clamp horizontal boundary
+    left = Math.max(padding, Math.min(window.innerWidth - popoverWidth - padding, left));
+    top = Math.max(padding, Math.min(window.innerHeight - popoverHeight - padding, top));
+
+    return {
+      top: `${top}px`,
+      left: `${left}px`,
+      width: `${popoverWidth}px`,
+      arrowPosition: arrowDir
+    };
+  };
+
+  const popoverStyle = calculatePopoverStyle();
+
+  return (
+    <div className="fixed inset-0 z-50 pointer-events-none select-none">
+      
+      {/* Dark overlay with translucent backdrop */}
+      <div 
+        className="fixed inset-0 bg-[#07080C]/75 backdrop-blur-[2px] pointer-events-auto transition-opacity duration-300"
+        onClick={handleSkip}
+      />
+
+      {/* Target Element Spotlight Box */}
+      {targetRect && (
+        <div
+          className="fixed pointer-events-none transition-all duration-300 ease-out z-50 rounded-xl"
+          style={{
+            top: `${targetRect.top - 6}px`,
+            left: `${targetRect.left - 6}px`,
+            width: `${targetRect.width + 12}px`,
+            height: `${targetRect.height + 12}px`,
+            boxShadow: '0 0 0 9999px rgba(7, 8, 12, 0.78), 0 0 25px rgba(155, 92, 255, 0.6)',
+            border: '2px solid #9B5CFF'
+          }}
+        >
+          {/* Animated corner accents */}
+          <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#00E5FF] animate-pulse" />
+          <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#00E5FF] animate-pulse" />
+          <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#00E5FF] animate-pulse" />
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#00E5FF] animate-pulse" />
+        </div>
+      )}
+
+      {/* Floating Spotlight Popover with Pointing Arrow */}
+      <div
+        className="fixed pointer-events-auto z-50 bg-[#0D1016] border border-[#9B5CFF]/60 rounded-2xl p-5 shadow-[0_0_40px_rgba(155,92,255,0.25)] space-y-4 animate-in fade-in zoom-in-95 duration-200"
+        style={{
+          top: popoverStyle.top,
+          left: popoverStyle.left,
+          width: popoverStyle.width
+        }}
+      >
+        {/* Pointing Caret Arrow */}
+        {popoverStyle.arrowPosition === 'top' && (
+          <div 
+            className="absolute -top-3 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-b-8 border-b-[#9B5CFF]"
+          />
+        )}
+        {popoverStyle.arrowPosition === 'bottom' && (
+          <div 
+            className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-[#9B5CFF]"
+          />
+        )}
+        {popoverStyle.arrowPosition === 'left' && (
+          <div 
+            className="absolute -left-3 top-8 w-0 h-0 border-y-8 border-y-transparent border-r-8 border-r-[#9B5CFF]"
+          />
+        )}
+        {popoverStyle.arrowPosition === 'right' && (
+          <div 
+            className="absolute -right-3 top-8 w-0 h-0 border-y-8 border-y-transparent border-l-8 border-l-[#9B5CFF]"
+          />
+        )}
+
+        {/* Top Header */}
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-1 bg-[#9B5CFF]/15 border border-[#9B5CFF]/30 text-[#C49AFF] text-[10px] font-mono font-bold uppercase rounded-md tracking-wider">
+            <span className="px-2 py-0.5 bg-[#9B5CFF]/20 border border-[#9B5CFF]/40 text-[#C49AFF] text-[9px] font-mono font-bold uppercase rounded tracking-wider">
               {current.badge}
             </span>
-            <span className="text-[11px] font-mono text-slate-500 font-bold">
-              Step {currentStep + 1} of {steps.length}
+            <span className="text-[10px] font-mono text-slate-500 font-bold">
+              {currentStep + 1} of {steps.length}
             </span>
           </div>
 
           <button
             onClick={handleSkip}
-            className="text-slate-500 hover:text-[#F4F1EA] p-1.5 rounded-lg hover:bg-slate-900 transition-all cursor-pointer"
+            className="text-slate-500 hover:text-[#F4F1EA] p-1 rounded hover:bg-slate-900 transition-colors cursor-pointer"
             title="Skip Tour (Esc)"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Step Content */}
-        <div className="space-y-4 relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="p-3.5 bg-[#11151D] border border-slate-800 rounded-xl flex items-center justify-center shrink-0 shadow-inner">
-              {current.icon}
-            </div>
-            <div>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#F4F1EA] tracking-tight">
-                {current.title}
-              </h3>
-            </div>
-          </div>
-
-          <p className="text-sm text-[#9299A8] leading-relaxed">
+        {/* Content */}
+        <div className="space-y-2">
+          <h4 className="text-base font-extrabold text-[#F4F1EA] flex items-center gap-2 tracking-tight">
+            <span>{current.title}</span>
+          </h4>
+          <p className="text-xs text-[#9299A8] leading-relaxed">
             {current.description}
           </p>
 
-          {/* Pro Tips Box */}
-          <div className="p-4 bg-[#11151D]/80 border border-slate-900 rounded-xl space-y-2">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-[#9B5CFF] font-bold">
-              Key Capabilities
+          <div className="p-2.5 bg-[#11151D] border border-slate-900 rounded-lg flex items-start gap-2">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#55D39A] shrink-0 mt-0.5" />
+            <p className="text-[11px] text-slate-300 leading-snug">
+              {current.tips}
             </p>
-            <div className="space-y-1.5">
-              {current.tips.map((tip, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-slate-300">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#55D39A] shrink-0 mt-0.5" />
-                  <span>{tip}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
-        {/* Step Progress Dots */}
-        <div className="flex items-center justify-center gap-1.5 pt-2">
-          {steps.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentStep(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentStep 
-                  ? 'w-6 bg-[#9B5CFF]' 
-                  : idx < currentStep 
-                  ? 'w-2 bg-[#55D39A]' 
-                  : 'w-2 bg-slate-800 hover:bg-slate-700'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Footer Controls (Skip, Back, Next) */}
-        <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-900 relative z-10">
+        {/* Step dots & Controls */}
+        <div className="flex items-center justify-between pt-2 border-t border-slate-900">
           <button
             onClick={handleSkip}
-            className="text-xs font-bold text-slate-500 hover:text-slate-300 transition-colors cursor-pointer px-2 py-1.5"
+            className="text-[11px] font-bold text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
           >
-            Skip Tour
+            Skip
           </button>
+
+          <div className="flex items-center gap-1.5">
+            {steps.map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-1 rounded-full transition-all ${
+                  idx === currentStep ? 'w-4 bg-[#9B5CFF]' : 'w-1 bg-slate-800'
+                }`}
+              />
+            ))}
+          </div>
 
           <div className="flex items-center gap-2">
             {currentStep > 0 && (
               <button
                 onClick={handlePrev}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 text-[#F4F1EA] text-xs font-bold rounded-lg transition-all cursor-pointer"
+                className="p-1.5 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 text-[#F4F1EA] rounded-md transition-all cursor-pointer"
+                title="Previous step"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Back</span>
-              </button>
-            )}
-
-            {current.highlightRoute && currentStep < steps.length - 1 && (
-              <button
-                onClick={() => handleJumpToRoute(current.highlightRoute)}
-                className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 text-[#9B5CFF] hover:text-[#C49AFF] text-xs font-bold rounded-lg transition-all cursor-pointer"
-              >
-                <span>Try It Now</span>
               </button>
             )}
 
             <button
               onClick={handleNext}
-              className="flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-[#9B5CFF] to-[#8038FF] hover:from-[#A86FFF] hover:to-[#9147FF] text-[#07080C] text-xs font-extrabold rounded-lg transition-all shadow-[0_0_20px_rgba(155,92,255,0.3)] hover:shadow-[0_0_25px_rgba(155,92,255,0.5)] cursor-pointer active:scale-95"
+              className="flex items-center gap-1 px-3.5 py-1.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-md transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(155,92,255,0.4)]"
             >
-              <span>{currentStep === steps.length - 1 ? 'Get Started 🚀' : 'Next'}</span>
+              <span>{currentStep === steps.length - 1 ? 'Got it! 🚀' : 'Next'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
