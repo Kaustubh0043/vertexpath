@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClient;
 import java.net.http.HttpClient;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,15 +74,13 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/health")
-    public org.springframework.http.ResponseEntity<String> health() {
-        return org.springframework.http.ResponseEntity.ok("OK");
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("OK");
     }
 
-    @GetMapping("/test-connection")
-    
     @GetMapping("/test-mail")
-    public ResponseEntity<Map<String, Object>> testMail(@org.springframework.web.bind.annotation.RequestParam(defaultValue = "kaustubhjabhav0043@gmail.com") String to) {
+    public ResponseEntity<Map<String, Object>> testMail(@RequestParam(defaultValue = "kaustubhjabhav0043@gmail.com") String to) {
         Map<String, Object> res = new HashMap<>();
         try {
             res.put("configuredFromEmail", emailService.getFromEmail());
@@ -89,13 +90,14 @@ public class AuthController {
         } catch (Exception e) {
             res.put("status", "FAILED");
             res.put("error", e.getMessage());
-            java.io.StringWriter sw = new java.io.StringWriter();
-            e.printStackTrace(new java.io.PrintWriter(sw));
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
             res.put("stacktrace", sw.toString());
         }
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/test-connection")
     public ResponseEntity<Map<String, Object>> testConnection() {
         Map<String, Object> result = new HashMap<>();
         result.put("configuredAiServiceUrl", aiServiceUrl);
@@ -155,8 +157,8 @@ public class AuthController {
         } catch (Exception e) {
             result.put("compareJdConnection", "failed");
             result.put("compareJdError", e.getMessage());
-            java.io.StringWriter sw = new java.io.StringWriter();
-            java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             result.put("compareJdStacktrace", sw.toString());
         }
