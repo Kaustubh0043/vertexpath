@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, 
   ArrowRight, 
   ArrowLeft, 
   Sparkles, 
-  Compass, 
-  FileText, 
-  Map, 
-  Terminal, 
-  DollarSign, 
-  Command, 
-  CheckCircle2, 
-  HelpCircle,
-  MousePointerClick
+  CheckCircle2 
 } from 'lucide-react';
 
 interface TourStep {
@@ -21,9 +13,8 @@ interface TourStep {
   title: string;
   badge: string;
   description: string;
-  tips: string;
-  preferredPlacement: 'top' | 'bottom' | 'left' | 'right';
-  targetRoute?: string;
+  highlightText: string;
+  preferredPlacement: 'right' | 'bottom' | 'top' | 'left';
 }
 
 export const ProductTour: React.FC = () => {
@@ -31,66 +22,80 @@ export const ProductTour: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   const steps: TourStep[] = [
     {
-      targetSelector: '[data-tour="route-tracker"]',
+      targetSelector: '[data-tour="tour-route-tracker"]',
       title: 'Career Route Tracker',
-      badge: 'LIVE MILESTONES',
-      description: 'This is your real-time career journey. Click on any milestone node to jump directly into Resume, Skills, Roadmaps, Projects, Interviews, Coding, or Outreach.',
-      tips: 'Nodes dynamically check off as you complete real actions in the platform.',
-      preferredPlacement: 'bottom',
-      targetRoute: '/dashboard'
-    },
-    {
-      targetSelector: '[data-tour="daily-drill"]',
-      title: 'Daily Technical Drill',
-      badge: 'STREAK & XP',
-      description: 'Practice high-yield engineering questions every day to boost your streak, earn XP, and test your system architecture readiness.',
-      tips: 'Completing the daily drill awards XP and increments your streak counter.',
-      preferredPlacement: 'top',
-      targetRoute: '/dashboard'
-    },
-    {
-      targetSelector: '[data-tour="quick-actions"]',
-      title: 'Global Command Palette (Ctrl + K)',
-      badge: 'SHORTCUTS',
-      description: 'Access the spotlight search at any time by clicking here or pressing Ctrl + K to instantly switch between modules and trigger actions.',
-      tips: 'Press ⌘K on macOS or Ctrl+K on Windows from anywhere.',
+      badge: 'CAREER TIMELINE',
+      highlightText: 'Your live progress track',
+      description: 'Your career milestones dynamically light up as you complete real actions. Click on any milestone node to instantly jump to that module.',
       preferredPlacement: 'bottom'
     },
     {
-      targetSelector: '[data-tour="sidebar-your-path"]',
-      title: 'Your Path (Resume, Roadmaps, Projects)',
-      badge: 'STAGE 01 & 02',
-      description: 'Audit your resume with Google XYZ formulas, build 4-week syllabus roadmaps, and scaffold full-stack architectures with database schemas.',
-      tips: 'Export roadmaps as PDF or project specs as Markdown.',
+      targetSelector: '[data-tour="tour-resume"]',
+      title: 'Meet Resume & ATS Optimizer',
+      badge: 'STAGE 01 / PROFILE',
+      highlightText: 'Audit & Google XYZ Formulas',
+      description: 'Score your resume against high-bar ATS filters and generate metrics-driven bullet alternatives formatted with Google XYZ formula.',
       preferredPlacement: 'right'
     },
     {
-      targetSelector: '[data-tour="sidebar-practice"]',
-      title: 'Mock Interviews & Live Code IDE',
-      badge: 'STAGE 03 / PREP',
-      description: 'Practice real-time voice interviews with Web Speech synthesis and solve algorithmic problems in our dark-mode IDE with automated Big-O complexity audits.',
-      tips: 'Evaluates Time & Space complexity ($O(N)$ / $O(1)$) with optimal refactor code.',
+      targetSelector: '[data-tour="tour-roadmaps"]',
+      title: 'Learning Paths & Syllabi',
+      badge: 'STAGE 02 / FOUNDATION',
+      highlightText: 'Curriculum & PDF Export',
+      description: 'Generate customized 4-week learning roadmaps tailored to your target engineering domain with 1-click printable PDF exports.',
       preferredPlacement: 'right'
     },
     {
-      targetSelector: '[data-tour="sidebar-tools"]',
-      title: 'Outreach & Salary Negotiation',
-      badge: 'STAGE 04 / CAREER TOOLS',
-      description: 'Generate high-converting recruiter DMs, calculate market percentiles, and craft professional counter-offer email scripts.',
-      tips: 'Includes 3 tailored pitch variations: Recruiter, Engineering Manager, Founder.',
+      targetSelector: '[data-tour="tour-interviews"]',
+      title: 'Mock Voice Interviews',
+      badge: 'STAGE 03 / PREPARATION',
+      highlightText: 'Speech Recognition Simulator',
+      description: 'Practice real-time technical and behavioral interviews with Web Speech audio reading and AI evaluation scores.',
       preferredPlacement: 'right'
     },
     {
-      targetSelector: '[data-tour="career-badge"]',
-      title: 'Verified Career Badge & Public Portfolio',
-      badge: 'CERTIFIED BADGE',
-      description: 'Click here to preview your verified readiness certificate and copy your shareable public developer portfolio link (/p/:username).',
-      tips: 'Embed your live badge markdown directly into your GitHub README or LinkedIn bio.',
-      preferredPlacement: 'bottom',
-      targetRoute: '/dashboard'
+      targetSelector: '[data-tour="tour-coding"]',
+      title: 'Live Code Challenge IDE',
+      badge: 'STAGE 03 / CODING',
+      highlightText: 'Big-O Complexity Analyzer',
+      description: 'Write solutions in our Monaco-style dark IDE and receive automated Time O(N) & Space O(1) complexity audits with optimal refactors.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-outreach"]',
+      title: 'Recruiter Outreach & DM Suite',
+      badge: 'STAGE 04 / CONVERSION',
+      highlightText: '3 High-Converting Pitches',
+      description: 'Craft personalized cold DMs for Recruiters, Engineering Managers, and Founders to maximize interview response rates.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-compensation"]',
+      title: 'Salary & Negotiation Copilot',
+      badge: 'STAGE 04 / NEGOTIATION',
+      highlightText: 'Market Percentiles & Scripts',
+      description: 'Benchmark base, equity, and bonus compensation percentiles and generate tailored counter-offer email scripts.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-quick-actions"]',
+      title: 'Command Palette (Ctrl + K)',
+      badge: 'SHORTCUTS',
+      highlightText: 'Instant Navigation',
+      description: 'Press Ctrl + K from anywhere on VertexPath to search tools, jump between pages, or copy your public portfolio link.',
+      preferredPlacement: 'bottom'
+    },
+    {
+      targetSelector: '[data-tour="tour-portfolio"]',
+      title: 'Public Developer Portfolio',
+      badge: 'PROFILE / SHOWCASE',
+      highlightText: 'Shareable Profile URL',
+      description: 'Share your verified public developer portfolio (/p/:username) directly with recruiters and hiring managers.',
+      preferredPlacement: 'right'
     }
   ];
 
@@ -100,23 +105,17 @@ export const ProductTour: React.FC = () => {
     const el = document.querySelector(current.targetSelector);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-      // Allow slight delay for smooth scroll to finish
-      setTimeout(() => {
-        const rect = el.getBoundingClientRect();
-        setTargetRect(rect);
-      }, 150);
+      const rect = el.getBoundingClientRect();
+      setTargetRect(rect);
     } else {
       setTargetRect(null);
     }
   }, [isOpen, currentStep]);
 
   useEffect(() => {
-    // Check if tour completed before
     const hasCompleted = localStorage.getItem('vertexpath_tour_completed');
     if (!hasCompleted) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1000);
+      const timer = setTimeout(() => setIsOpen(true), 900);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -126,7 +125,6 @@ export const ProductTour: React.FC = () => {
       setCurrentStep(0);
       setIsOpen(true);
     };
-
     window.addEventListener('startVertexTour', handleStartTour);
     return () => window.removeEventListener('startVertexTour', handleStartTour);
   }, []);
@@ -134,19 +132,19 @@ export const ProductTour: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       updateTargetPosition();
+      const interval = setInterval(updateTargetPosition, 300);
       window.addEventListener('resize', updateTargetPosition);
       window.addEventListener('scroll', updateTargetPosition, true);
       return () => {
+        clearInterval(interval);
         window.removeEventListener('resize', updateTargetPosition);
         window.removeEventListener('scroll', updateTargetPosition, true);
       };
     }
   }, [isOpen, currentStep, updateTargetPosition]);
 
-  // Keyboard navigation
   useEffect(() => {
     if (!isOpen) return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleSkip();
@@ -156,7 +154,6 @@ export const ProductTour: React.FC = () => {
         handlePrev();
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, currentStep]);
@@ -189,206 +186,218 @@ export const ProductTour: React.FC = () => {
 
   const current = steps[currentStep];
 
-  // Calculate popover positioning with boundary clamping
-  const calculatePopoverStyle = () => {
-    if (!targetRect) {
-      return {
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        arrowPosition: 'none'
-      };
-    }
+  // Slack-Style Exact Positioning & Pointer Arrow Math
+  const popoverWidth = Math.min(360, window.innerWidth - 32);
+  const popoverHeight = 220;
+  const arrowSize = 12;
 
-    const padding = 16;
-    const popoverWidth = Math.min(380, window.innerWidth - 32);
-    const popoverHeight = 260; // Estimated height
+  let popoverTop = window.innerHeight / 2 - popoverHeight / 2;
+  let popoverLeft = window.innerWidth / 2 - popoverWidth / 2;
+  let arrowSide: 'left' | 'right' | 'top' | 'bottom' = 'left';
+  let arrowOffset = 24; // offset along the side
 
-    let top = 0;
-    let left = 0;
-    let arrowDir: 'top' | 'bottom' | 'left' | 'right' = 'top';
-
+  if (targetRect) {
     const placement = current.preferredPlacement;
 
-    if (placement === 'bottom') {
-      top = targetRect.bottom + padding;
-      left = targetRect.left + targetRect.width / 2 - popoverWidth / 2;
-      arrowDir = 'top'; // Arrow points UP towards the element above
-      if (top + popoverHeight > window.innerHeight) {
-        // Fallback to top
-        top = Math.max(padding, targetRect.top - popoverHeight - padding);
-        arrowDir = 'bottom';
-      }
+    if (placement === 'right') {
+      popoverLeft = targetRect.right + arrowSize + 4;
+      popoverTop = targetRect.top + (targetRect.height / 2) - (popoverHeight / 2);
+      arrowSide = 'left';
+
+      // Clamp vertical bounds
+      const clampedTop = Math.max(16, Math.min(window.innerHeight - popoverHeight - 16, popoverTop));
+      // Calculate where on the left edge the arrow should sit to point at the exact center of target
+      const targetCenterY = targetRect.top + targetRect.height / 2;
+      arrowOffset = Math.max(16, Math.min(popoverHeight - 28, targetCenterY - clampedTop - arrowSize / 2));
+      popoverTop = clampedTop;
+    } else if (placement === 'bottom') {
+      popoverTop = targetRect.bottom + arrowSize + 4;
+      popoverLeft = targetRect.left + (targetRect.width / 2) - (popoverWidth / 2);
+      arrowSide = 'top';
+
+      const clampedLeft = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, popoverLeft));
+      const targetCenterX = targetRect.left + targetRect.width / 2;
+      arrowOffset = Math.max(16, Math.min(popoverWidth - 28, targetCenterX - clampedLeft - arrowSize / 2));
+      popoverLeft = clampedLeft;
     } else if (placement === 'top') {
-      top = targetRect.top - popoverHeight - padding;
-      left = targetRect.left + targetRect.width / 2 - popoverWidth / 2;
-      arrowDir = 'bottom'; // Arrow points DOWN towards the element below
-      if (top < padding) {
-        top = targetRect.bottom + padding;
-        arrowDir = 'top';
-      }
-    } else if (placement === 'right') {
-      left = targetRect.right + padding;
-      top = targetRect.top + targetRect.height / 2 - popoverHeight / 2;
-      arrowDir = 'left'; // Arrow points LEFT towards sidebar element
-      if (left + popoverWidth > window.innerWidth) {
-        left = Math.max(padding, targetRect.left - popoverWidth - padding);
-        arrowDir = 'right';
-      }
-    } else {
-      left = targetRect.left - popoverWidth - padding;
-      top = targetRect.top + targetRect.height / 2 - popoverHeight / 2;
-      arrowDir = 'right';
+      popoverTop = targetRect.top - popoverHeight - arrowSize - 4;
+      popoverLeft = targetRect.left + (targetRect.width / 2) - (popoverWidth / 2);
+      arrowSide = 'bottom';
+
+      const clampedLeft = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, popoverLeft));
+      const targetCenterX = targetRect.left + targetRect.width / 2;
+      arrowOffset = Math.max(16, Math.min(popoverWidth - 28, targetCenterX - clampedLeft - arrowSize / 2));
+      popoverLeft = clampedLeft;
     }
-
-    // Clamp horizontal boundary
-    left = Math.max(padding, Math.min(window.innerWidth - popoverWidth - padding, left));
-    top = Math.max(padding, Math.min(window.innerHeight - popoverHeight - padding, top));
-
-    return {
-      top: `${top}px`,
-      left: `${left}px`,
-      width: `${popoverWidth}px`,
-      arrowPosition: arrowDir
-    };
-  };
-
-  const popoverStyle = calculatePopoverStyle();
+  }
 
   return (
     <div className="fixed inset-0 z-50 pointer-events-none select-none">
       
-      {/* Dark overlay with translucent backdrop */}
+      {/* Dimmed backdrop */}
       <div 
-        className="fixed inset-0 bg-[#07080C]/75 backdrop-blur-[2px] pointer-events-auto transition-opacity duration-300"
+        className="fixed inset-0 bg-[#07080C]/70 backdrop-blur-[1.5px] pointer-events-auto transition-opacity duration-300"
         onClick={handleSkip}
       />
 
-      {/* Target Element Spotlight Box */}
+      {/* Slack-Style Highlight Target Cutout */}
       {targetRect && (
         <div
-          className="fixed pointer-events-none transition-all duration-300 ease-out z-50 rounded-xl"
+          className="fixed pointer-events-none transition-all duration-300 ease-out z-50 rounded-lg"
           style={{
-            top: `${targetRect.top - 6}px`,
-            left: `${targetRect.left - 6}px`,
-            width: `${targetRect.width + 12}px`,
-            height: `${targetRect.height + 12}px`,
-            boxShadow: '0 0 0 9999px rgba(7, 8, 12, 0.78), 0 0 25px rgba(155, 92, 255, 0.6)',
+            top: `${targetRect.top - 4}px`,
+            left: `${targetRect.left - 4}px`,
+            width: `${targetRect.width + 8}px`,
+            height: `${targetRect.height + 8}px`,
+            boxShadow: '0 0 0 9999px rgba(7, 8, 12, 0.72), 0 0 25px rgba(155, 92, 255, 0.75)',
             border: '2px solid #9B5CFF'
           }}
         >
-          {/* Animated corner accents */}
-          <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#00E5FF] animate-pulse" />
-          <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#00E5FF] animate-pulse" />
-          <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#00E5FF] animate-pulse" />
-          <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#00E5FF] animate-pulse" />
+          {/* Subtle pulse aura */}
+          <div className="absolute inset-0 bg-[#9B5CFF]/15 rounded-lg animate-pulse" />
         </div>
       )}
 
-      {/* Floating Spotlight Popover with Pointing Arrow */}
+      {/* Slack/Userpilot Style Popover Card */}
       <div
-        className="fixed pointer-events-auto z-50 bg-[#0D1016] border border-[#9B5CFF]/60 rounded-2xl p-5 shadow-[0_0_40px_rgba(155,92,255,0.25)] space-y-4 animate-in fade-in zoom-in-95 duration-200"
+        ref={popoverRef}
+        className="fixed pointer-events-auto z-50 bg-[#121620] border-2 border-[#9B5CFF] rounded-2xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_30px_rgba(155,92,255,0.3)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
         style={{
-          top: popoverStyle.top,
-          left: popoverStyle.left,
-          width: popoverStyle.width
+          top: `${popoverTop}px`,
+          left: `${popoverLeft}px`,
+          width: `${popoverWidth}px`
         }}
       >
-        {/* Pointing Caret Arrow */}
-        {popoverStyle.arrowPosition === 'top' && (
-          <div 
-            className="absolute -top-3 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-b-8 border-b-[#9B5CFF]"
-          />
-        )}
-        {popoverStyle.arrowPosition === 'bottom' && (
-          <div 
-            className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-[#9B5CFF]"
-          />
-        )}
-        {popoverStyle.arrowPosition === 'left' && (
-          <div 
-            className="absolute -left-3 top-8 w-0 h-0 border-y-8 border-y-transparent border-r-8 border-r-[#9B5CFF]"
-          />
-        )}
-        {popoverStyle.arrowPosition === 'right' && (
-          <div 
-            className="absolute -right-3 top-8 w-0 h-0 border-y-8 border-y-transparent border-l-8 border-l-[#9B5CFF]"
-          />
+        {/* Crisp Triangular Pointer Arrow touching target */}
+        {arrowSide === 'left' && (
+          <div
+            className="absolute w-0 h-0 pointer-events-none"
+            style={{
+              left: `-${arrowSize + 2}px`,
+              top: `${arrowOffset}px`,
+              borderTop: `${arrowSize}px solid transparent`,
+              borderBottom: `${arrowSize}px solid transparent`,
+              borderRight: `${arrowSize + 2}px solid #9B5CFF`,
+            }}
+          >
+            {/* Inner fill arrow */}
+            <div
+              className="absolute w-0 h-0"
+              style={{
+                left: '2px',
+                top: `-${arrowSize}px`,
+                borderTop: `${arrowSize}px solid transparent`,
+                borderBottom: `${arrowSize}px solid transparent`,
+                borderRight: `${arrowSize}px solid #121620`,
+              }}
+            />
+          </div>
         )}
 
-        {/* Top Header */}
+        {arrowSide === 'top' && (
+          <div
+            className="absolute w-0 h-0 pointer-events-none"
+            style={{
+              top: `-${arrowSize + 2}px`,
+              left: `${arrowOffset}px`,
+              borderLeft: `${arrowSize}px solid transparent`,
+              borderRight: `${arrowSize}px solid transparent`,
+              borderBottom: `${arrowSize + 2}px solid #9B5CFF`,
+            }}
+          >
+            <div
+              className="absolute w-0 h-0"
+              style={{
+                top: '2px',
+                left: `-${arrowSize}px`,
+                borderLeft: `${arrowSize}px solid transparent`,
+                borderRight: `${arrowSize}px solid transparent`,
+                borderBottom: `${arrowSize}px solid #121620`,
+              }}
+            />
+          </div>
+        )}
+
+        {arrowSide === 'bottom' && (
+          <div
+            className="absolute w-0 h-0 pointer-events-none"
+            style={{
+              bottom: `-${arrowSize + 2}px`,
+              left: `${arrowOffset}px`,
+              borderLeft: `${arrowSize}px solid transparent`,
+              borderRight: `${arrowSize}px solid transparent`,
+              borderTop: `${arrowSize + 2}px solid #9B5CFF`,
+            }}
+          >
+            <div
+              className="absolute w-0 h-0"
+              style={{
+                bottom: '2px',
+                left: `-${arrowSize}px`,
+                borderLeft: `${arrowSize}px solid transparent`,
+                borderRight: `${arrowSize}px solid transparent`,
+                borderTop: `${arrowSize}px solid #121620`,
+              }}
+            />
+          </div>
+        )}
+
+        {/* Card Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 bg-[#9B5CFF]/20 border border-[#9B5CFF]/40 text-[#C49AFF] text-[9px] font-mono font-bold uppercase rounded tracking-wider">
+            <Sparkles className="w-4 h-4 text-[#9B5CFF] animate-pulse" />
+            <span className="text-[10px] font-mono font-extrabold uppercase text-[#C49AFF] tracking-wider">
               {current.badge}
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 font-bold">
-              {currentStep + 1} of {steps.length}
             </span>
           </div>
 
-          <button
-            onClick={handleSkip}
-            className="text-slate-500 hover:text-[#F4F1EA] p-1 rounded hover:bg-slate-900 transition-colors cursor-pointer"
-            title="Skip Tour (Esc)"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono text-slate-400 font-bold">
+              {currentStep + 1} of {steps.length}
+            </span>
+            <button
+              onClick={handleSkip}
+              className="text-slate-400 hover:text-white p-1 rounded-md hover:bg-slate-800/60 cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="space-y-2">
-          <h4 className="text-base font-extrabold text-[#F4F1EA] flex items-center gap-2 tracking-tight">
-            <span>{current.title}</span>
+        {/* Card Title & Content (Slack-Style) */}
+        <div className="space-y-1.5">
+          <h4 className="text-base font-extrabold text-[#F4F1EA] tracking-tight leading-snug">
+            {current.title}
           </h4>
           <p className="text-xs text-[#9299A8] leading-relaxed">
             {current.description}
           </p>
-
-          <div className="p-2.5 bg-[#11151D] border border-slate-900 rounded-lg flex items-start gap-2">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#55D39A] shrink-0 mt-0.5" />
-            <p className="text-[11px] text-slate-300 leading-snug">
-              {current.tips}
-            </p>
-          </div>
         </div>
 
-        {/* Step dots & Controls */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-900">
+        {/* Step Progress & Slack-style "Next / Let's Go" Buttons */}
+        <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
           <button
             onClick={handleSkip}
-            className="text-[11px] font-bold text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
+            className="text-[11px] font-semibold text-slate-400 hover:text-slate-200 cursor-pointer"
           >
             Skip
           </button>
-
-          <div className="flex items-center gap-1.5">
-            {steps.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-1 rounded-full transition-all ${
-                  idx === currentStep ? 'w-4 bg-[#9B5CFF]' : 'w-1 bg-slate-800'
-                }`}
-              />
-            ))}
-          </div>
 
           <div className="flex items-center gap-2">
             {currentStep > 0 && (
               <button
                 onClick={handlePrev}
-                className="p-1.5 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 text-[#F4F1EA] rounded-md transition-all cursor-pointer"
-                title="Previous step"
+                className="px-2.5 py-1.5 bg-[#1A202C] hover:bg-slate-700 text-[#F4F1EA] text-xs font-bold rounded-lg cursor-pointer"
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
+                Back
               </button>
             )}
 
             <button
               onClick={handleNext}
-              className="flex items-center gap-1 px-3.5 py-1.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-md transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(155,92,255,0.4)]"
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-[#9B5CFF] hover:bg-[#A86FFF] text-[#07080C] text-xs font-extrabold rounded-lg shadow-[0_0_20px_rgba(155,92,255,0.4)] cursor-pointer active:scale-95 transition-all"
             >
-              <span>{currentStep === steps.length - 1 ? 'Got it! 🚀' : 'Next'}</span>
+              <span>{currentStep === steps.length - 1 ? "Let's Go! 🚀" : "Next"}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

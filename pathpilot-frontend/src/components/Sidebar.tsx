@@ -35,40 +35,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     {
       title: 'OVERVIEW',
       items: [
-        { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard }
+        { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, tourId: 'tour-dashboard' }
       ]
     },
     {
       title: 'YOUR PATH',
-      tourId: 'sidebar-your-path',
       items: [
-        { name: 'Resume & ATS', path: '/dashboard/resume', icon: FileText },
-        { name: 'Learning Paths', path: '/dashboard/roadmaps', icon: Map },
-        { name: 'Project Architect', path: '/dashboard/projects', icon: Cpu }
+        { name: 'Resume & ATS', path: '/dashboard/resume', icon: FileText, tourId: 'tour-resume' },
+        { name: 'Learning Paths', path: '/dashboard/roadmaps', icon: Map, tourId: 'tour-roadmaps' },
+        { name: 'Project Architect', path: '/dashboard/projects', icon: Cpu, tourId: 'tour-projects' }
       ]
     },
     {
       title: 'PREPARE & PRACTICE',
-      tourId: 'sidebar-practice',
       items: [
-        { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck },
-        { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal },
-        { name: 'Job Match Audit', path: '/dashboard/jd-match', icon: FileCheck }
+        { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck, tourId: 'tour-interviews' },
+        { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal, tourId: 'tour-coding' },
+        { name: 'Job Match Audit', path: '/dashboard/jd-match', icon: FileCheck, tourId: 'tour-jd-match' }
       ]
     },
     {
       title: 'CAREER TOOLS',
-      tourId: 'sidebar-tools',
       items: [
-        { name: 'Outreach Copilot', path: '/dashboard/outreach', icon: Mail },
-        { name: 'Salary Negotiation', path: '/dashboard/compensation', icon: DollarSign },
-        { name: 'Career Coach', path: '/dashboard/chat', icon: MessageSquare }
+        { name: 'Outreach Copilot', path: '/dashboard/outreach', icon: Mail, tourId: 'tour-outreach' },
+        { name: 'Salary Negotiation', path: '/dashboard/compensation', icon: DollarSign, tourId: 'tour-compensation' },
+        { name: 'Career Coach', path: '/dashboard/chat', icon: MessageSquare, tourId: 'tour-chat' }
       ]
     },
     {
       title: 'PROFILE',
       items: [
-        { name: 'Public Portfolio', path: `/p/${userPortfolioSlug}`, icon: Compass }
+        { name: 'Public Portfolio', path: `/p/${userPortfolioSlug}`, icon: Compass, tourId: 'tour-portfolio' }
       ]
     }
   ];
@@ -128,6 +125,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                   <NavLink
                     key={item.name}
                     to={item.path}
+                    data-tour={item.tourId}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) => `
                       relative flex items-center gap-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 group pl-3
@@ -139,13 +137,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                     {({ isActive }) => (
                       <>
                         {isActive && (
-                          <motion.div
-                            layoutId="active-nav-pill"
-                            className="absolute inset-0 bg-[#11151D] border border-slate-800 rounded-lg -z-10"
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          <motion.div 
+                            layoutId="activeTabBackground"
+                            className="absolute inset-0 bg-[#9B5CFF]/10 rounded-lg -z-10"
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
                           />
                         )}
-                        <item.icon className="w-4 h-4 transition-transform duration-200 group-hover:scale-105" />
+                        <item.icon className={`w-4 h-4 transition-colors ${
+                          isActive ? 'text-[#9B5CFF]' : 'text-[#606979] group-hover:text-[#F4F1EA]'
+                        }`} />
                         <span>{item.name}</span>
                       </>
                     )}
@@ -156,11 +156,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           ))}
         </nav>
 
-        {/* Footer / Logout */}
+        {/* Logout Footer */}
         <div className="p-4 border-t border-slate-900 bg-slate-950/20">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-2.5 rounded text-xs font-semibold text-[#FF6577] hover:bg-[#FF6577]/10 transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-950/20 rounded-lg transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
