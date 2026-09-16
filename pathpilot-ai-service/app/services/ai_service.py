@@ -1,16 +1,12 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+import json
+import logging
+import requests
+from typing import List, Optional
 from pydantic import BaseModel, Field
-from typing import List
 from app.config import settings
-from app.utils.vector_store import vector_store_manager
 
-# Initialize Chat Model
-def get_chat_model():
-    return ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
-        google_api_key=settings.GEMINI_API_KEY,
-        temperature=0.3
-    )
+logger = logging.getLogger(__name__)
 
 # ==========================================
 # PYDANTIC STRUCTURED OUTPUT SCHEMA DEFINITIONS
@@ -66,19 +62,70 @@ class JdComparisonModel(BaseModel):
 
 class AIService:
     def __init__(self):
-        self.llm = get_chat_model()
+        self.model_name = "gemini-1.5-flash"
+
+    def _call_gemini_rest(self, contents: list, json_mode: bool = False, system_instruction: str = None) -> str:
+        """Direct HTTPS REST call to Gemini 1.5 Flash API with reliable timeouts and zero gRPC overhead."""
+        api_key = settings.GEMINI_API_KEY.strip()
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY is not configured in environment variables on Render. Please set GEMINI_API_KEY in Render dashboard.")
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={api_key}"
+        
+        generation_config = {
+            "temperature": 0.3,
+            "maxOutputTokens": 4096
+        }
+        if json_mode:
+            generation_config["responseMimeType"] = "application/json"
+
+        payload = {
+            "contents": contents,
+            "generationConfig": generation_config
+        }
+
+        if system_instruction:
+            payload["systemInstruction"] = {
+                "parts": [{"text": system_instruction}]
+            }
+
+        headers = {"Content-Type": "application/json"}
+        
+        try:
+            resp = requests.post(url, json=payload, headers=headers, timeout=25)
+        except requests.exceptions.Timeout:
+            raise RuntimeError("Gemini API call timed out after 25 seconds.")
+        except Exception as e:
+            raise RuntimeError(f"Network error contacting Gemini API: {str(e)}")
+
+        if resp.status_code != 200:
+            err_body = resp.text
+            try:
+                err_json = resp.json()
+                err_msg = err_json.get("error", {}).get("message", err_body)
+            except Exception:
+                err_msg = err_body
+            raise RuntimeError(f"Gemini API returned status {resp.status_code}: {err_msg}")
+
+        data = resp.json()
+        candidates = data.get("candidates", [])
+        if not candidates:
+            raise RuntimeError("Gemini returned empty candidate response.")
+
+        parts = candidates[0].get("content", {}).get("parts", [])
+        if not parts or "text" not in parts[0]:
+            raise RuntimeError("Gemini response missing text parts.")
+
+        return parts[0]["text"]
 
     def _invoke_json(self, prompt: str) -> dict:
-        """Helper to invoke LLM in native JSON mode and parse the response dict."""
-        json_llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
-            google_api_key=settings.GEMINI_API_KEY,
-            temperature=0.3,
-            model_kwargs={"response_mime_type": "application/json"}
-        )
-        response = json_llm.invoke(prompt)
-        text = response.content.strip()
-        # Strip markdown code fences if present
+        """Helper to invoke Gemini via REST in native JSON mode and parse the response dict."""
+        contents = [
+            {"role": "user", "parts": [{"text": prompt}]}
+        ]
+        text = self._call_gemini_rest(contents, json_mode=True).strip()
+        
+        # Strip markdown fences if Gemini added them despite json_mode
         if text.startswith("```"):
             lines = text.split("\n")
             if lines[0].startswith("```"):
@@ -86,17 +133,17 @@ class AIService:
             if lines[-1].startswith("```"):
                 lines = lines[:-1]
             text = "\n".join(lines).strip()
-        import json
+            
         return json.loads(text)
 
     def chat_session(self, message: str, history: List[dict], profile: dict = None) -> str:
-        """Runs standard conversational dialogue using history and user profile context."""
-        system_prompt = (
-            "You are PathPilot's senior AI career coach. Offer actionable, concrete advice on software development, "
-            "portfolio building, and job searching. Support code snippet formatting using standard markdown backticks."
+        """Runs conversational dialogue using history and user profile context."""
+        system_instruction = (
+            "You are VertexPath's senior AI career coach. Offer actionable, concrete advice on software development, "
+            "portfolio building, technical interviews, and job searching. Support code snippet formatting using standard markdown backticks."
         )
         if profile:
-            system_prompt += (
+            system_instruction += (
                 f"\n\nUser Profile Context for Personalization:\n"
                 f"- Target Career Goal: {profile.get('careerGoal') or 'Software Engineer'}\n"
                 f"- Experience Level: {profile.get('experienceLevel') or 'Not specified'}\n"
@@ -106,21 +153,23 @@ class AIService:
                 f"- Weekly Time Commitment: {profile.get('weeklyCommitment') or 'Not specified'}\n"
                 f"- Preferred Learning Style: {profile.get('optionalLearningStyle') or 'Not specified'}\n"
                 f"- Job Location Preference: {profile.get('optionalJobPreference') or 'Not specified'}\n"
-                f"Use this context to tailor advice directly to this user's situation so they don't have to re-explain."
+                f"Use this context to tailor advice directly to this user's situation."
             )
 
-        messages = [
-            ("system", system_prompt)
-        ]
-        # Append history
+        contents = []
         for item in history:
-            role = "human" if item["role"] == "user" else "ai"
-            messages.append((role, item["content"]))
-        
-        messages.append(("human", message))
-        
-        response = self.llm.invoke(messages)
-        return response.content
+            role = "user" if item.get("role") == "user" else "model"
+            contents.append({
+                "role": role,
+                "parts": [{"text": item.get("content", "")}]
+            })
+
+        contents.append({
+            "role": "user",
+            "parts": [{"text": message}]
+        })
+
+        return self._call_gemini_rest(contents, json_mode=False, system_instruction=system_instruction)
 
     def generate_roadmap(self, topic: str) -> dict:
         """Generates a structured syllabus learning path."""
@@ -130,7 +179,7 @@ class AIService:
             "- Define a highly progressive week-by-week study plan with structured, sequential modules.\n"
             "- Each week must have a professional title and a detailed description explaining what concepts are mastered.\n"
             "- Under each week, provide a list of highly specific, actionable study tasks and hands-on coding exercises. Avoid generic tasks.\n"
-            "- Estimate realistic, practical hours for each task. Ensure hours reflect the actual effort required.\n\n"
+            "- Estimate realistic, practical hours for each task.\n\n"
             "You MUST respond ONLY with a JSON object matching this schema:\n"
             "{\n"
             "  \"title\": \"Overall title of the curriculum\",\n"
@@ -158,7 +207,7 @@ class AIService:
             f"Generate a comprehensive, detailed, production-ready software project blueprint for the tech stack/concept: '{stack}'.\n"
             "Guidelines:\n"
             "- ideas: Suggest a production-grade application idea with detailed descriptions of core features, security protocols, and advanced architecture patterns.\n"
-            "- folder_structure: Provide a complete, highly organized directory tree diagram showcasing all layers of the project (e.g. backend source code controllers, services, database configurations, and frontend client views if a full tech stack is specified) showcasing src files, tests, and configuration assets.\n"
+            "- folder_structure: Provide a complete, highly organized directory tree diagram showcasing all layers of the project (backend source code, controllers, services, database config, and frontend client views) showcasing src files, tests, and configuration assets.\n"
             "- api_suggestions: List specific REST API endpoints, detailing HTTP verbs, exact paths, expected query/path parameters, request payloads, and response status codes.\n"
             "- database_design: Detail a database design schema indicating table fields, data types, relationships (primary/foreign keys), indexing recommendations, and query performance optimizations.\n\n"
             "You MUST respond ONLY with a JSON object matching this schema:\n"
@@ -196,14 +245,14 @@ class AIService:
             "5. Provide constructive feedback detailing what they answered right and what is missing. Provide a clean, perfect, production-grade model answer.\n\n"
             "You MUST respond ONLY with a JSON object matching this schema:\n"
             "{\n"
-            "  \"score\": 0, // Rating score integer from 0 to 100. IMPORTANT: If the answer is short/lazy, this must be between 0 and 10.\n"
+            "  \"score\": 0,\n"
             "  \"feedback\": \"Critique on what was covered and what was missing\",\n"
             "  \"model_answer\": \"Suggested ideal answer to the question\"\n"
             "}"
         )
         result = self._invoke_json(prompt)
         
-        # Proactive python fallback verification check for extremely short/lazy answers
+        # Fallback check for extremely short/lazy answers
         clean_ans = answer.strip().lower().replace(".", "").replace(",", "").replace("!", "")
         word_count = len(clean_ans.split())
         lazy_words = ["easy", "simple", "dont know", "don't know", "skip", "pass", "ok", "fine", "nothing", "no idea", "too easy", "whatever"]
@@ -227,10 +276,10 @@ class AIService:
             f"Analyze the following resume text:\n\n{resume_text}\n\n"
             "You MUST respond ONLY with a JSON object matching this schema:\n"
             "{\n"
-            "  \"ats_score\": 85, // Calculated ATS parser score from 0 to 100\n"
+            "  \"ats_score\": 85,\n"
             "  \"summary\": \"Executive summary of the candidate's profile strengths\",\n"
-            "  \"missing_skills\": [\"list\", \"of\", \"skills\"], // Top skills and keywords missing from the resume\n"
-            "  \"improvement_suggestions\": [\"suggestion1\", \"suggestion2\"], // Specific actionable layout or content enhancements\n"
+            "  \"missing_skills\": [\"skill1\", \"skill2\"],\n"
+            "  \"improvement_suggestions\": [\"suggestion1\", \"suggestion2\"],\n"
             "  \"feedback\": \"General evaluator comments and suggestions\"\n"
             "}"
         )
@@ -243,11 +292,11 @@ class AIService:
             f"Job Description Text:\n{jd_text}\n\n"
             "Compare them. You MUST respond ONLY with a JSON object matching this schema:\n"
             "{\n"
-            "  \"match_percentage\": 70, // Compatibility score integer from 0 to 100\n"
-            "  \"skill_gap_analysis\": [\"gap1\", \"gap2\"], // Concrete details about why the profile doesn't match\n"
-            "  \"missing_technologies\": [\"tech1\", \"tech2\"], // Technologies listed in JD but missing in resume\n"
-            "  \"recommended_learning_path\": [\"step1\", \"step2\"], // Action steps to acquire the missing tech\n"
-            "  \"interview_prep_topics\": [\"topic1\", \"topic2\"] // Suggested topics to review for an interview for this role\n"
+            "  \"match_percentage\": 70,\n"
+            "  \"skill_gap_analysis\": [\"gap1\", \"gap2\"],\n"
+            "  \"missing_technologies\": [\"tech1\", \"tech2\"],\n"
+            "  \"recommended_learning_path\": [\"step1\", \"step2\"],\n"
+            "  \"interview_prep_topics\": [\"topic1\", \"topic2\"]\n"
             "}"
         )
         return self._invoke_json(prompt)
@@ -303,10 +352,14 @@ class AIService:
             "    \"Option C text\",\n"
             "    \"Option D text\"\n"
             "  ],\n"
-            "  \"correct_index\": 1, // Integer 0 to 3 indicating the right answer\n"
+            "  \"correct_index\": 1,\n"
             "  \"explanation\": \"Concise 2-sentence explanation of why the correct answer is right and why other choices fail.\"\n"
             "}"
         )
         return self._invoke_json(prompt)
+
+# Backward compatibility helper
+def get_chat_model():
+    return ai_service
 
 ai_service = AIService()

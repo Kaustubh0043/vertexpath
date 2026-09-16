@@ -55,6 +55,46 @@ def health():
     return {"status": "ok", "service": "VertexPath AI Engine"}
 
 # ==========================================
+
+@app.get("/api/ai/diagnostics")
+def diagnostics():
+    from app.config import settings
+    import time
+    api_key = (settings.GEMINI_API_KEY or "").strip()
+    masked_key = f"{api_key[:6]}...{api_key[-4:]}" if len(api_key) > 10 else ("EMPTY" if not api_key else "INVALID_SHORT")
+    
+    test_result = {}
+    if not api_key:
+        test_result = {
+            "status": "ERROR",
+            "message": "GEMINI_API_KEY environment variable is NOT set in Render service settings!"
+        }
+    else:
+        start_t = time.time()
+        try:
+            from app.services.ai_service import ai_service
+            test_resp = ai_service.chat_session("Reply with only the single word: READY", [])
+            elapsed = round((time.time() - start_t) * 1000, 2)
+            test_result = {
+                "status": "SUCCESS",
+                "latency_ms": elapsed,
+                "gemini_reply": test_resp.strip()
+            }
+        except Exception as e:
+            elapsed = round((time.time() - start_t) * 1000, 2)
+            test_result = {
+                "status": "FAILED",
+                "latency_ms": elapsed,
+                "error": str(e)
+            }
+
+    return {
+        "service": "VertexPath AI Engine",
+        "gemini_api_key_status": masked_key,
+        "key_length": len(api_key),
+        "test_call": test_result
+    }
+
 # REQUEST BODY SCHEMAS
 # ==========================================
 
