@@ -776,7 +776,7 @@ export const Dashboard: React.FC = () => {
                 </button>
 
                 <a
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=https://vertexpath.vercel.app`}
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin || 'https://pathpilot-ai-gilt.vercel.app')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2.5 bg-[#11151D] hover:bg-[#1A202C] text-[#F4F1EA] text-xs font-bold rounded-lg border border-slate-800 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
