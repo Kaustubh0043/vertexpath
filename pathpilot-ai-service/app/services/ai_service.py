@@ -336,3 +336,7 @@ class AIService:
         return self._invoke_json(prompt)
 
 ai_service = AIService()
+
+
+def get_chat_model():
+    return ai_service
