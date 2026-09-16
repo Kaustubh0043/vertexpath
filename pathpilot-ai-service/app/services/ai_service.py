@@ -321,6 +321,157 @@ class AIService:
         )
         return self._invoke_json(prompt)
 
+
+    def generate_outreach_templates(self, company: str, role: str, recipient: str = "", recipient_type: str = "Hiring Manager", tone: str = "Professional & Value-Driven", target_project: str = "") -> dict:
+        """Generates 3 distinct high-converting cold email / LinkedIn outreach templates."""
+        prompt = (
+            f"Generate 3 personalized, high-converting cold outreach templates for a technical candidate.\n"
+            f"Target Company: {company}\n"
+            f"Target Role: {role}\n"
+            f"Recipient Name (if known): {recipient or '[Hiring Manager Name]'}\n"
+            f"Recipient Role/Type: {recipient_type}\n"
+            f"Tone: {tone}\n"
+            f"Candidate Featured Project/Skills: {target_project or 'Modern full-stack systems and clean architecture'}\n\n"
+            "Guidelines:\n"
+            "- Avoid generic fluff. Highlight specific value, proactive problem solving, and relevant engineering craftsmanship.\n"
+            "- Template 1: 'Direct Value Pitch' (focus on technical impact and relevant project showcase).\n"
+            "- Template 2: 'Warm Referral / Engineering Team Lead' (focus on shared stack alignment and team culture).\n"
+            "- Template 3: '140-Character InMail / Quick DM' (concise mobile-first format for recruiters/founders).\n\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            '  "company": "' + company + '",\n'
+            '  "role": "' + role + '",\n'
+            '  "templates": [\n'
+            '    {\n'
+            '      "type": "Direct Value Pitch",\n'
+            '      "channel": "Email / LinkedIn",\n'
+            '      "subject": "Subject line with high open rate",\n'
+            '      "body": "Full body text with clear paragraph spacing and [Placeholders]",\n'
+            '      "hook_strategy": "1-sentence summary of why this template works",\n'
+            '      "best_for": "Engineering Managers & Founders"\n'
+            '    },\n'
+            '    {\n'
+            '      "type": "Warm Referral & Tech Alignment",\n'
+            '      "channel": "LinkedIn / Email",\n'
+            '      "subject": "Subject line",\n'
+            '      "body": "Full body text with [Placeholders]",\n'
+            '      "hook_strategy": "Strategy summary",\n'
+            '      "best_for": "Senior Staff Engineers & Team Leads"\n'
+            '    },\n'
+            '    {\n'
+            '      "type": "Concise 140-Char InMail DM",\n'
+            '      "channel": "LinkedIn InMail / DM",\n'
+            '      "subject": "Quick intro",\n'
+            '      "body": "Concise text under 150 words",\n'
+            '      "hook_strategy": "Strategy summary",\n'
+            '      "best_for": "Technical Recruiters & Sourcers"\n'
+            '    }\n'
+            '  ]\n'
+            "}"
+        )
+        return self._invoke_json(prompt)
+
+    def generate_coding_challenge(self, stack: str = "Full Stack", difficulty: str = "Medium", topic: str = "Algorithms & Data Structures") -> dict:
+        """Generates a practical coding challenge tailored to target tech stack."""
+        prompt = (
+            f"Generate a practical, real-world coding challenge for a software engineer.\n"
+            f"Tech Stack / Focus: {stack}\n"
+            f"Difficulty Level: {difficulty}\n"
+            f"Topic Area: {topic}\n\n"
+            "Guidelines:\n"
+            "- Design a realistic problem commonly asked by top tier tech companies.\n"
+            "- Provide starter code in Python and JavaScript/TypeScript.\n"
+            "- Provide 2 clear test cases with sample input and expected output.\n\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            '  "title": "Title of problem",\n'
+            '  "difficulty": "' + difficulty + '",\n'
+            '  "category": "' + topic + '",\n'
+            '  "description": "Clear problem statement and requirements",\n'
+            '  "starter_code": {\n'
+            '    "python": "def solution(...):\n    pass",\n'
+            '    "javascript": "function solution(...) {\n    // your code\n}"\n'
+            '  },\n'
+            '  "test_cases": [\n'
+            '    {\n'
+            '      "input": "Input representation",\n'
+            '      "expected": "Expected output",\n'
+            '      "explanation": "Brief explanation"\n'
+            '    }\n'
+            '  ],\n'
+            '  "hints": ["Hint 1", "Hint 2"]\n'
+            "}"
+        )
+        return self._invoke_json(prompt)
+
+    def evaluate_code_solution(self, problem_title: str, problem_desc: str, code: str, language: str = "python") -> dict:
+        """Analyzes code implementation for algorithmic correctness, time/space complexity, and clean code."""
+        prompt = (
+            f"Problem: {problem_title}\n"
+            f"Description: {problem_desc}\n"
+            f"Language: {language}\n\n"
+            f"Candidate Code Submission:\n```{language}\n{code}\n```\n\n"
+            "Evaluate this submission thoroughly.\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            '  "status": "PASS", // "PASS", "NEEDS_OPTIMIZATION", or "SYNTAX_ERROR"\n'
+            '  "score": 85, // Integer 0 to 100\n'
+            '  "time_complexity": "O(n)",\n'
+            '  "space_complexity": "O(1)",\n'
+            '  "analysis": "Detailed technical analysis of algorithm logic, edge cases, and efficiency",\n'
+            '  "edge_cases_handled": ["List of edge cases correctly handled"],\n'
+            '  "edge_cases_missed": ["List of potential edge cases missed"],\n'
+            '  "optimized_solution": "Clean, optimized production-grade solution with brief inline comments"\n'
+            "}"
+        )
+        return self._invoke_json(prompt)
+
+    def analyze_compensation(self, role: str, level: str = "Mid-Level", location: str = "Remote / US", base_offer: str = "120000", currency: str = "USD") -> dict:
+        """Calculates market compensation benchmarks and writes strategic counter-offer scripts."""
+        prompt = (
+            f"Analyze compensation benchmarks and formulate negotiation leverage for:\n"
+            f"Role: {role}\n"
+            f"Experience Level: {level}\n"
+            f"Location: {location}\n"
+            f"Current Base Offer / Expectation: {base_offer} {currency}\n\n"
+            "You MUST respond ONLY with a JSON object matching this schema:\n"
+            "{\n"
+            '  "market_benchmarks": {\n'
+            '    "p25": 100000,\n'
+            '    "p50_median": 125000,\n'
+            '    "p75": 150000,\n'
+            '    "p90": 175000,\n'
+            '    "currency": "' + currency + '"\n'
+            '  },\n'
+            '  "offer_analysis": "Executive assessment of where this offer stands against current tech market rates",\n'
+            '  "leverage_points": [\n'
+            '    "Leverage point 1 based on skill scarcity",\n'
+            '    "Leverage point 2 based on scope of responsibilities"\n'
+            '  ],\n'
+            '  "counter_offer_scripts": [\n'
+            '    {\n'
+            '      "style": "Collaborative Value Proposition",\n'
+            '      "subject": "Excited about offer / Exploring compensation alignment",\n'
+            '      "body": "Professional email body with [Hiring Manager], [Salary] placeholders",\n'
+            '      "recommended_when": "Standard polite negotiation focused on market value and enthusiasm"\n'
+            '    },\n'
+            '    {\n'
+            '      "style": "Competing Offer Leverage",\n'
+            '      "subject": "Follow-up regarding offer details and decision timeline",\n'
+            '      "body": "Professional email body leveraging secondary pipeline discussions",\n'
+            '      "recommended_when": "When you have active interview stages or competing timelines"\n'
+            '    },\n'
+            '    {\n'
+            '      "style": "Total Rewards & Equity Buffer",\n'
+            '      "subject": "Exploring overall compensation package structure",\n'
+            '      "body": "Email requesting sign-on bonus, equity grants, or accelerated review if base is capped",\n'
+            '      "recommended_when": "When base salary bands are rigid and non-negotiable"\n'
+            '    }\n'
+            '  ]\n'
+            "}"
+        )
+        return self._invoke_json(prompt)
+
 ai_service = AIService()
 
 

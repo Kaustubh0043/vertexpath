@@ -242,3 +242,87 @@ async def rag_delete(document_id: str):
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+# ==========================================
+# EXPANDED FEATURE REQUEST SCHEMAS
+# ==========================================
+
+class OutreachRequest(BaseModel):
+    company: str
+    role: str
+    recipient: Optional[str] = ""
+    recipientType: Optional[str] = "Hiring Manager"
+    tone: Optional[str] = "Professional & Value-Driven"
+    targetProject: Optional[str] = ""
+
+class CodingChallengeRequest(BaseModel):
+    stack: Optional[str] = "Full Stack"
+    difficulty: Optional[str] = "Medium"
+    topic: Optional[str] = "Algorithms & Data Structures"
+
+class CodeEvaluateRequest(BaseModel):
+    problemTitle: str
+    problemDesc: str
+    code: str
+    language: Optional[str] = "python"
+
+class CompensationRequest(BaseModel):
+    role: str
+    level: Optional[str] = "Mid-Level"
+    location: Optional[str] = "Remote / US"
+    baseOffer: Optional[str] = "120000"
+    currency: Optional[str] = "USD"
+
+# ==========================================
+# EXPANDED FEATURE API ROUTES
+# ==========================================
+
+@app.post("/api/ai/outreach/generate")
+def generate_outreach(request: OutreachRequest):
+    try:
+        return ai_service.generate_outreach_templates(
+            company=request.company,
+            role=request.role,
+            recipient=request.recipient,
+            recipient_type=request.recipientType,
+            tone=request.tone,
+            target_project=request.targetProject
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Outreach generation failed: {str(e)}")
+
+@app.post("/api/ai/coding/challenge")
+def generate_coding_challenge_route(request: CodingChallengeRequest):
+    try:
+        return ai_service.generate_coding_challenge(
+            stack=request.stack,
+            difficulty=request.difficulty,
+            topic=request.topic
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Coding challenge generation failed: {str(e)}")
+
+@app.post("/api/ai/coding/evaluate")
+def evaluate_code_route(request: CodeEvaluateRequest):
+    try:
+        return ai_service.evaluate_code_solution(
+            problem_title=request.problemTitle,
+            problem_desc=request.problemDesc,
+            code=request.code,
+            language=request.language
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Code evaluation failed: {str(e)}")
+
+@app.post("/api/ai/compensation/analyze")
+def analyze_compensation_route(request: CompensationRequest):
+    try:
+        return ai_service.analyze_compensation(
+            role=request.role,
+            level=request.level,
+            location=request.location,
+            base_offer=request.baseOffer,
+            currency=request.currency
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Compensation analysis failed: {str(e)}")

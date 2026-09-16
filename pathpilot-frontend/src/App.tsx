@@ -13,8 +13,12 @@ import { Projects } from './pages/Projects';
 import { Interviews } from './pages/Interviews';
 import { Onboarding } from './pages/Onboarding';
 import { Profile } from './pages/Profile';
+import { Outreach } from './pages/Outreach';
+import { CodingChallenge } from './pages/CodingChallenge';
+import { Compensation } from './pages/Compensation';
+import { PublicPortfolio } from './pages/PublicPortfolio';
 
-// Private Route Guard Component (Redirects to Onboarding if incomplete)
+// Private Route Guard Component
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -37,7 +41,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   return <>{children}</>;
 };
 
-// Onboarding Route Guard Component (Only accessible if onboarding is incomplete)
+// Onboarding Route Guard Component
 const OnboardingRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -71,6 +75,10 @@ function App() {
           {/* Public Auth Routes */}
           <Route path="/auth" element={<Auth />} />
 
+          {/* Public Developer Profile Portfolio */}
+          <Route path="/p/:username" element={<PublicPortfolio />} />
+          <Route path="/portfolio/:username" element={<PublicPortfolio />} />
+
           {/* Onboarding Flow Page */}
           <Route 
             path="/onboarding" 
@@ -95,8 +103,12 @@ function App() {
             <Route path="resume" element={<Resume />} />
             <Route path="jd-match" element={<JdMatch />} />
             <Route path="roadmaps" element={<Roadmaps />} />
+            <Route path="learning" element={<Roadmaps />} />
             <Route path="projects" element={<Projects />} />
             <Route path="interviews" element={<Interviews />} />
+            <Route path="coding" element={<CodingChallenge />} />
+            <Route path="outreach" element={<Outreach />} />
+            <Route path="compensation" element={<Compensation />} />
             <Route path="profile" element={<Profile />} />
           </Route>
 

@@ -8,9 +8,12 @@ import {
   FileText, 
   FileCheck, 
   Map, 
-  Terminal, 
+  Cpu, 
   UserCheck, 
   LogOut,
+  Mail,
+  Terminal,
+  DollarSign,
   Compass
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
@@ -24,7 +27,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
-  // Reorganized navigation groups (Points 27, 35)
+  const userPortfolioSlug = user?.fullName 
+    ? user.fullName.toLowerCase().replace(/\s+/g, '-')
+    : 'developer';
+
   const navSections = [
     {
       title: 'OVERVIEW',
@@ -35,22 +41,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     {
       title: 'YOUR PATH',
       items: [
-        { name: 'Resume', path: '/dashboard/resume', icon: FileText },
-        { name: 'Learning', path: '/dashboard/roadmaps', icon: Map },
-        { name: 'Projects', path: '/dashboard/projects', icon: Terminal }
+        { name: 'Resume & ATS', path: '/dashboard/resume', icon: FileText },
+        { name: 'Learning Paths', path: '/dashboard/roadmaps', icon: Map },
+        { name: 'Project Architect', path: '/dashboard/projects', icon: Cpu }
       ]
     },
     {
-      title: 'PREPARE',
+      title: 'PREPARE & PRACTICE',
       items: [
-        { name: 'Job Match', path: '/dashboard/jd-match', icon: FileCheck },
-        { name: 'Interviews', path: '/dashboard/interviews', icon: UserCheck }
+        { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck },
+        { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal },
+        { name: 'Job Match Audit', path: '/dashboard/jd-match', icon: FileCheck }
       ]
     },
     {
-      title: 'COACH',
+      title: 'CAREER TOOLS',
       items: [
+        { name: 'Outreach Copilot', path: '/dashboard/outreach', icon: Mail },
+        { name: 'Salary Negotiation', path: '/dashboard/compensation', icon: DollarSign },
         { name: 'Career Coach', path: '/dashboard/chat', icon: MessageSquare }
+      ]
+    },
+    {
+      title: 'PROFILE',
+      items: [
+        { name: 'Public Portfolio', path: `/p/${userPortfolioSlug}`, icon: Compass }
       ]
     }
   ];
@@ -62,7 +77,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      {/* Mobile Sidebar Overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
@@ -99,24 +113,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </NavLink>
         </div>
 
-        {/* Reorganized grouped Nav Links (Point 27) */}
-        <nav className="flex-1 px-4 py-6 space-y-6 overflow-y-auto custom-scrollbar">
+        {/* Nav Links */}
+        <nav className="flex-1 px-4 py-4 space-y-5 overflow-y-auto custom-scrollbar">
           {navSections.map((section) => (
-            <div key={section.title} className="space-y-2">
+            <div key={section.title} className="space-y-1.5">
               <h4 className="px-3 text-[10px] font-bold text-[#606979] uppercase tracking-[0.2em]">
                 {section.title}
               </h4>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {section.items.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
                     className={({ isActive }) => `
-                      relative flex items-center gap-3 py-2.5 rounded text-sm font-medium transition-all duration-200 group pl-3
+                      relative flex items-center gap-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 group pl-3
                       ${isActive 
                         ? 'text-[#F4F1EA] border-l-2 border-[#9B5CFF]' 
-                        : 'text-[#9299A8] hover:text-[#F4F1EA] border-l-2 border-transparent hover:bg-[#11151D]/10'}
+                        : 'text-[#9299A8] hover:text-[#F4F1EA] border-l-2 border-transparent hover:bg-[#11151D]/40'}
                     `}
                   >
                     {({ isActive }) => (
@@ -124,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                         {isActive && (
                           <motion.div
                             layoutId="active-nav-pill"
-                            className="absolute inset-0 bg-[#11151D]/60 rounded -z-10"
+                            className="absolute inset-0 bg-[#11151D] border border-slate-800 rounded-lg -z-10"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
                         )}
