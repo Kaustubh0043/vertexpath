@@ -79,25 +79,25 @@ export const Projects: React.FC = () => {
       <div className="space-y-6">
         <div className="space-y-2">
           <p className="eyebrow-text">Build / 06</p>
-          <h3 className="text-2xl font-extrabold text-[#F4F1EA] tracking-tight">What do you want to build?</h3>
-          <p className="text-xs text-[#9299A8] leading-relaxed max-w-xl">
+          <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight">What do you want to build?</h3>
+          <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-xl">
             Provide a stack definition or specific product idea. VertexPath will model the directory layouts, relational SQL database schemas, and REST API controller gateway endpoints.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-2xl bg-[#0D1016] p-2 border border-slate-900 rounded-lg">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-2xl bg-[#15161C] p-2 border border-[#25262D] rounded-lg">
           <input
             type="text"
             required
             placeholder="e.g. ecommerce app with React, Spring Boot, and PostgreSQL"
             value={stackInput}
             onChange={(e) => setStackInput(e.target.value)}
-            className="flex-1 bg-[#07080C] border-none text-xs text-[#F4F1EA] px-3 focus:outline-none placeholder-slate-600 focus:ring-0 focus:border-none"
+            className="flex-1 bg-[#111318] border-none text-xs text-[#F4F4F5] px-3 focus:outline-none placeholder-slate-600 focus:ring-0 focus:border-none"
           />
           <button
             type="submit"
             disabled={generateProjectMutation.isPending || !stackInput.trim()}
-            className="px-5 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded transition-all cursor-pointer flex items-center justify-center gap-2"
+            className="px-5 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             {generateProjectMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -133,10 +133,10 @@ export const Projects: React.FC = () => {
         <div id="project-results" className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start animate-fade-up-header">
           
           {/* Concept Overview Box */}
-          <div className="bg-[#0D1016] border border-slate-900 p-6 rounded-lg md:col-span-2 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/60 pb-3">
-              <h5 className="text-xs font-bold text-[#F4F1EA] flex items-center gap-2">
-                <Cpu className="w-4.5 h-4.5 text-[#9B5CFF]" />
+          <div className="bg-[#15161C] border border-[#25262D] p-6 rounded-lg md:col-span-2 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#25262D]/60 pb-3">
+              <h5 className="text-xs font-bold text-[#F4F4F5] flex items-center gap-2">
+                <Cpu className="w-4.5 h-4.5 text-[#8B5CF6]" />
                 <span>Project Concept & Overview</span>
               </h5>
 
@@ -155,28 +155,28 @@ export const Projects: React.FC = () => {
                   a.click();
                   URL.revokeObjectURL(url);
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#9B5CFF]/15 hover:bg-[#9B5CFF]/25 text-[#9B5CFF] text-xs font-bold rounded-md border border-[#9B5CFF]/30 transition-all cursor-pointer w-fit"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 text-[#8B5CF6] text-xs font-bold rounded-md border border-[#8B5CF6]/30 transition-all cursor-pointer w-fit"
                 title="Download Blueprint Scaffold"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download Spec (.MD)</span>
               </button>
             </div>
-            <p className="text-xs text-[#9299A8] leading-relaxed font-sans select-text">
+            <p className="text-xs text-[#A1A1AA] leading-relaxed font-sans select-text">
               {result.ideas}
             </p>
           </div>
 
           {/* Directory Blueprint */}
-          <div className="bg-[#0D1016] border border-slate-900 flex flex-col h-[380px] rounded-lg">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-900 bg-[#11151D]/40">
-              <h5 className="text-[11px] font-bold text-[#9299A8] flex items-center gap-2 uppercase tracking-wide">
-                <FolderTree className="w-4 h-4 text-[#9B5CFF]" />
+          <div className="bg-[#15161C] border border-[#25262D] flex flex-col h-[380px] rounded-lg">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#25262D] bg-[#11151D]/40">
+              <h5 className="text-[11px] font-bold text-[#A1A1AA] flex items-center gap-2 uppercase tracking-wide">
+                <FolderTree className="w-4 h-4 text-[#8B5CF6]" />
                 <span>Directory Layout</span>
               </h5>
               <button 
                 onClick={() => copyText(result.folder_structure, 'folder')}
-                className="text-[10px] text-slate-500 hover:text-[#F4F1EA] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
+                className="text-[10px] text-slate-500 hover:text-[#F4F4F5] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
               >
                 {copiedSection === 'folder' ? (
                   <span className="text-[#55D39A]">Copied</span>
@@ -185,21 +185,21 @@ export const Projects: React.FC = () => {
                 )}
               </button>
             </div>
-            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#C49AFF] leading-relaxed select-text bg-[#07080C] custom-scrollbar">
+            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#C49AFF] leading-relaxed select-text bg-[#111318] custom-scrollbar">
               <code>{result.folder_structure}</code>
             </pre>
           </div>
 
           {/* API Controller Specs */}
-          <div className="bg-[#0D1016] border border-slate-900 flex flex-col h-[380px] rounded-lg">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-900 bg-[#11151D]/40">
-              <h5 className="text-[11px] font-bold text-[#9299A8] flex items-center gap-2 uppercase tracking-wide">
+          <div className="bg-[#15161C] border border-[#25262D] flex flex-col h-[380px] rounded-lg">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#25262D] bg-[#11151D]/40">
+              <h5 className="text-[11px] font-bold text-[#A1A1AA] flex items-center gap-2 uppercase tracking-wide">
                 <Terminal className="w-4 h-4 text-[#55C8E8]" />
                 <span>REST Controllers Gateway</span>
               </h5>
               <button 
                 onClick={() => copyText(result.api_suggestions, 'api')}
-                className="text-[10px] text-slate-500 hover:text-[#F4F1EA] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
+                className="text-[10px] text-slate-500 hover:text-[#F4F4F5] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
               >
                 {copiedSection === 'api' ? (
                   <span className="text-[#55D39A]">Copied</span>
@@ -208,21 +208,21 @@ export const Projects: React.FC = () => {
                 )}
               </button>
             </div>
-            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#CBD5E1] leading-relaxed select-text bg-[#07080C] custom-scrollbar">
+            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#CBD5E1] leading-relaxed select-text bg-[#111318] custom-scrollbar">
               <code>{result.api_suggestions}</code>
             </pre>
           </div>
 
           {/* Database SQL Design Schema */}
-          <div className="bg-[#0D1016] border border-slate-900 flex flex-col h-[380px] md:col-span-2 rounded-lg">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-900 bg-[#11151D]/40">
-              <h5 className="text-[11px] font-bold text-[#9299A8] flex items-center gap-2 uppercase tracking-wide">
+          <div className="bg-[#15161C] border border-[#25262D] flex flex-col h-[380px] md:col-span-2 rounded-lg">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#25262D] bg-[#11151D]/40">
+              <h5 className="text-[11px] font-bold text-[#A1A1AA] flex items-center gap-2 uppercase tracking-wide">
                 <Database className="w-4 h-4 text-[#E9B84B]" />
                 <span>Relational Schema (SQL / DDL)</span>
               </h5>
               <button 
                 onClick={() => copyText(result.database_design, 'db')}
-                className="text-[10px] text-slate-500 hover:text-[#F4F1EA] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
+                className="text-[10px] text-slate-500 hover:text-[#F4F4F5] flex items-center gap-1 cursor-pointer transition-colors font-semibold"
               >
                 {copiedSection === 'db' ? (
                   <span className="text-[#55D39A]">Copied</span>
@@ -231,7 +231,7 @@ export const Projects: React.FC = () => {
                 )}
               </button>
             </div>
-            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#E9B84B]/90 leading-relaxed select-text bg-[#07080C] custom-scrollbar">
+            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#E9B84B]/90 leading-relaxed select-text bg-[#111318] custom-scrollbar">
               <code>{result.database_design}</code>
             </pre>
           </div>

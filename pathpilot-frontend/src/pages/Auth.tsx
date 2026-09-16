@@ -137,7 +137,7 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen text-[#F4F1EA] flex items-center justify-center p-6 bg-[#07080C]">
+    <div className="relative min-h-screen text-[#F4F4F5] flex items-center justify-center p-6 bg-[#111318]">
       
       <div className="w-full max-w-sm relative z-10 my-8">
         
@@ -145,9 +145,9 @@ export const Auth: React.FC = () => {
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center gap-2.5 mb-2">
             <img src={logoImg} alt="VertexPath Logo" className="w-32 h-32 object-contain" />
-            <h1 className="text-3xl font-extrabold tracking-tight text-[#F4F1EA] font-display m-0">VertexPath</h1>
+            <h1 className="text-3xl font-extrabold tracking-tight text-[#F4F4F5] font-display m-0">VertexPath</h1>
           </div>
-          <p className="text-[#9299A8] text-xs text-center font-medium max-w-xs leading-normal">
+          <p className="text-[#A1A1AA] text-xs text-center font-medium max-w-xs leading-normal">
             The Career Operating System
           </p>
         </div>
@@ -166,12 +166,12 @@ export const Auth: React.FC = () => {
         {/* Auth Panels */}
         {isVerify ? (
           /* Verification Screen */
-          <div className="bg-[#0D1016] border border-slate-900 p-8 rounded-lg space-y-6">
-            <div className="flex items-center gap-3 text-[#9B5CFF]">
-              <div className="p-1.5 rounded bg-[#9B5CFF]/10 border border-[#9B5CFF]/20">
+          <div className="bg-[#15161C] border border-[#25262D] p-8 rounded-lg space-y-6">
+            <div className="flex items-center gap-3 text-[#8B5CF6]">
+              <div className="p-1.5 rounded bg-[#8B5CF6]/10 border border-[#8B5CF6]/20">
                 <KeyRound className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-[#F4F1EA]">Verify Your Account</h2>
+              <h2 className="text-base font-bold text-[#F4F4F5]">Verify Your Account</h2>
             </div>
 
             {error && (
@@ -188,8 +188,8 @@ export const Auth: React.FC = () => {
               </div>
             )}
 
-            <p className="text-[#9299A8] text-xs leading-relaxed">
-              We've sent a 6-digit verification code to <strong className="text-[#F4F1EA]">{email}</strong>. Please enter it below.
+            <p className="text-[#A1A1AA] text-xs leading-relaxed">
+              We've sent a 6-digit verification code to <strong className="text-[#F4F4F5]">{email}</strong>. Please enter it below.
             </p>
 
             <form onSubmit={handleVerify} className="space-y-5">
@@ -202,14 +202,14 @@ export const Auth: React.FC = () => {
                   placeholder="123456"
                   value={code}
                   onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
-                  className="w-full text-center tracking-[0.5em] font-extrabold text-lg py-2.5 bg-[#07080C] border border-slate-900 rounded text-[#F4F1EA]"
+                  className="w-full text-center tracking-[0.5em] font-extrabold text-lg py-2.5 bg-[#111318] border border-[#25262D] rounded text-[#F4F4F5]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading || code.length !== 6}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -218,7 +218,7 @@ export const Auth: React.FC = () => {
                 )}
               </button>
 
-              <div className="flex justify-between items-center text-xs mt-6 pt-3 border-t border-slate-900">
+              <div className="flex justify-between items-center text-xs mt-6 pt-3 border-t border-[#25262D]">
                 <button
                   type="button"
                   onClick={() => { setIsVerify(false); setError(null); setSuccessMsg(null); }}
@@ -230,7 +230,7 @@ export const Auth: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleResendCode}
-                  className="text-[#9B5CFF] hover:text-[#C49AFF] font-bold transition-colors cursor-pointer"
+                  className="text-[#8B5CF6] hover:text-[#C49AFF] font-bold transition-colors cursor-pointer"
                 >
                   Resend Code
                 </button>
@@ -239,12 +239,12 @@ export const Auth: React.FC = () => {
           </div>
         ) : isForgotPassword ? (
           /* Forgot Password Screen */
-          <div className="bg-[#0D1016] border border-slate-900 p-8 rounded-lg space-y-6">
-            <div className="flex items-center gap-3 text-[#9B5CFF]">
-              <div className="p-1.5 rounded bg-[#9B5CFF]/10 border border-[#9B5CFF]/20">
+          <div className="bg-[#15161C] border border-[#25262D] p-8 rounded-lg space-y-6">
+            <div className="flex items-center gap-3 text-[#8B5CF6]">
+              <div className="p-1.5 rounded bg-[#8B5CF6]/10 border border-[#8B5CF6]/20">
                 <Compass className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-[#F4F1EA]">Reset Password</h2>
+              <h2 className="text-base font-bold text-[#F4F4F5]">Reset Password</h2>
             </div>
 
             {error && (
@@ -261,7 +261,7 @@ export const Auth: React.FC = () => {
               </div>
             )}
 
-            <p className="text-[#9299A8] text-xs leading-relaxed">
+            <p className="text-[#A1A1AA] text-xs leading-relaxed">
               Enter your email address below and we'll send you instructions to reset your password.
             </p>
 
@@ -281,7 +281,7 @@ export const Auth: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -290,7 +290,7 @@ export const Auth: React.FC = () => {
                 )}
               </button>
 
-              <div className="flex items-center justify-center text-xs mt-6 pt-3 border-t border-slate-900">
+              <div className="flex items-center justify-center text-xs mt-6 pt-3 border-t border-[#25262D]">
                 <button
                   type="button"
                   onClick={() => { setIsForgotPassword(false); setError(null); setSuccessMsg(null); }}
@@ -304,13 +304,13 @@ export const Auth: React.FC = () => {
           </div>
         ) : (
           /* Login/Signup Screen */
-          <div className="bg-[#0D1016] border border-slate-900 p-8 rounded-lg space-y-6">
+          <div className="bg-[#15161C] border border-[#25262D] p-8 rounded-lg space-y-6">
             {/* Header Tabs */}
-            <div className="flex border-b border-slate-900 mb-6">
+            <div className="flex border-b border-[#25262D] mb-6">
               <button
                 onClick={() => { setIsLogin(true); setError(null); setSuccessMsg(null); }}
                 className={`flex-1 pb-3 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-all ${
-                  isLogin ? 'border-[#9B5CFF] text-[#F4F1EA]' : 'border-transparent text-slate-500 hover:text-slate-200'
+                  isLogin ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-slate-500 hover:text-slate-200'
                 }`}
               >
                 Sign In
@@ -318,7 +318,7 @@ export const Auth: React.FC = () => {
               <button
                 onClick={() => { setIsLogin(false); setError(null); setSuccessMsg(null); }}
                 className={`flex-1 pb-3 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-all ${
-                  !isLogin ? 'border-[#9B5CFF] text-[#F4F1EA]' : 'border-transparent text-slate-500 hover:text-slate-200'
+                  !isLogin ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-slate-500 hover:text-slate-200'
                 }`}
               >
                 Create Account
@@ -377,7 +377,7 @@ export const Auth: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => { setIsForgotPassword(true); setError(null); setSuccessMsg(null); }}
-                      className="text-[11px] text-[#9B5CFF] hover:text-[#C49AFF] font-bold transition-colors cursor-pointer"
+                      className="text-[11px] text-[#8B5CF6] hover:text-[#C49AFF] font-bold transition-colors cursor-pointer"
                     >
                       Forgot?
                     </button>
@@ -422,20 +422,20 @@ export const Auth: React.FC = () => {
                     type="checkbox"
                     checked={agreeTerms}
                     onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-900 bg-[#07080C] text-[#9B5CFF] focus:ring-[#9B5CFF] focus:ring-offset-[#07080C] cursor-pointer mt-0.5"
+                    className="w-4 h-4 rounded border-[#25262D] bg-[#111318] text-[#8B5CF6] focus:ring-[#8B5CF6] focus:ring-offset-[#111318] cursor-pointer mt-0.5"
                   />
-                  <label htmlFor="agreeTerms" className="text-xs text-[#9299A8] leading-normal select-none">
+                  <label htmlFor="agreeTerms" className="text-xs text-[#A1A1AA] leading-normal select-none">
                     I agree to the{' '}
                     <span 
                       onClick={() => openModal('terms')} 
-                      className="text-[#9B5CFF] font-bold hover:text-[#C49AFF] transition-colors cursor-pointer"
+                      className="text-[#8B5CF6] font-bold hover:text-[#C49AFF] transition-colors cursor-pointer"
                     >
                       Terms of Service
                     </span>
                     {' '}and{' '}
                     <span 
                       onClick={() => openModal('privacy')} 
-                      className="text-[#9B5CFF] font-bold hover:text-[#C49AFF] transition-colors cursor-pointer"
+                      className="text-[#8B5CF6] font-bold hover:text-[#C49AFF] transition-colors cursor-pointer"
                     >
                       Privacy Policy
                     </span>.
@@ -447,7 +447,7 @@ export const Auth: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading || (!isLogin && password !== confirmPassword)}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer mt-6"
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer mt-6"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -463,14 +463,14 @@ export const Auth: React.FC = () => {
       {/* Terms & Privacy Modal */}
       {showTermsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#0D1016] border border-slate-900 w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden rounded-lg z-50 shadow-2xl">
+          <div className="bg-[#15161C] border border-[#25262D] w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden rounded-lg z-50 shadow-2xl">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-900 bg-[#11151D]/30">
+            <div className="flex items-center justify-between p-6 border-b border-[#25262D] bg-[#11151D]/30">
               <div className="flex gap-4">
                 <button
                   onClick={() => setActiveModalTab('terms')}
                   className={`text-xs font-bold pb-1 uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                    activeModalTab === 'terms' ? 'border-[#9B5CFF] text-[#F4F1EA]' : 'border-transparent text-slate-550 hover:text-white'
+                    activeModalTab === 'terms' ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-slate-550 hover:text-white'
                   }`}
                 >
                   Terms of Service
@@ -478,7 +478,7 @@ export const Auth: React.FC = () => {
                 <button
                   onClick={() => setActiveModalTab('privacy')}
                   className={`text-xs font-bold pb-1 uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                    activeModalTab === 'privacy' ? 'border-[#9B5CFF] text-[#F4F1EA]' : 'border-transparent text-slate-550 hover:text-white'
+                    activeModalTab === 'privacy' ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-slate-550 hover:text-white'
                   }`}
                 >
                   Privacy Policy
@@ -493,33 +493,33 @@ export const Auth: React.FC = () => {
             </div>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6 text-xs text-[#9299A8] leading-relaxed custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 text-xs text-[#A1A1AA] leading-relaxed custom-scrollbar">
               {activeModalTab === 'terms' ? (
                 <div className="space-y-4">
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">1. Acceptance of Terms</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">1. Acceptance of Terms</h3>
                   <p>
                     Welcome to VertexPath. By accessing or using our platform, you agree to be bound by these Terms of Service. If you do not agree, please do not use the Service.
                   </p>
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">2. Description of Service</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">2. Description of Service</h3>
                   <p>
                     VertexPath is a career development ecosystem designed to assist users with roadmaps, resume score evaluation, mock interviews, and reference context question answering. AI suggestions are generated by LLMs and are intended solely for educational purposes.
                   </p>
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">3. User Obligations & Account</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">3. User Obligations & Account</h3>
                   <p>
                     You agree to provide true, accurate, and complete information during registration. You are responsible for keeping your account password secure.
                   </p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">1. Information We Collect</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">1. Information We Collect</h3>
                   <p>
                     We collect personal information that you provide directly, such as your name, email address, password hash, and files/resumes you upload to the platform.
                   </p>
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">2. How We Use Your Information</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">2. How We Use Your Information</h3>
                   <p>
                     We use information to maintain your career dashboard, generate roadmaps, and review resumes.
                   </p>
-                  <h3 className="text-[#F4F1EA] font-bold text-sm">3. Data Sharing & Third-Party APIs</h3>
+                  <h3 className="text-[#F4F4F5] font-bold text-sm">3. Data Sharing & Third-Party APIs</h3>
                   <p>
                     We use enterprise-grade AI neural models and isolated vector storage to power intelligent career features. Resumes and context files are indexed and processed with end-to-end encryption. We do not sell your personal data.
                   </p>
@@ -528,10 +528,10 @@ export const Auth: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t border-slate-900 flex justify-end bg-[#11151D]/20">
+            <div className="p-6 border-t border-[#25262D] flex justify-end bg-[#11151D]/20">
               <button
                 onClick={() => setShowTermsModal(false)}
-                className="px-4 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded cursor-pointer"
+                className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded cursor-pointer"
               >
                 Close
               </button>

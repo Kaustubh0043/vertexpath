@@ -11,11 +11,12 @@ import {
   DollarSign, 
   LayoutDashboard, 
   MessageSquare,
-  Sparkles,
   ArrowRight,
   X,
   HelpCircle,
-  Share2
+  Share2,
+  FileCheck,
+  User
 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -42,101 +43,110 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   const commands: CommandItem[] = [
     {
       id: 'tour',
-      title: 'Take Interactive Product Tour',
-      description: 'Step-by-step interactive walkthrough of all VertexPath features',
+      title: 'Take Product Tour',
+      description: 'Step-by-step guided walkthrough of all VertexPath features',
       category: 'Help',
       icon: HelpCircle,
       action: () => {
         window.dispatchEvent(new Event('startVertexTour'));
       },
-      shortcut: 'T O U R'
+      shortcut: 'TOUR'
     },
     {
       id: 'dashboard',
-      title: 'Dashboard Overview & Career Route',
-      description: 'View daily streak, technical drill & readiness badge',
+      title: 'Dashboard Overview',
+      description: 'View daily streak, technical drill & milestone readiness',
       category: 'Overview',
       icon: LayoutDashboard,
       path: '/dashboard',
       shortcut: 'G D'
     },
     {
-      id: 'portfolio',
-      title: 'Public Developer Portfolio',
-      description: 'View & share your verified public career portfolio profile',
-      category: 'Overview',
-      icon: Share2,
-      path: '/portfolio/me',
-      shortcut: 'G P'
-    },
-    {
       id: 'resume',
-      title: 'Resume ATS Optimizer & XYZ Rewriter',
-      description: 'Score resume, match JDs & optimize bullet points',
-      category: 'Your Path',
+      title: 'Resume & ATS Optimizer',
+      description: 'Score resume, match JDs & optimize Google XYZ bullet points',
+      category: 'Build',
       icon: FileText,
       path: '/dashboard/resume',
       shortcut: 'G R'
     },
     {
       id: 'learning',
-      title: 'Learning Roadmaps',
-      description: 'Generate 4-week custom curriculum & study plans',
-      category: 'Your Path',
+      title: 'Learning Paths',
+      description: 'Generate 4-week custom curriculum & printable PDF roadmaps',
+      category: 'Build',
       icon: Map,
-      path: '/dashboard/learning',
+      path: '/dashboard/roadmaps',
       shortcut: 'G L'
     },
     {
       id: 'projects',
-      title: 'Project Architecture Generator',
-      description: 'Synthesize folder layouts, schemas & REST routes',
-      category: 'Your Path',
+      title: 'Project Architect',
+      description: 'Synthesize folder layouts, database schemas & REST routes',
+      category: 'Build',
       icon: Cpu,
       path: '/dashboard/projects',
       shortcut: 'G P'
     },
     {
       id: 'interviews',
-      title: 'AI Voice Mock Interviews',
+      title: 'Mock Voice Interviews',
       description: 'Speech recognition interview simulator with audio AI',
-      category: 'Prepare',
+      category: 'Practice',
       icon: Mic,
       path: '/dashboard/interviews',
       shortcut: 'G I'
     },
     {
       id: 'coding',
-      title: 'Live Code Challenge & Complexity Analyzer',
-      description: 'In-browser IDE with O(n) Time/Space complexity audits',
-      category: 'Prepare',
+      title: 'Code Challenge & Complexity',
+      description: 'In-browser IDE with Time/Space O(n) complexity audits',
+      category: 'Practice',
       icon: Terminal,
       path: '/dashboard/coding',
       shortcut: 'G C'
     },
     {
+      id: 'jd-match',
+      title: 'Job Description Match',
+      description: 'Benchmark resume against target job description requirements',
+      category: 'Get Hired',
+      icon: FileCheck,
+      path: '/dashboard/jd-match',
+      shortcut: 'G J'
+    },
+    {
       id: 'outreach',
-      title: 'Recruiter Outreach & Cold DM Generator',
-      description: 'High-converting email and LinkedIn outreach templates',
-      category: 'Tools',
+      title: 'Outreach Copilot',
+      description: 'High-converting recruiter and engineering manager DMs',
+      category: 'Get Hired',
       icon: Mail,
       path: '/dashboard/outreach',
       shortcut: 'G O'
     },
     {
+      id: 'portfolio',
+      title: 'Public Developer Portfolio',
+      description: 'View & share your verified public career portfolio profile',
+      category: 'Get Hired',
+      icon: Share2,
+      path: '/portfolio/me',
+      shortcut: 'G V'
+    },
+    {
       id: 'compensation',
-      title: 'Tech Salary & Negotiation Copilot',
-      description: 'Benchmark market percentiles & counter-offer scripts',
-      category: 'Tools',
+      title: 'Salary & Negotiation Copilot',
+      description: 'Benchmark market percentiles & generate counter-offer scripts',
+      category: 'Career',
       icon: DollarSign,
       path: '/dashboard/compensation',
       shortcut: 'G S'
     },
     {
       id: 'chat',
-      title: 'Senior AI Career Coach Chat',
-      description: 'Interactive dialogue with personalized context',
-      category: 'Coach',
+      title: 'Senior AI Career Coach',
+      description: 'Interactive dialogue with personalized document context',
+      category: 'Career',
       icon: MessageSquare,
       path: '/dashboard/chat',
       shortcut: 'G A'
@@ -186,34 +196,34 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-[#07080C]/80 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-[#09090B]/80 backdrop-blur-sm animate-in fade-in duration-150">
       <div 
-        className="relative w-full max-w-2xl bg-[#0D1016] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
+        className="relative w-full max-w-xl bg-[#111318] border border-[#25262D] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-900 gap-3">
-          <Search className="w-5 h-5 text-[#9B5CFF]" />
+        <div className="flex items-center px-4 py-3 border-b border-[#25262D] gap-3 bg-[#15161C]">
+          <Search className="w-4 h-4 text-[#8B5CF6]" />
           <input
             type="text"
-            placeholder="Type a command or search tools (e.g. 'coding', 'salary', 'tour')..."
+            placeholder="Type a command or search (e.g. 'resume', 'coding', 'tour')..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="flex-1 bg-transparent text-sm text-[#F4F1EA] placeholder:text-slate-500 focus:outline-none"
+            className="flex-1 bg-transparent text-xs text-[#F4F4F5] placeholder:text-[#71717A] focus:outline-none border-none p-0 focus:ring-0"
           />
           <button 
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-300 p-1 rounded-md hover:bg-slate-900 cursor-pointer"
+            className="text-[#71717A] hover:text-[#F4F4F5] p-1 rounded hover:bg-[#111318] cursor-pointer"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-slate-900/50">
+        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-[#1D1E24] custom-scrollbar">
           {filteredCommands.length === 0 ? (
-            <div className="p-8 text-center text-sm text-slate-500">
+            <div className="p-8 text-center text-xs text-[#71717A]">
               No matching commands or tools found.
             </div>
           ) : (
@@ -232,34 +242,34 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
                     onClose();
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${
+                  className={`flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-colors ${
                     isSelected 
-                      ? 'bg-[#151A23] border border-[#9B5CFF]/30 text-white' 
-                      : 'text-slate-300 hover:bg-[#11151D] border border-transparent'
+                      ? 'bg-[#181A21] border border-[#353842] text-white' 
+                      : 'text-[#A1A1AA] hover:bg-[#15161C] border border-transparent'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-[#9B5CFF]/20 text-[#C49AFF]' : 'bg-slate-900 text-slate-400'}`}>
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className={`p-1.5 rounded-md ${isSelected ? 'bg-[#8B5CF6]/20 text-[#A78BFA]' : 'bg-[#15161C] text-[#71717A]'}`}>
                       <Icon className="w-4 h-4" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-[#F4F1EA]">{command.title}</span>
-                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 bg-slate-900 rounded text-slate-500 font-mono">
+                        <span className="text-xs font-semibold text-[#F4F4F5] truncate">{command.title}</span>
+                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.2 bg-[#0D0E12] rounded text-[#71717A] font-mono border border-[#25262D]">
                           {command.category}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-400">{command.description}</p>
+                      <p className="text-[11px] text-[#71717A] truncate">{command.description}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0 ml-2">
                     {command.shortcut && (
-                      <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono bg-slate-900/80 border border-slate-800 rounded text-slate-500">
+                      <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono bg-[#0D0E12] border border-[#25262D] rounded text-[#71717A]">
                         {command.shortcut}
                       </kbd>
                     )}
-                    <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'text-[#9B5CFF] translate-x-0.5' : 'text-slate-700'}`} />
+                    <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-[#8B5CF6]' : 'text-[#25262D]'}`} />
                   </div>
                 </div>
               );
@@ -268,13 +278,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
         </div>
 
         {/* Footer shortcuts */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#090C10] border-t border-slate-900 text-[10px] text-slate-500">
+        <div className="flex items-center justify-between px-3.5 py-2 bg-[#0D0E12] border-t border-[#25262D] text-[10px] text-[#71717A]">
           <div className="flex items-center gap-3">
-            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">↑↓</kbd> Navigate</span>
-            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">↵</kbd> Select</span>
-            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">ESC</kbd> Close</span>
+            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">↑↓</kbd> Navigate</span>
+            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">↵</kbd> Select</span>
+            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">ESC</kbd> Close</span>
           </div>
-          <span className="text-slate-600 font-mono">VertexPath Command v2.4</span>
+          <span className="font-mono text-[#52525B]">VertexPath v2.4</span>
         </div>
       </div>
     </div>

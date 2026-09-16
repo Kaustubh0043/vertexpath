@@ -182,10 +182,10 @@ export const Roadmaps: React.FC = () => {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[500px] items-start">
       
       {/* Sidebar - Roadmaps lists (Clean architectural list, Point 2) */}
-      <div className="bg-[#0D1016] border border-slate-900 p-4 rounded-lg flex flex-col h-full md:col-span-1 space-y-4">
+      <div className="bg-[#15161C] border border-[#25262D] p-4 rounded-lg flex flex-col h-full md:col-span-1 space-y-4">
         <button
           onClick={() => { setIsCreating(true); setActiveRoadmapId(null); }}
-          className="w-full flex items-center justify-center gap-2 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>New Path</span>
@@ -193,7 +193,7 @@ export const Roadmaps: React.FC = () => {
 
         <div className="overflow-y-auto space-y-1 pr-1 custom-scrollbar max-h-[400px]">
           {loadingList ? (
-            <Loader2 className="w-5 h-5 animate-spin text-[#9B5CFF] mx-auto py-4" />
+            <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6] mx-auto py-4" />
           ) : !roadmaps || roadmaps.length === 0 ? (
             <p className="text-[11px] text-slate-500 text-center py-4">No roadmaps generated yet.</p>
           ) : (
@@ -204,12 +204,12 @@ export const Roadmaps: React.FC = () => {
                 className={`
                   flex items-center justify-between px-3 py-2.5 rounded text-xs font-semibold cursor-pointer border transition-all group
                   ${activeRoadmapId === r.id 
-                    ? 'bg-[#11151D] border-slate-800 text-[#F4F1EA]' 
-                    : 'text-[#9299A8] bg-transparent border-transparent hover:text-[#F4F1EA] hover:bg-[#11151D]/40'}
+                    ? 'bg-[#11151D] border-[#25262D] text-[#F4F4F5]' 
+                    : 'text-[#A1A1AA] bg-transparent border-transparent hover:text-[#F4F4F5] hover:bg-[#11151D]/40'}
                 `}
               >
                 <div className="flex items-center gap-2 truncate">
-                  <Map className="w-4 h-4 shrink-0 text-[#9B5CFF]" />
+                  <Map className="w-4 h-4 shrink-0 text-[#8B5CF6]" />
                   <span className="truncate">{r.title}</span>
                 </div>
                 <button
@@ -234,8 +234,8 @@ export const Roadmaps: React.FC = () => {
           <div className="flex-1 flex flex-col justify-center max-w-md w-full py-8 space-y-6">
             <div className="space-y-2">
               <p className="eyebrow-text">Learning / 03</p>
-              <h3 className="text-2xl font-extrabold text-[#F4F1EA] tracking-tight">What do you want to learn?</h3>
-              <p className="text-xs text-[#9299A8] leading-relaxed">
+              <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight">What do you want to learn?</h3>
+              <p className="text-xs text-[#A1A1AA] leading-relaxed">
                 Provide a career domain, technology stack, or target role. VertexPath will generate a week-by-week checksheet roadmap.
               </p>
             </div>
@@ -272,7 +272,7 @@ export const Roadmaps: React.FC = () => {
                 <button
                   type="submit"
                   disabled={generateRoadmapMutation.isPending || !topicInput.trim()}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
                 >
                   <span>Generate roadmap →</span>
                 </button>
@@ -291,18 +291,18 @@ export const Roadmaps: React.FC = () => {
         ) : !activeRoadmapId ? (
           /* Landing Empty View (Point 38) */
           <div className="flex-1 flex flex-col items-center justify-center text-center py-16 space-y-3">
-            <div className="p-3 bg-[#11151D] border border-slate-900 rounded-lg">
-              <Map className="w-8 h-8 text-[#9B5CFF]" />
+            <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-lg">
+              <Map className="w-8 h-8 text-[#8B5CF6]" />
             </div>
-            <h4 className="text-base font-bold text-[#F4F1EA]">Select a Learning Path</h4>
-            <p className="text-xs text-[#9299A8] max-w-xs leading-normal">
+            <h4 className="text-base font-bold text-[#F4F4F5]">Select a Learning Path</h4>
+            <p className="text-xs text-[#A1A1AA] max-w-xs leading-normal">
               Select an existing roadmap from the sidebar or click 'New Path' to generate a curriculum checksheet.
             </p>
           </div>
         ) : loadingDetails ? (
           /* Loading Detail View */
           <div className="flex-1 flex flex-col items-center justify-center py-16 space-y-2">
-            <Loader2 className="w-6 h-6 animate-spin text-[#9B5CFF]" />
+            <Loader2 className="w-6 h-6 animate-spin text-[#8B5CF6]" />
             <span className="text-xs text-slate-400">Loading syllabus data...</span>
           </div>
         ) : !roadmapDetails ? (
@@ -314,7 +314,7 @@ export const Roadmaps: React.FC = () => {
           <div className="space-y-8 animate-fade-in">
             
             {/* Header Title / Description / Progress */}
-            <div className="space-y-4 pb-6 border-b border-slate-900">
+            <div className="space-y-4 pb-6 border-b border-[#25262D]">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <p className="eyebrow-text">Syllabus Path</p>
@@ -337,16 +337,16 @@ export const Roadmaps: React.FC = () => {
                       a.click();
                       URL.revokeObjectURL(url);
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#11151D] hover:bg-[#1A202C] text-slate-300 text-xs font-bold rounded-md border border-slate-800 transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#11151D] hover:bg-[#1A202C] text-slate-300 text-xs font-bold rounded-md border border-[#25262D] transition-all cursor-pointer"
                     title="Export as Markdown"
                   >
-                    <Download className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                    <Download className="w-3.5 h-3.5 text-[#8B5CF6]" />
                     <span>Export MD</span>
                   </button>
 
                   <button
                     onClick={() => window.print()}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#9B5CFF]/15 hover:bg-[#9B5CFF]/25 text-[#9B5CFF] text-xs font-bold rounded-md border border-[#9B5CFF]/30 transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 text-[#8B5CF6] text-xs font-bold rounded-md border border-[#8B5CF6]/30 transition-all cursor-pointer"
                     title="Print or Save as PDF"
                   >
                     <Printer className="w-3.5 h-3.5" />
@@ -355,17 +355,17 @@ export const Roadmaps: React.FC = () => {
                 </div>
               </div>
 
-              <p className="text-xs text-[#9299A8] leading-relaxed max-w-2xl">{roadmapDetails.description}</p>
+              <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-2xl">{roadmapDetails.description}</p>
               
               {/* Progress indicator */}
               <div className="space-y-2 max-w-md pt-2">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-[#9299A8]">Path Progress</span>
-                  <span className="text-[#9B5CFF]">{calculateProgress(roadmapDetails.nodes)}% Completed</span>
+                  <span className="text-[#A1A1AA]">Path Progress</span>
+                  <span className="text-[#8B5CF6]">{calculateProgress(roadmapDetails.nodes)}% Completed</span>
                 </div>
                 <div className="w-full h-1.5 bg-[#11151D] rounded overflow-hidden">
                   <div 
-                    className="h-full bg-[#9B5CFF] transition-all duration-500" 
+                    className="h-full bg-[#8B5CF6] transition-all duration-500" 
                     style={{ width: `${calculateProgress(roadmapDetails.nodes)}%` }}
                   />
                 </div>
@@ -389,18 +389,18 @@ export const Roadmaps: React.FC = () => {
                     onClick={() => setExpandedNodeId(isExpanded ? null : node.id)}
                     className={`p-5 rounded-lg border transition-all space-y-3 cursor-pointer
                       ${isCurrent 
-                        ? 'border-[#9B5CFF]/30 bg-[#0D1016] border-l-2 border-l-[#9B5CFF]' 
-                        : 'border-slate-900 bg-transparent text-slate-500'}`}
+                        ? 'border-[#8B5CF6]/30 bg-[#15161C] border-l-2 border-l-[#8B5CF6]' 
+                        : 'border-[#25262D] bg-transparent text-slate-500'}`}
                   >
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className={`text-xs font-bold ${isCurrent ? 'text-[#F4F1EA]' : 'text-slate-500'}`}>
+                        <span className={`text-xs font-bold ${isCurrent ? 'text-[#F4F4F5]' : 'text-slate-500'}`}>
                           {headingText}
                         </span>
                         <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                           isCompleted 
                             ? 'bg-[#55D39A]/10 text-[#55D39A]' 
-                            : isCurrent ? 'bg-[#9B5CFF]/10 text-[#9B5CFF]' : 'bg-slate-900 text-slate-600'
+                            : isCurrent ? 'bg-[#8B5CF6]/10 text-[#8B5CF6]' : 'bg-slate-900 text-slate-600'
                         }`}>
                           {isCompleted ? '✓ Completed' : isCurrent ? '◉ Current' : '○ Upcoming'}
                         </span>
@@ -412,8 +412,8 @@ export const Roadmaps: React.FC = () => {
                     </div>
 
                     {isExpanded && (
-                      <div className="space-y-3 pt-3 border-t border-slate-900/60" onClick={(e) => e.stopPropagation()}>
-                        <p className="text-xs text-[#9299A8] leading-relaxed max-w-xl">{node.description}</p>
+                      <div className="space-y-3 pt-3 border-t border-[#25262D]/60" onClick={(e) => e.stopPropagation()}>
+                        <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-xl">{node.description}</p>
                         
                         {/* Tasks Checklist Sub-list (Point 29) */}
                         <div className="space-y-2 pt-2">
@@ -423,7 +423,7 @@ export const Roadmaps: React.FC = () => {
                               <div 
                                 key={task.id}
                                 onClick={() => toggleTaskMutation.mutate(task.id)}
-                                className="flex items-start justify-between p-2.5 rounded bg-[#11151D] border border-slate-900 hover:border-slate-800 text-xs cursor-pointer transition-all group"
+                                className="flex items-start justify-between p-2.5 rounded bg-[#11151D] border border-[#25262D] hover:border-[#25262D] text-xs cursor-pointer transition-all group"
                               >
                                 <div className="flex items-start gap-3 min-w-0 pr-4">
                                   {isTaskCompleted ? (

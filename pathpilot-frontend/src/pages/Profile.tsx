@@ -137,7 +137,7 @@ export const Profile: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#9B5CFF]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
       </div>
     );
   }
@@ -178,10 +178,10 @@ export const Profile: React.FC = () => {
     <div className="space-y-8 max-w-4xl">
       
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#25262D]">
         <div className="space-y-1">
           <p className="eyebrow-text">Profile / Career settings</p>
-          <h3 className="text-2xl font-extrabold text-[#F4F1EA] tracking-tight font-display">Manage Career Profile</h3>
+          <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight font-display">Manage Career Profile</h3>
           <p className="text-xs text-slate-500 max-w-lg font-medium">
             Review and adjust your target goals, learning speeds, and engineering stack gaps to tune PathPilot's personalized guides.
           </p>
@@ -190,7 +190,7 @@ export const Profile: React.FC = () => {
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="self-start sm:self-center px-4 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+            className="self-start sm:self-center px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
           >
             Edit Career Profile
           </button>
@@ -204,7 +204,7 @@ export const Profile: React.FC = () => {
       )}
 
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="space-y-8 bg-[#0D1016]/30 border border-slate-900 p-6 rounded-lg">
+        <form onSubmit={handleSubmit} className="space-y-8 bg-[#15161C]/30 border border-[#25262D] p-6 rounded-lg">
           
           {/* STEP 1: CAREER GOAL */}
           <div className="space-y-3">
@@ -217,8 +217,8 @@ export const Profile: React.FC = () => {
                   onClick={() => setCareerGoal(opt)}
                   className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                     careerGoal === opt 
-                      ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                      : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                      ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                      : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                   }`}
                 >
                   {opt}
@@ -242,7 +242,7 @@ export const Profile: React.FC = () => {
           </div>
 
           {/* STEP 2: EXPERIENCE & TECH */}
-          <div className="space-y-4 pt-4 border-t border-slate-900/60">
+          <div className="space-y-4 pt-4 border-t border-[#25262D]/60">
             <div className="space-y-3">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">02 — Experience Level</span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -253,8 +253,8 @@ export const Profile: React.FC = () => {
                     onClick={() => setExperienceLevel(opt)}
                     className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                       experienceLevel === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -265,7 +265,7 @@ export const Profile: React.FC = () => {
 
             <div className="space-y-3 pt-2">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Current Technologies Stack</span>
-              <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-1 border border-slate-900 rounded bg-slate-950/20 custom-scrollbar">
+              <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-1 border border-[#25262D] rounded bg-slate-950/20 custom-scrollbar">
                 {techOptions.map(tech => {
                   const isSelected = selectedTechs.includes(tech);
                   return (
@@ -275,8 +275,8 @@ export const Profile: React.FC = () => {
                       onClick={() => handleTechToggle(tech)}
                       className={`px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
                         isSelected 
-                          ? 'border-[#9B5CFF] bg-[#9B5CFF]/15 text-[#9B5CFF]' 
-                          : 'border-slate-900 bg-transparent text-slate-555 hover:border-slate-800'
+                          ? 'border-[#8B5CF6] bg-[#8B5CF6]/15 text-[#8B5CF6]' 
+                          : 'border-[#25262D] bg-transparent text-slate-555 hover:border-[#25262D]'
                       }`}
                     >
                       {isSelected && <Check className="w-3 h-3" />}
@@ -297,7 +297,7 @@ export const Profile: React.FC = () => {
                 <button 
                   type="button"
                   onClick={handleAddCustomTech}
-                  className="p-2 bg-[#9B5CFF] text-[#07080C] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
+                  className="p-2 bg-[#8B5CF6] text-[#111318] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -306,7 +306,7 @@ export const Profile: React.FC = () => {
           </div>
 
           {/* STEP 3: CAREER OBJECTIVE */}
-          <div className="space-y-3 pt-4 border-t border-slate-900/60">
+          <div className="space-y-3 pt-4 border-t border-[#25262D]/60">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">03 — Career Objective</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {objectiveOptions.map(opt => (
@@ -316,8 +316,8 @@ export const Profile: React.FC = () => {
                   onClick={() => setCareerObjective(opt)}
                   className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                     careerObjective === opt 
-                      ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                      : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                      ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                      : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                   }`}
                 >
                   {opt}
@@ -327,7 +327,7 @@ export const Profile: React.FC = () => {
           </div>
 
           {/* STEP 4: GAPS */}
-          <div className="space-y-3 pt-4 border-t border-slate-900/60">
+          <div className="space-y-3 pt-4 border-t border-[#25262D]/60">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">04 — Gaps / Focus Areas</span>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {gapOptions.map(opt => {
@@ -339,8 +339,8 @@ export const Profile: React.FC = () => {
                     onClick={() => handleGapToggle(opt)}
                     className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                       isSelected 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -351,7 +351,7 @@ export const Profile: React.FC = () => {
           </div>
 
           {/* STEP 5: COMMITMENT */}
-          <div className="space-y-4 pt-4 border-t border-slate-900/60">
+          <div className="space-y-4 pt-4 border-t border-[#25262D]/60">
             <div className="space-y-3">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">05 — Weekly Commitment</span>
               <div className="grid grid-cols-2 gap-2">
@@ -362,8 +362,8 @@ export const Profile: React.FC = () => {
                     onClick={() => setWeeklyCommitment(opt)}
                     className={`p-2.5 text-center border rounded text-xs transition-all cursor-pointer ${
                       weeklyCommitment === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -403,14 +403,14 @@ export const Profile: React.FC = () => {
           </div>
 
           {/* Form Actions */}
-          <div className="flex gap-4 pt-4 border-t border-slate-900">
+          <div className="flex gap-4 pt-4 border-t border-[#25262D]">
             <button
               type="submit"
               disabled={updateProfileMutation.isPending}
-              className="flex items-center gap-1.5 px-6 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded cursor-pointer transition-all"
+              className="flex items-center gap-1.5 px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
             >
               {updateProfileMutation.isPending ? (
-                <RefreshCw className="w-4 h-4 animate-spin text-[#07080C]" />
+                <RefreshCw className="w-4 h-4 animate-spin text-[#111318]" />
               ) : (
                 <>
                   <span>Save Profile</span>
@@ -420,7 +420,7 @@ export const Profile: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="px-6 py-2.5 bg-transparent border border-slate-900 hover:border-slate-800 text-[#F4F1EA] text-xs font-bold rounded transition-all cursor-pointer"
+              className="px-6 py-2.5 bg-transparent border border-[#25262D] hover:border-[#25262D] text-[#F4F4F5] text-xs font-bold rounded transition-all cursor-pointer"
             >
               Cancel
             </button>
@@ -429,42 +429,42 @@ export const Profile: React.FC = () => {
         </form>
       ) : (
         /* READ ONLY PROFILE VIEW */
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 bg-[#0D1016]/20 border border-slate-900 p-6 rounded-lg text-xs leading-relaxed">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 bg-[#15161C]/20 border border-[#25262D] p-6 rounded-lg text-xs leading-relaxed">
           <div className="space-y-5">
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Target Career Goal</span>
-              <p className="font-semibold text-base text-[#F4F1EA]">{profile?.careerGoal || 'Not set'}</p>
+              <p className="font-semibold text-base text-[#F4F4F5]">{profile?.careerGoal || 'Not set'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Experience Level</span>
-              <p className="font-semibold text-sm text-[#F4F1EA]">{profile?.experienceLevel || 'Not set'}</p>
+              <p className="font-semibold text-sm text-[#F4F4F5]">{profile?.experienceLevel || 'Not set'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Primary Objective</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.careerObjective || 'Not set'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.careerObjective || 'Not set'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Weekly Time Commitment</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.weeklyCommitment || 'Not set'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.weeklyCommitment || 'Not set'}</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Skill Gaps / Focus Areas</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.skillGaps || 'None set'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.skillGaps || 'None set'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Currently Working With (Technologies)</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.technologies || 'None'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.technologies || 'None'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Learning Style Preference</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.optionalLearningStyle || 'Mixed'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.optionalLearningStyle || 'Mixed'}</p>
             </div>
             <div className="space-y-0.5">
               <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Job Location Preference</span>
-              <p className="font-semibold text-[#F4F1EA]">{profile?.optionalJobPreference || 'Open'}</p>
+              <p className="font-semibold text-[#F4F4F5]">{profile?.optionalJobPreference || 'Open'}</p>
             </div>
           </div>
         </div>

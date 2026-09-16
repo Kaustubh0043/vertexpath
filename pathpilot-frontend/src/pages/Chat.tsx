@@ -122,7 +122,7 @@ export const Chat: React.FC = () => {
         return (
           <strong 
             key={index} 
-            className="font-extrabold text-[#F4F1EA]"
+            className="font-extrabold text-[#F4F4F5]"
           >
             {part}
           </strong>
@@ -138,26 +138,26 @@ export const Chat: React.FC = () => {
       const trimmed = line.trim();
 
       if (trimmed === '---') {
-        return <hr key={lineIndex} className="border-slate-900 my-4" />;
+        return <hr key={lineIndex} className="border-[#25262D] my-4" />;
       }
 
       if (trimmed.startsWith('#### ')) {
         return (
-          <h6 key={lineIndex} className="text-[10px] font-bold text-[#9299A8] mt-3 mb-1.5 uppercase tracking-widest">
+          <h6 key={lineIndex} className="text-[10px] font-bold text-[#A1A1AA] mt-3 mb-1.5 uppercase tracking-widest">
             {parseInlineFormatting(trimmed.substring(5))}
           </h6>
         );
       }
       if (trimmed.startsWith('### ')) {
         return (
-          <h5 key={lineIndex} className="text-xs font-bold text-[#F4F1EA] mt-4 mb-2">
+          <h5 key={lineIndex} className="text-xs font-bold text-[#F4F4F5] mt-4 mb-2">
             {parseInlineFormatting(trimmed.substring(4))}
           </h5>
         );
       }
       if (trimmed.startsWith('## ')) {
         return (
-          <h4 key={lineIndex} className="text-sm font-extrabold text-[#9B5CFF] mt-5 mb-2.5">
+          <h4 key={lineIndex} className="text-sm font-extrabold text-[#8B5CF6] mt-5 mb-2.5">
             {parseInlineFormatting(trimmed.substring(3))}
           </h4>
         );
@@ -165,7 +165,7 @@ export const Chat: React.FC = () => {
 
       if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
         return (
-          <li key={lineIndex} className="ml-4 my-1 text-[#9299A8] leading-relaxed text-xs list-disc">
+          <li key={lineIndex} className="ml-4 my-1 text-[#A1A1AA] leading-relaxed text-xs list-disc">
             {parseInlineFormatting(trimmed.substring(2))}
           </li>
         );
@@ -176,7 +176,7 @@ export const Chat: React.FC = () => {
       }
 
       return (
-        <p key={lineIndex} className="text-[#9299A8] leading-relaxed text-xs my-1">
+        <p key={lineIndex} className="text-[#A1A1AA] leading-relaxed text-xs my-1">
           {parseInlineFormatting(line)}
         </p>
       );
@@ -225,12 +225,12 @@ export const Chat: React.FC = () => {
         const tableData = parseMarkdownTable(currentTableLines.join('\n'));
         if (tableData) {
           blocks.push(
-            <div key={`table-${blocks.length}`} className="my-4 overflow-x-auto border border-slate-900 bg-[#07080C] rounded-lg">
+            <div key={`table-${blocks.length}`} className="my-4 overflow-x-auto border border-[#25262D] bg-[#111318] rounded-lg">
               <table className="min-w-full divide-y divide-slate-900 text-xs">
                 <thead className="bg-[#11151D]">
                   <tr>
                     {tableData.headers.map((h, i) => (
-                      <th key={i} className="px-4 py-2 text-left font-bold text-[#F4F1EA] uppercase tracking-wider">
+                      <th key={i} className="px-4 py-2 text-left font-bold text-[#F4F4F5] uppercase tracking-wider">
                         {h}
                       </th>
                     ))}
@@ -244,9 +244,9 @@ export const Chat: React.FC = () => {
                         const cleanCell = cell.replace(/\[(.*?)\]/g, '$1');
 
                         return (
-                          <td key={cIdx} className="px-4 py-2.5 text-[#9299A8] whitespace-nowrap">
+                          <td key={cIdx} className="px-4 py-2.5 text-[#A1A1AA] whitespace-nowrap">
                             {isAction ? (
-                              <button className="inline-flex items-center gap-1 text-[11px] font-bold text-[#9B5CFF] hover:text-[#C49AFF] cursor-pointer">
+                              <button className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8B5CF6] hover:text-[#C49AFF] cursor-pointer">
                                 {cleanCell}
                               </button>
                             ) : (
@@ -300,15 +300,15 @@ export const Chat: React.FC = () => {
         const blockId = `${msgId}-code-${index}`;
 
         return (
-          <div key={index} className="my-4 rounded border border-slate-900 bg-[#07080C] font-mono text-[11px]">
-            <div className="flex items-center justify-between px-4 py-1.5 bg-[#11151D] border-b border-slate-900 text-slate-400">
-              <span className="flex items-center gap-1.5 text-[9px] uppercase font-bold text-[#9B5CFF]">
+          <div key={index} className="my-4 rounded border border-[#25262D] bg-[#111318] font-mono text-[11px]">
+            <div className="flex items-center justify-between px-4 py-1.5 bg-[#11151D] border-b border-[#25262D] text-slate-400">
+              <span className="flex items-center gap-1.5 text-[9px] uppercase font-bold text-[#8B5CF6]">
                 <Terminal className="w-3.5 h-3.5" />
                 {codeLang}
               </span>
               <button 
                 onClick={() => copyToClipboard(codeText, blockId)}
-                className="flex items-center gap-1 hover:text-[#F4F1EA] transition-colors cursor-pointer text-[10px]"
+                className="flex items-center gap-1 hover:text-[#F4F4F5] transition-colors cursor-pointer text-[10px]"
               >
                 {copiedId === blockId ? (
                   <span className="text-[#55D39A]">Copied</span>
@@ -334,7 +334,7 @@ export const Chat: React.FC = () => {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 h-[calc(100vh-10rem)] min-h-[500px] items-start">
       
       {/* Sidebar Panel - Conversation List (Hidden on Mobile) */}
-      <div className="hidden md:flex bg-[#0D1016] border border-slate-900 p-4 rounded-lg flex-col h-full md:col-span-1 space-y-4">
+      <div className="hidden md:flex bg-[#15161C] border border-[#25262D] p-4 rounded-lg flex-col h-full md:col-span-1 space-y-4">
         
         {/* Create Chat */}
         <form onSubmit={handleCreateChat} className="flex gap-2">
@@ -344,11 +344,11 @@ export const Chat: React.FC = () => {
             placeholder="New chat title..."
             value={newChatTitle}
             onChange={(e) => setNewChatTitle(e.target.value)}
-            className="flex-1 min-w-0 px-3 py-2 bg-[#07080C] border border-slate-900 rounded text-xs text-[#F4F1EA]"
+            className="flex-1 min-w-0 px-3 py-2 bg-[#111318] border border-[#25262D] rounded text-xs text-[#F4F4F5]"
           />
           <button 
             type="submit" 
-            className="px-3 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded transition-all cursor-pointer flex items-center justify-center shrink-0"
+            className="px-3 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded transition-all cursor-pointer flex items-center justify-center shrink-0"
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -357,7 +357,7 @@ export const Chat: React.FC = () => {
         <div className="flex-1 overflow-y-auto space-y-1 pr-1 custom-scrollbar max-h-[350px]">
           {loadingConvs ? (
             <div className="text-center py-6">
-              <Loader2 className="w-5 h-5 animate-spin text-[#9B5CFF] mx-auto" />
+              <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6] mx-auto" />
             </div>
           ) : !conversations || conversations.length === 0 ? (
             <div className="text-center py-6">
@@ -371,12 +371,12 @@ export const Chat: React.FC = () => {
                 className={`
                   flex items-center justify-between px-3 py-2.5 rounded text-xs font-semibold cursor-pointer border transition-all group
                   ${activeConvId === conv.id 
-                    ? 'bg-[#11151D] border-slate-800 text-[#F4F1EA]' 
-                    : 'text-[#9299A8] bg-transparent border-transparent hover:text-[#F4F1EA] hover:bg-[#11151D]/40'}
+                    ? 'bg-[#11151D] border-[#25262D] text-[#F4F4F5]' 
+                    : 'text-[#A1A1AA] bg-transparent border-transparent hover:text-[#F4F4F5] hover:bg-[#11151D]/40'}
                 `}
               >
                 <div className="flex items-center gap-2 truncate">
-                  <MessageSquare className="w-4 h-4 shrink-0 text-[#9B5CFF]" />
+                  <MessageSquare className="w-4 h-4 shrink-0 text-[#8B5CF6]" />
                   <span className="truncate">{conv.title}</span>
                 </div>
                 <button
@@ -395,13 +395,13 @@ export const Chat: React.FC = () => {
       </div>
 
       {/* Main Chat Terminal */}
-      <div className="bg-[#0D1016] border border-slate-900 flex flex-col h-full md:col-span-3 rounded-lg overflow-hidden">
+      <div className="bg-[#15161C] border border-[#25262D] flex flex-col h-full md:col-span-3 rounded-lg overflow-hidden">
         
         {/* Desktop & Mobile Header Bar */}
-        <div className="p-3 border-b border-slate-900 flex items-center justify-between gap-3 bg-[#07080C]">
+        <div className="p-3 border-b border-[#25262D] flex items-center justify-between gap-3 bg-[#111318]">
           <div className="flex items-center gap-2">
-            <Bot className="w-4 h-4 text-[#9B5CFF]" />
-            <span className="text-xs font-bold text-[#F4F1EA]">
+            <Bot className="w-4 h-4 text-[#8B5CF6]" />
+            <span className="text-xs font-bold text-[#F4F4F5]">
               {conversations?.find((c: any) => c.id === activeConvId)?.title || "Career Coach Assistant"}
             </span>
           </div>
@@ -422,10 +422,10 @@ export const Chat: React.FC = () => {
                   a.click();
                   URL.revokeObjectURL(url);
                 }}
-                className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-slate-400 hover:text-[#F4F1EA] bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 rounded transition-all cursor-pointer"
+                className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-slate-400 hover:text-[#F4F4F5] bg-[#11151D] hover:bg-[#1A202C] border border-[#25262D] rounded transition-all cursor-pointer"
                 title="Export session as Markdown"
               >
-                <Download className="w-3 h-3 text-[#9B5CFF]" />
+                <Download className="w-3 h-3 text-[#8B5CF6]" />
                 <span className="hidden sm:inline">Export MD</span>
               </button>
             )}
@@ -436,26 +436,26 @@ export const Chat: React.FC = () => {
         <div ref={messageContainerRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 custom-scrollbar">
           {!activeConvId ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
-              <div className="p-3 bg-[#11151D] border border-slate-900 rounded-lg">
-                <MessageSquare className="w-8 h-8 text-[#9B5CFF]" />
+              <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-lg">
+                <MessageSquare className="w-8 h-8 text-[#8B5CF6]" />
               </div>
-              <h4 className="text-base font-bold text-[#F4F1EA]">VertexPath Career Coach</h4>
-              <p className="text-xs text-[#9299A8] max-w-xs leading-normal">
+              <h4 className="text-base font-bold text-[#F4F4F5]">VertexPath Career Coach</h4>
+              <p className="text-xs text-[#A1A1AA] max-w-xs leading-normal">
                 Select a conversation history from the sidebar or start a new chat below to begin coaching.
               </p>
             </div>
           ) : loadingMessages ? (
             <div className="flex items-center justify-center h-full py-16">
-              <Loader2 className="w-6 h-6 animate-spin text-[#9B5CFF]" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#8B5CF6]" />
             </div>
           ) : !messages || messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12 space-y-4">
-              <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl w-fit mx-auto shadow-inner">
-                <Sparkles className="w-6 h-6 text-[#9B5CFF]" />
+              <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl w-fit mx-auto shadow-inner">
+                <Sparkles className="w-6 h-6 text-[#8B5CF6]" />
               </div>
               <div className="space-y-1">
-                <h5 className="text-sm font-bold text-[#F4F1EA]">Ask your Career Coach anything</h5>
-                <p className="text-[11px] text-[#9299A8] max-w-sm">Tap any prompt below to jumpstart your career strategy session:</p>
+                <h5 className="text-sm font-bold text-[#F4F4F5]">Ask your Career Coach anything</h5>
+                <p className="text-[11px] text-[#A1A1AA] max-w-sm">Tap any prompt below to jumpstart your career strategy session:</p>
               </div>
 
               {/* Quick Prompt Chips */}
@@ -474,7 +474,7 @@ export const Chat: React.FC = () => {
                         sendMessageMutation.mutate({ convId: activeConvId, content: promptText });
                       }
                     }}
-                    className="p-3 bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 hover:border-[#9B5CFF]/40 text-left text-[11px] text-[#F4F1EA] rounded-lg transition-all cursor-pointer shadow-sm hover:shadow-[#9B5CFF]/10"
+                    className="p-3 bg-[#11151D] hover:bg-[#1A202C] border border-[#25262D] hover:border-[#8B5CF6]/40 text-left text-[11px] text-[#F4F4F5] rounded-lg transition-all cursor-pointer shadow-sm hover:shadow-[#8B5CF6]/10"
                   >
                     {promptText}
                   </button>
@@ -492,8 +492,8 @@ export const Chat: React.FC = () => {
                   <div className={`
                     max-w-[85%] rounded-lg p-3.5 text-xs leading-relaxed border shadow-md
                     ${isAi 
-                      ? 'bg-[#07080C] border-slate-800/80 rounded-tl-none text-[#F4F1EA]' 
-                      : 'bg-[#11151D] border-slate-800 text-[#F4F1EA] rounded-tr-none'}
+                      ? 'bg-[#111318] border-[#25262D]/80 rounded-tl-none text-[#F4F4F5]' 
+                      : 'bg-[#11151D] border-[#25262D] text-[#F4F4F5] rounded-tr-none'}
                   `}>
                     {renderMessageContent(msg.content, msg.id)}
                   </div>
@@ -505,9 +505,9 @@ export const Chat: React.FC = () => {
           {/* Pending response loader */}
           {sendMessageMutation.isPending && (
             <div className="flex gap-3 items-start justify-start">
-              <div className="bg-[#07080C] border border-slate-800 rounded-lg rounded-tl-none p-3.5 flex items-center gap-2 shadow-md">
-                <Loader2 className="w-4 h-4 animate-spin text-[#9B5CFF]" />
-                <span className="text-[11px] text-[#9B5CFF] font-semibold animate-pulse">VertexPath is thinking & formulating response...</span>
+              <div className="bg-[#111318] border border-[#25262D] rounded-lg rounded-tl-none p-3.5 flex items-center gap-2 shadow-md">
+                <Loader2 className="w-4 h-4 animate-spin text-[#8B5CF6]" />
+                <span className="text-[11px] text-[#8B5CF6] font-semibold animate-pulse">VertexPath is thinking & formulating response...</span>
               </div>
             </div>
           )}
@@ -515,7 +515,7 @@ export const Chat: React.FC = () => {
 
         {/* Input Form Bar */}
         {activeConvId && (
-          <div className="p-4 border-t border-slate-900 bg-[#07080C]/50">
+          <div className="p-4 border-t border-[#25262D] bg-[#111318]/50">
             <form onSubmit={handleSendMessage} className="flex gap-2">
               <input
                 type="text"
@@ -524,12 +524,12 @@ export const Chat: React.FC = () => {
                 placeholder="Ask Career Coach coaching tips or architectural tradeoffs..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 min-w-0 px-4 py-3 bg-[#07080C] border border-slate-800 rounded-lg text-xs text-[#F4F1EA] focus:outline-none focus:border-[#9B5CFF] placeholder-slate-600"
+                className="flex-1 min-w-0 px-4 py-3 bg-[#111318] border border-[#25262D] rounded-lg text-xs text-[#F4F4F5] focus:outline-none focus:border-[#8B5CF6] placeholder-slate-600"
               />
               <button 
                 type="submit" 
                 disabled={!inputText.trim() || sendMessageMutation.isPending}
-                className="px-6 py-3 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-lg shadow-[#9B5CFF]/20 shrink-0"
+                className="px-6 py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-lg shadow-[#8B5CF6]/20 shrink-0"
               >
                 <span>Send</span>
               </button>

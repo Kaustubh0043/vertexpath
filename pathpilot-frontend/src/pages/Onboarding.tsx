@@ -257,48 +257,48 @@ export const Onboarding: React.FC = () => {
 
   if (showSummary) {
     return (
-      <div className="min-h-screen text-[#F4F1EA] flex flex-col items-center justify-center p-6 bg-[#07080C] relative selection:bg-[#9B5CFF]/30 selection:text-[#C49AFF]">
+      <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[#8B5CF6]/30 selection:text-[#C49AFF]">
         <div className="aurora-container">
           <div className="cyber-grid-2d" />
         </div>
 
-        <div className="w-full max-w-2xl bg-[#0D1016]/45 border border-slate-900 rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
-          <div className="space-y-2 text-center pb-4 border-b border-slate-900">
-            <span className="text-[10px] font-mono font-bold text-[#9B5CFF] tracking-[0.25em] uppercase">onboarding complete</span>
-            <h2 className="text-3xl font-extrabold text-[#F4F1EA] font-display">YOUR PATH IS READY.</h2>
-            <p className="text-xs text-[#9299A8] max-w-md mx-auto">
+        <div className="w-full max-w-2xl bg-[#15161C]/45 border border-[#25262D] rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
+          <div className="space-y-2 text-center pb-4 border-b border-[#25262D]">
+            <span className="text-[10px] font-mono font-bold text-[#8B5CF6] tracking-[0.25em] uppercase">onboarding complete</span>
+            <h2 className="text-3xl font-extrabold text-[#F4F4F5] font-display">YOUR PATH IS READY.</h2>
+            <p className="text-xs text-[#A1A1AA] max-w-md mx-auto">
               VertexPath has configured a personalized dashboard, checklist blueprint, and interview mock coach to align with your targets.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs border-b border-slate-900 pb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs border-b border-[#25262D] pb-6">
             <div className="space-y-4">
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Target Role</span>
-                <p className="font-semibold text-[#F4F1EA]">{careerGoal === 'Other' ? customCareerGoal : careerGoal}</p>
+                <p className="font-semibold text-[#F4F4F5]">{careerGoal === 'Other' ? customCareerGoal : careerGoal}</p>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Experience Level</span>
-                <p className="font-semibold text-[#F4F1EA]">{experienceLevel}</p>
+                <p className="font-semibold text-[#F4F4F5]">{experienceLevel}</p>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Primary Objective</span>
-                <p className="font-semibold text-[#F4F1EA]">{careerObjective}</p>
+                <p className="font-semibold text-[#F4F4F5]">{careerObjective}</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Focus Areas / Gaps</span>
-                <p className="font-semibold text-[#F4F1EA]">{selectedGaps.slice(0, 3).join(', ')}</p>
+                <p className="font-semibold text-[#F4F4F5]">{selectedGaps.slice(0, 3).join(', ')}</p>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Weekly Time Commitment</span>
-                <p className="font-semibold text-[#F4F1EA]">{weeklyCommitment}</p>
+                <p className="font-semibold text-[#F4F4F5]">{weeklyCommitment}</p>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Draft Technologies</span>
-                <p className="font-semibold text-[#F4F1EA] truncate max-w-[200px]">
+                <p className="font-semibold text-[#F4F4F5] truncate max-w-[200px]">
                   {selectedTechs.length > 0 ? selectedTechs.join(', ') : 'None selected'}
                 </p>
               </div>
@@ -306,33 +306,33 @@ export const Onboarding: React.FC = () => {
           </div>
 
           <div className="space-y-4">
-            <span className="text-[10px] font-mono font-bold text-[#9B5CFF] tracking-wider uppercase">YOUR FIRST PATH</span>
+            <span className="text-[10px] font-mono font-bold text-[#8B5CF6] tracking-wider uppercase">YOUR FIRST PATH</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-3.5 bg-[#07080C] border border-slate-900 rounded flex gap-3 items-start">
-                <span className="text-[#9B5CFF] font-mono text-xs font-bold">01</span>
+              <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
+                <span className="text-[#8B5CF6] font-mono text-xs font-bold">01</span>
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Analyze Baseline Profile</p>
+                  <p className="text-xs font-bold text-[#F4F4F5]">Analyze Baseline Profile</p>
                   <p className="text-[10px] text-slate-500">Scan technical signals on your resume</p>
                 </div>
               </div>
-              <div className="p-3.5 bg-[#07080C] border border-slate-900 rounded flex gap-3 items-start">
-                <span className="text-[#9B5CFF] font-mono text-xs font-bold">02</span>
+              <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
+                <span className="text-[#8B5CF6] font-mono text-xs font-bold">02</span>
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Close Skill Gaps</p>
+                  <p className="text-xs font-bold text-[#F4F4F5]">Close Skill Gaps</p>
                   <p className="text-[10px] text-slate-500">Build structure around {selectedGaps[0] || 'Technical Skills'}</p>
                 </div>
               </div>
-              <div className="p-3.5 bg-[#07080C] border border-slate-900 rounded flex gap-3 items-start">
-                <span className="text-[#9B5CFF] font-mono text-xs font-bold">03</span>
+              <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
+                <span className="text-[#8B5CF6] font-mono text-xs font-bold">03</span>
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Build Blueprint Proof</p>
+                  <p className="text-xs font-bold text-[#F4F4F5]">Build Blueprint Proof</p>
                   <p className="text-[10px] text-slate-500">Generate scaffolding for a target stack</p>
                 </div>
               </div>
-              <div className="p-3.5 bg-[#07080C] border border-slate-900 rounded flex gap-3 items-start">
-                <span className="text-[#9B5CFF] font-mono text-xs font-bold">04</span>
+              <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
+                <span className="text-[#8B5CF6] font-mono text-xs font-bold">04</span>
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Technical Simulations</p>
+                  <p className="text-xs font-bold text-[#F4F4F5]">Technical Simulations</p>
                   <p className="text-[10px] text-slate-500">Practice mock questions with strict grader</p>
                 </div>
               </div>
@@ -343,7 +343,7 @@ export const Onboarding: React.FC = () => {
             <button
               onClick={handleComplete}
               disabled={isSubmitting}
-              className="flex-1 flex items-center justify-center gap-1.5 px-6 py-3.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded cursor-pointer transition-all"
+              className="flex-1 flex items-center justify-center gap-1.5 px-6 py-3.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
             >
               {isSubmitting ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -357,7 +357,7 @@ export const Onboarding: React.FC = () => {
             <button
               onClick={() => setShowSummary(false)}
               disabled={isSubmitting}
-              className="px-6 py-3.5 bg-transparent border border-slate-900 hover:border-slate-800 text-[#F4F1EA] text-xs font-bold rounded transition-all cursor-pointer"
+              className="px-6 py-3.5 bg-transparent border border-[#25262D] hover:border-[#25262D] text-[#F4F4F5] text-xs font-bold rounded transition-all cursor-pointer"
             >
               EDIT MY ANSWERS
             </button>
@@ -368,20 +368,20 @@ export const Onboarding: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen text-[#F4F1EA] flex flex-col items-center justify-center p-6 bg-[#07080C] relative selection:bg-[#9B5CFF]/30 selection:text-[#C49AFF]">
+    <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[#8B5CF6]/30 selection:text-[#C49AFF]">
       
       {/* Background patterns */}
       <div className="aurora-container">
         <div className="cyber-grid-2d" />
       </div>
 
-      <div className="w-full max-w-3xl bg-[#0D1016]/45 border border-slate-900 rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
+      <div className="w-full max-w-3xl bg-[#15161C]/45 border border-[#25262D] rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
         
         {/* Onboarding Header */}
-        <div className="flex justify-between items-center border-b border-slate-900 pb-4">
+        <div className="flex justify-between items-center border-b border-[#25262D] pb-4">
           <div className="flex items-center gap-2">
             <img src={logoImg} alt="VertexPath Logo" className="w-18 h-18 object-contain -mr-4" />
-            <span className="text-xs font-extrabold tracking-tight text-[#F4F1EA] font-display">VertexPath Setup</span>
+            <span className="text-xs font-extrabold tracking-tight text-[#F4F4F5] font-display">VertexPath Setup</span>
           </div>
           <span className="text-[11px] font-mono text-slate-500 font-bold">{progressSteps[currentStep - 1].num} / 05</span>
         </div>
@@ -389,7 +389,7 @@ export const Onboarding: React.FC = () => {
         {/* Minimal Progress Line (Point 3) */}
         <div className="w-full h-[1px] bg-slate-900 relative">
           <div 
-            className="absolute left-0 top-0 h-full bg-[#9B5CFF] transition-all duration-300"
+            className="absolute left-0 top-0 h-full bg-[#8B5CF6] transition-all duration-300"
             style={{ width: `${(currentStep / 5) * 100}%` }}
           />
         </div>
@@ -401,7 +401,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight font-display">WHERE DO YOU WANT YOUR CAREER TO GO?</h3>
+                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHERE DO YOU WANT YOUR CAREER TO GO?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose the direction you're currently aiming for. You can change this later.</p>
               </div>
 
@@ -412,8 +412,8 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setCareerGoal(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       careerGoal === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-400 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -441,7 +441,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight font-display">WHERE ARE YOU RIGHT NOW?</h3>
+                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHERE ARE YOU RIGHT NOW?</h3>
                 <p className="text-xs text-slate-500 font-medium">Select your experience level parameters.</p>
               </div>
 
@@ -452,8 +452,8 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setExperienceLevel(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       experienceLevel === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-400 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -461,13 +461,13 @@ export const Onboarding: React.FC = () => {
                 ))}
               </div>
 
-              <div className="space-y-3 text-left border-t border-slate-900 pt-6">
+              <div className="space-y-3 text-left border-t border-[#25262D] pt-6">
                 <div>
-                  <h4 className="text-xs font-bold text-[#F4F1EA]">WHAT ARE YOU CURRENTLY WORKING WITH?</h4>
+                  <h4 className="text-xs font-bold text-[#F4F4F5]">WHAT ARE YOU CURRENTLY WORKING WITH?</h4>
                   <p className="text-[10px] text-slate-500 font-medium">Select languages or frameworks you know. (Optional)</p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-1 border border-slate-900 rounded bg-slate-950/20 custom-scrollbar">
+                <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-1 border border-[#25262D] rounded bg-slate-950/20 custom-scrollbar">
                   {techOptions.map(tech => {
                     const isSelected = selectedTechs.includes(tech);
                     return (
@@ -476,8 +476,8 @@ export const Onboarding: React.FC = () => {
                         onClick={() => handleTechToggle(tech)}
                         className={`px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
                           isSelected 
-                            ? 'border-[#9B5CFF] bg-[#9B5CFF]/15 text-[#9B5CFF]' 
-                            : 'border-slate-900 bg-transparent text-slate-500 hover:border-slate-800'
+                            ? 'border-[#8B5CF6] bg-[#8B5CF6]/15 text-[#8B5CF6]' 
+                            : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                         }`}
                       >
                         {isSelected && <Check className="w-3 h-3" />}
@@ -497,7 +497,7 @@ export const Onboarding: React.FC = () => {
                   />
                   <button 
                     type="submit"
-                    className="p-2 bg-[#9B5CFF] text-[#07080C] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
+                    className="p-2 bg-[#8B5CF6] text-[#111318] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </button>
@@ -510,7 +510,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight font-display">WHAT ARE YOU TRYING TO ACHIEVE NEXT?</h3>
+                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHAT ARE YOU TRYING TO ACHIEVE NEXT?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose your primary next destination goal.</p>
               </div>
 
@@ -521,8 +521,8 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setCareerObjective(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       careerObjective === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-400 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -536,7 +536,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight font-display">WHAT'S HOLDING YOU BACK?</h3>
+                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHAT'S HOLDING YOU BACK?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose the areas where you want VertexPath to help most.</p>
               </div>
 
@@ -549,8 +549,8 @@ export const Onboarding: React.FC = () => {
                       onClick={() => handleGapToggle(opt)}
                       className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                         isSelected 
-                          ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                          : 'border-slate-900 bg-transparent text-slate-400 hover:border-slate-800'
+                          ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                          : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                       }`}
                     >
                       {opt}
@@ -565,7 +565,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F1EA] tracking-tight font-display">HOW MUCH TIME CAN YOU REALISTICALLY COMMIT?</h3>
+                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">HOW MUCH TIME CAN YOU REALISTICALLY COMMIT?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose what you can consistently maintain, not your ideal schedule.</p>
               </div>
 
@@ -576,8 +576,8 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setWeeklyCommitment(opt)}
                     className={`p-3 text-center border rounded text-xs transition-all cursor-pointer ${
                       weeklyCommitment === opt 
-                        ? 'border-[#9B5CFF] bg-[#9B5CFF]/5 text-[#F4F1EA]' 
-                        : 'border-slate-900 bg-transparent text-slate-400 hover:border-slate-800'
+                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
                     {opt}
@@ -585,7 +585,7 @@ export const Onboarding: React.FC = () => {
                 ))}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-900 pt-6 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#25262D] pt-6 text-left">
                 <div className="space-y-1">
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Preferred Learning Style (Optional)</span>
                   <select
@@ -619,7 +619,7 @@ export const Onboarding: React.FC = () => {
         </div>
 
         {/* Wizard Controls */}
-        <div className="flex justify-between items-center border-t border-slate-900 pt-4">
+        <div className="flex justify-between items-center border-t border-[#25262D] pt-4">
           <button
             onClick={handleBack}
             disabled={currentStep === 1}
@@ -632,7 +632,7 @@ export const Onboarding: React.FC = () => {
           <button
             onClick={handleNext}
             disabled={!isStepValid()}
-            className="flex items-center gap-1 px-4 py-2 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all"
+            className="flex items-center gap-1 px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all"
           >
             <span>{currentStep === 5 ? 'SUMMARY' : 'NEXT'}</span>
             <ArrowRight className="w-3.5 h-3.5" />

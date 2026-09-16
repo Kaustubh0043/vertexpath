@@ -125,8 +125,8 @@ Best,
       {/* Title */}
       <div className="space-y-2">
         <p className="eyebrow-text">Negotiation / 09</p>
-        <h3 className="text-2xl font-extrabold text-[#F4F1EA] tracking-tight">Tech Salary & Negotiation Copilot</h3>
-        <p className="text-xs text-[#9299A8] leading-relaxed max-w-2xl">
+        <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight">Tech Salary & Negotiation Copilot</h3>
+        <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-2xl">
           Benchmark tech industry compensation percentiles across locations and generate battle-tested counter-offer email scripts to maximize your total rewards.
         </p>
       </div>
@@ -134,16 +134,16 @@ Best,
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Input Form */}
-        <div className="lg:col-span-5 bg-[#0D1016] border border-slate-800/80 p-6 rounded-2xl space-y-6 shadow-xl">
-          <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
-            <DollarSign className="w-4 h-4 text-[#9B5CFF]" />
-            <span className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider">Offer & Benchmark Parameters</span>
+        <div className="lg:col-span-5 bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-6 shadow-xl">
+          <div className="flex items-center gap-2 border-b border-[#25262D] pb-3">
+            <DollarSign className="w-4 h-4 text-[#8B5CF6]" />
+            <span className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Offer & Benchmark Parameters</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                <Briefcase className="w-3.5 h-3.5 text-[#8B5CF6]" />
                 Target Job Title *
               </label>
               <input
@@ -162,7 +162,7 @@ Best,
                 <select
                   value={level}
                   onChange={(e) => setLevel(e.target.value)}
-                  className="w-full text-xs bg-[#07080C] border border-slate-800 text-[#F4F1EA] rounded-lg p-2.5 focus:border-[#9B5CFF]"
+                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
                 >
                   <option value="Entry-Level (0-2 YOE)">Entry-Level (0-2 YOE)</option>
                   <option value="Mid-Level (2-5 YOE)">Mid-Level (2-5 YOE)</option>
@@ -173,7 +173,7 @@ Best,
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#8B5CF6]" />
                   Location
                 </label>
                 <input
@@ -203,7 +203,7 @@ Best,
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
-                  className="w-full text-xs bg-[#07080C] border border-slate-800 text-[#F4F1EA] rounded-lg p-2.5 focus:border-[#9B5CFF]"
+                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
                 >
                   <option value="USD">USD ($)</option>
                   <option value="INR">INR (₹)</option>
@@ -216,7 +216,7 @@ Best,
             <button
               type="submit"
               disabled={compMutation.isPending || !role.trim()}
-              className="w-full py-3 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#9B5CFF]/20"
+              className="w-full py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
             >
               <TrendingUp className="w-4 h-4" />
               <span>Benchmark & Generate Negotiation Scripts →</span>
@@ -224,12 +224,12 @@ Best,
           </form>
 
           {/* Leverage Tip */}
-          <div className="bg-[#11151D] p-4 rounded-xl border border-slate-800 space-y-1.5 text-xs text-slate-400">
+          <div className="bg-[#11151D] p-4 rounded-xl border border-[#25262D] space-y-1.5 text-xs text-slate-400">
             <span className="text-[10px] font-bold text-[#55D39A] uppercase tracking-wider flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" />
               Negotiation Golden Rule
             </span>
-            <p className="text-[11px] text-[#9299A8] leading-relaxed">
+            <p className="text-[11px] text-[#A1A1AA] leading-relaxed">
               Negotiating an offer professionally never causes an offer retraction. Companies budget a 10-15% buffer specifically for candidates who ask articulately.
             </p>
           </div>
@@ -252,12 +252,12 @@ Best,
           )}
 
           {!compMutation.isPending && !data && (
-            <div className="bg-[#0D1016] border border-slate-800/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
-              <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl">
-                <BarChart3 className="w-8 h-8 text-[#9B5CFF]" />
+            <div className="bg-[#15161C] border border-[#25262D]/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
+              <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl">
+                <BarChart3 className="w-8 h-8 text-[#8B5CF6]" />
               </div>
-              <h5 className="text-base font-bold text-[#F4F1EA]">No Compensation Benchmark Active</h5>
-              <p className="text-xs text-[#9299A8] max-w-sm leading-relaxed">
+              <h5 className="text-base font-bold text-[#F4F4F5]">No Compensation Benchmark Active</h5>
+              <p className="text-xs text-[#A1A1AA] max-w-sm leading-relaxed">
                 Provide your role and target location on the left to reveal market percentile distributions and battle-tested negotiation scripts.
               </p>
             </div>
@@ -268,10 +268,10 @@ Best,
               
               {/* Percentile Distribution Card */}
               {benchmarks && (
-                <div className="bg-[#0D1016] border border-slate-800/80 p-6 rounded-2xl space-y-5 shadow-xl">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <span className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4 text-[#9B5CFF]" />
+                <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-5 shadow-xl">
+                  <div className="flex items-center justify-between border-b border-[#25262D] pb-3">
+                    <span className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4 text-[#8B5CF6]" />
                       Market Compensation Percentiles
                     </span>
                     <span className="text-[10px] text-slate-500 font-mono">{benchmarks.currency} Annual Base</span>
@@ -279,7 +279,7 @@ Best,
 
                   {/* Visual Bar Grid */}
                   <div className="grid grid-cols-4 gap-2 text-center">
-                    <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl space-y-1">
+                    <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1">
                       <span className="text-[10px] text-slate-500 font-bold uppercase">25th %ile</span>
                       <p className="text-sm font-bold font-mono text-slate-300">
                         {benchmarks.p25?.toLocaleString()}
@@ -287,7 +287,7 @@ Best,
                       <span className="text-[9px] text-slate-600 block">Entry Band</span>
                     </div>
 
-                    <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl space-y-1">
+                    <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1">
                       <span className="text-[10px] text-[#55C8E8] font-bold uppercase">Median (50th)</span>
                       <p className="text-sm font-bold font-mono text-[#55C8E8]">
                         {benchmarks.p50_median?.toLocaleString()}
@@ -295,15 +295,15 @@ Best,
                       <span className="text-[9px] text-slate-600 block">Market Average</span>
                     </div>
 
-                    <div className="p-3 bg-[#11151D] border border-[#9B5CFF]/30 rounded-xl space-y-1 bg-[#9B5CFF]/5">
+                    <div className="p-3 bg-[#11151D] border border-[#8B5CF6]/30 rounded-xl space-y-1 bg-[#8B5CF6]/5">
                       <span className="text-[10px] text-[#C49AFF] font-bold uppercase">75th %ile</span>
                       <p className="text-sm font-bold font-mono text-[#C49AFF]">
                         {benchmarks.p75?.toLocaleString()}
                       </p>
-                      <span className="text-[9px] text-[#9B5CFF] block">Target Zone</span>
+                      <span className="text-[9px] text-[#8B5CF6] block">Target Zone</span>
                     </div>
 
-                    <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl space-y-1">
+                    <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1">
                       <span className="text-[10px] text-[#55D39A] font-bold uppercase">Top 10% (90th)</span>
                       <p className="text-sm font-bold font-mono text-[#55D39A]">
                         {benchmarks.p90?.toLocaleString()}
@@ -312,7 +312,7 @@ Best,
                     </div>
                   </div>
 
-                  <p className="text-xs text-[#9299A8] leading-relaxed bg-[#07080C] p-3.5 rounded-xl border border-slate-800">
+                  <p className="text-xs text-[#A1A1AA] leading-relaxed bg-[#111318] p-3.5 rounded-xl border border-[#25262D]">
                     {data.offer_analysis}
                   </p>
                 </div>
@@ -320,15 +320,15 @@ Best,
 
               {/* Leverage Points */}
               {data.leverage_points && (
-                <div className="bg-[#0D1016] border border-slate-800/80 p-5 rounded-2xl space-y-2.5 shadow-xl">
+                <div className="bg-[#15161C] border border-[#25262D]/80 p-5 rounded-2xl space-y-2.5 shadow-xl">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                     <Award className="w-3.5 h-3.5 text-[#55D39A]" />
                     Key Negotiation Leverage Drivers
                   </span>
                   <ul className="space-y-1.5 text-xs text-slate-300">
                     {data.leverage_points.map((pt: string, idx: number) => (
-                      <li key={idx} className="flex items-start gap-2 bg-[#07080C] p-2.5 rounded-lg border border-slate-800/80">
-                        <span className="text-[#9B5CFF] font-bold">&bull;</span>
+                      <li key={idx} className="flex items-start gap-2 bg-[#111318] p-2.5 rounded-lg border border-[#25262D]/80">
+                        <span className="text-[#8B5CF6] font-bold">&bull;</span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -338,18 +338,18 @@ Best,
 
               {/* Negotiation Scripts */}
               <div className="space-y-4">
-                <h5 className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#9B5CFF]" />
+                <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-[#8B5CF6]" />
                   <span>Strategic Counter-Offer Email Scripts</span>
                 </h5>
 
                 {data.counter_offer_scripts?.map((script: any, idx: number) => {
                   const isCopied = copiedScriptIdx === idx;
                   return (
-                    <div key={idx} className="bg-[#0D1016] border border-slate-800/80 hover:border-[#9B5CFF]/30 p-5 rounded-2xl space-y-3.5 shadow-xl transition-all">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                    <div key={idx} className="bg-[#15161C] border border-[#25262D]/80 hover:border-[#8B5CF6]/30 p-5 rounded-2xl space-y-3.5 shadow-xl transition-all">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#25262D] pb-3">
                         <div>
-                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#9B5CFF]/15 text-[#9B5CFF] border border-[#9B5CFF]/30">
+                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
                             {script.style}
                           </span>
                         </div>
@@ -359,7 +359,7 @@ Best,
                           onClick={() => handleCopy(`Subject: ${script.subject}
 
 ${script.body}`, idx)}
-                          className="flex items-center gap-1.5 px-3 py-1 bg-[#11151D] hover:bg-[#1A202C] text-slate-300 hover:text-[#F4F1EA] text-xs font-bold rounded-lg border border-slate-800 transition-all cursor-pointer self-start sm:self-auto"
+                          className="flex items-center gap-1.5 px-3 py-1 bg-[#11151D] hover:bg-[#1A202C] text-slate-300 hover:text-[#F4F4F5] text-xs font-bold rounded-lg border border-[#25262D] transition-all cursor-pointer self-start sm:self-auto"
                         >
                           {isCopied ? (
                             <>
@@ -368,18 +368,18 @@ ${script.body}`, idx)}
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                              <Copy className="w-3.5 h-3.5 text-[#8B5CF6]" />
                               <span>Copy Script</span>
                             </>
                           )}
                         </button>
                       </div>
 
-                      <div className="p-4 bg-[#07080C] border border-slate-800 rounded-xl text-xs text-slate-300 leading-relaxed font-sans whitespace-pre-line select-text">
+                      <div className="p-4 bg-[#111318] border border-[#25262D] rounded-xl text-xs text-slate-300 leading-relaxed font-sans whitespace-pre-line select-text">
                         {script.body}
                       </div>
 
-                      <div className="p-2.5 rounded-lg bg-[#11151D] border border-slate-800 text-[11px] text-[#9299A8]">
+                      <div className="p-2.5 rounded-lg bg-[#11151D] border border-[#25262D] text-[11px] text-[#A1A1AA]">
                         <span className="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">When to use</span>
                         {script.recommended_when}
                       </div>

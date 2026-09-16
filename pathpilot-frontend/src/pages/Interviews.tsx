@@ -257,23 +257,23 @@ export const Interviews: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-2">
           <p className="eyebrow-text">Prepare / 05</p>
-          <h3 className="text-2xl font-extrabold text-[#F4F1EA] tracking-tight flex items-center gap-2.5">
+          <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight flex items-center gap-2.5">
             <span>Voice-Powered Interview Simulator</span>
-            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#9B5CFF]/15 text-[#9B5CFF] border border-[#9B5CFF]/30 rounded">
+            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30 rounded">
               AI PRO
             </span>
           </h3>
-          <p className="text-xs text-[#9299A8] leading-relaxed max-w-xl">
+          <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-xl">
             Simulate real-world technical and HR screening rounds with AI voice questions, real-time speech dictation, and pressure timers.
           </p>
         </div>
 
         {currentQuestion && !evaluation && (
-          <div className="flex items-center gap-3 bg-[#0D1016] border border-slate-800/80 px-4 py-2 rounded-lg">
-            <Timer className={`w-4 h-4 ${timeLeft < 30 ? 'text-[#FF6577] animate-pulse' : 'text-[#9B5CFF]'}`} />
+          <div className="flex items-center gap-3 bg-[#15161C] border border-[#25262D]/80 px-4 py-2 rounded-lg">
+            <Timer className={`w-4 h-4 ${timeLeft < 30 ? 'text-[#FF6577] animate-pulse' : 'text-[#8B5CF6]'}`} />
             <div className="text-left">
               <span className="text-[10px] uppercase font-bold text-slate-500 block">Time Remaining</span>
-              <span className={`text-sm font-mono font-extrabold ${timeLeft < 30 ? 'text-[#FF6577]' : 'text-[#F4F1EA]'}`}>
+              <span className={`text-sm font-mono font-extrabold ${timeLeft < 30 ? 'text-[#FF6577]' : 'text-[#F4F4F5]'}`}>
                 {formatTimer(timeLeft)}
               </span>
             </div>
@@ -283,13 +283,13 @@ export const Interviews: React.FC = () => {
 
       {/* Role configuration form */}
       {!currentQuestion ? (
-        <div className="bg-[#0D1016] border border-slate-900 p-8 rounded-xl max-w-lg mx-auto space-y-6 text-center shadow-xl">
+        <div className="bg-[#15161C] border border-[#25262D] p-8 rounded-xl max-w-lg mx-auto space-y-6 text-center shadow-xl">
           <div className="space-y-2">
-            <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl w-fit mx-auto shadow-inner">
-              <Sparkles className="w-8 h-8 text-[#9B5CFF]" />
+            <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl w-fit mx-auto shadow-inner">
+              <Sparkles className="w-8 h-8 text-[#8B5CF6]" />
             </div>
-            <h4 className="text-base font-bold text-[#F4F1EA]">Start Your Mock Screening</h4>
-            <p className="text-xs text-[#9299A8] leading-relaxed max-w-sm mx-auto">
+            <h4 className="text-base font-bold text-[#F4F4F5]">Start Your Mock Screening</h4>
+            <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-sm mx-auto">
               Enter your target role and VertexPath will generate interactive audio questions, evaluate your answer structure, and score your performance.
             </p>
           </div>
@@ -303,7 +303,7 @@ export const Interviews: React.FC = () => {
                 placeholder="e.g. Senior Java Developer, Full Stack Engineer, AWS DevOps"
                 value={roleInput}
                 onChange={(e) => setRoleInput(e.target.value)}
-                className="w-full text-xs text-center py-2.5 bg-[#07080C] border border-slate-800 rounded focus:border-[#9B5CFF] text-[#F4F1EA]"
+                className="w-full text-xs text-center py-2.5 bg-[#111318] border border-[#25262D] rounded focus:border-[#8B5CF6] text-[#F4F4F5]"
               />
             </div>
 
@@ -314,30 +314,30 @@ export const Interviews: React.FC = () => {
                   key={role}
                   type="button"
                   onClick={() => setRoleInput(role)}
-                  className="px-2.5 py-1 text-[10px] font-medium bg-[#11151D] hover:bg-[#1A202C] text-[#9299A8] hover:text-[#F4F1EA] border border-slate-800 rounded transition-all cursor-pointer"
+                  className="px-2.5 py-1 text-[10px] font-medium bg-[#11151D] hover:bg-[#1A202C] text-[#A1A1AA] hover:text-[#F4F4F5] border border-[#25262D] rounded transition-all cursor-pointer"
                 >
                   {role}
                 </button>
               ))}
             </div>
 
-            <div className="flex items-center justify-between px-3 py-2 bg-[#11151D] border border-slate-800/80 rounded text-xs">
+            <div className="flex items-center justify-between px-3 py-2 bg-[#11151D] border border-[#25262D]/80 rounded text-xs">
               <span className="text-slate-400 font-medium text-[11px] flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                <Clock className="w-3.5 h-3.5 text-[#8B5CF6]" />
                 Enable 2-Min Answer Timer
               </span>
               <input
                 type="checkbox"
                 checked={timerEnabled}
                 onChange={(e) => setTimerEnabled(e.target.checked)}
-                className="accent-[#9B5CFF] cursor-pointer"
+                className="accent-[#8B5CF6] cursor-pointer"
               />
             </div>
 
             <button
               type="submit"
               disabled={generateQuestionMutation.isPending || !roleInput.trim()}
-              className="w-full py-3 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#9B5CFF]/20"
+              className="w-full py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
             >
               {generateQuestionMutation.isPending ? (
                 <div className="flex items-center gap-2">
@@ -368,8 +368,8 @@ export const Interviews: React.FC = () => {
           <div className="md:col-span-8 space-y-6">
             
             {/* Immersive Question Header with Audio Player */}
-            <div className="bg-[#0D1016] border border-slate-800/80 p-6 rounded-xl space-y-4 shadow-xl">
-              <div className="flex items-center justify-between text-[11px] font-mono text-[#9B5CFF]">
+            <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-xl space-y-4 shadow-xl">
+              <div className="flex items-center justify-between text-[11px] font-mono text-[#8B5CF6]">
                 <span className="flex items-center gap-1.5 font-bold">
                   <Radio className="w-3.5 h-3.5 animate-pulse text-[#55D39A]" />
                   QUESTION {String(questionIndex).padStart(2, '0')} / 10
@@ -380,8 +380,8 @@ export const Interviews: React.FC = () => {
                   type="button"
                   className={`flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold rounded-md border transition-all cursor-pointer ${
                     isSpeaking 
-                      ? 'bg-[#9B5CFF]/20 text-[#9B5CFF] border-[#9B5CFF] animate-pulse' 
-                      : 'bg-[#11151D] text-slate-300 border-slate-800 hover:border-[#9B5CFF]/50'
+                      ? 'bg-[#8B5CF6]/20 text-[#8B5CF6] border-[#8B5CF6] animate-pulse' 
+                      : 'bg-[#11151D] text-slate-300 border-[#25262D] hover:border-[#8B5CF6]/50'
                   }`}
                   title={isSpeaking ? 'Stop speaking' : 'Read question aloud'}
                 >
@@ -392,14 +392,14 @@ export const Interviews: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <Volume2 className="w-3.5 h-3.5 text-[#9B5CFF]" />
+                      <Volume2 className="w-3.5 h-3.5 text-[#8B5CF6]" />
                       <span>Listen to AI</span>
                     </>
                   )}
                 </button>
               </div>
 
-              <p className="text-base font-bold text-[#F4F1EA] leading-relaxed">
+              <p className="text-base font-bold text-[#F4F4F5] leading-relaxed">
                 {currentQuestion}
               </p>
             </div>
@@ -421,7 +421,7 @@ export const Interviews: React.FC = () => {
                           className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer ${
                             isListening
                               ? 'bg-[#FF6577]/20 text-[#FF6577] border border-[#FF6577] animate-pulse'
-                              : 'bg-[#11151D] hover:bg-[#1A202C] text-[#9B5CFF] border border-slate-800'
+                              : 'bg-[#11151D] hover:bg-[#1A202C] text-[#8B5CF6] border border-[#25262D]'
                           }`}
                         >
                           {isListening ? (
@@ -452,7 +452,7 @@ export const Interviews: React.FC = () => {
                       placeholder="Type or speak your explanation, system architecture tradeoffs, code examples, or STAR framework response..."
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
-                      className="w-full text-xs font-sans leading-relaxed p-4 bg-[#07080C] border border-slate-800 rounded-lg focus:border-[#9B5CFF] text-[#F4F1EA] placeholder-slate-600"
+                      className="w-full text-xs font-sans leading-relaxed p-4 bg-[#111318] border border-[#25262D] rounded-lg focus:border-[#8B5CF6] text-[#F4F4F5] placeholder-slate-600"
                     />
                   </div>
 
@@ -464,7 +464,7 @@ export const Interviews: React.FC = () => {
                         if (recognitionRef.current && isListening) recognitionRef.current.stop();
                         setCurrentQuestion(null);
                       }}
-                      className="flex items-center gap-1 px-4 py-2 border border-slate-800 text-slate-400 hover:text-[#FF6577] text-xs font-bold rounded-lg cursor-pointer transition-all"
+                      className="flex items-center gap-1 px-4 py-2 border border-[#25262D] text-slate-400 hover:text-[#FF6577] text-xs font-bold rounded-lg cursor-pointer transition-all"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
                       <span>Exit Room</span>
@@ -473,7 +473,7 @@ export const Interviews: React.FC = () => {
                     <button
                       type="submit"
                       disabled={evaluateAnswerMutation.isPending || !userAnswer.trim()}
-                      className="px-6 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[#9B5CFF]/20"
+                      className="px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
                     >
                       {evaluateAnswerMutation.isPending ? (
                         <div className="flex items-center gap-2">
@@ -502,14 +502,14 @@ export const Interviews: React.FC = () => {
 
             {/* Active Evaluation Panel */}
             {evaluation && !evaluateAnswerMutation.isPending && (
-              <div className="space-y-6 animate-fade-in bg-[#0D1016] border border-slate-800/80 p-6 rounded-xl shadow-xl">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <h5 className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider flex items-center gap-2">
+              <div className="space-y-6 animate-fade-in bg-[#15161C] border border-[#25262D]/80 p-6 rounded-xl shadow-xl">
+                <div className="flex items-center justify-between border-b border-[#25262D] pb-4">
+                  <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-[#55D39A]" />
                     <span>Answer Evaluation & Scoring</span>
                   </h5>
                   
-                  <div className="flex items-baseline gap-1.5 bg-[#11151D] px-3 py-1.5 rounded-lg border border-slate-800">
+                  <div className="flex items-baseline gap-1.5 bg-[#11151D] px-3 py-1.5 rounded-lg border border-[#25262D]">
                     <span className={`text-2xl font-mono font-extrabold ${getScoreColor(evaluation.score)}`}>
                       {evaluation.score}%
                     </span>
@@ -519,14 +519,14 @@ export const Interviews: React.FC = () => {
 
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Coaching Critique</span>
-                  <p className="text-xs text-[#9299A8] leading-relaxed bg-[#07080C] p-4 rounded-lg border border-slate-800/80">
+                  <p className="text-xs text-[#A1A1AA] leading-relaxed bg-[#111318] p-4 rounded-lg border border-[#25262D]/80">
                     {evaluation.feedback}
                   </p>
                 </div>
 
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Ideal Production Model Answer</span>
-                  <pre className="p-4 overflow-auto font-mono text-[11px] text-[#cbd5e1] leading-relaxed select-text bg-[#07080C] border border-slate-800/80 rounded-lg max-h-[250px] custom-scrollbar">
+                  <pre className="p-4 overflow-auto font-mono text-[11px] text-[#cbd5e1] leading-relaxed select-text bg-[#111318] border border-[#25262D]/80 rounded-lg max-h-[250px] custom-scrollbar">
                     <code>{evaluation.model_answer}</code>
                   </pre>
                 </div>
@@ -534,7 +534,7 @@ export const Interviews: React.FC = () => {
                 <div className="flex justify-between items-center pt-2">
                   <button
                     onClick={() => setCurrentQuestion(null)}
-                    className="px-4 py-2 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-bold rounded-lg cursor-pointer transition-all"
+                    className="px-4 py-2 border border-[#25262D] text-slate-400 hover:text-slate-200 text-xs font-bold rounded-lg cursor-pointer transition-all"
                   >
                     Finish Session
                   </button>
@@ -542,7 +542,7 @@ export const Interviews: React.FC = () => {
                   <button
                     onClick={handleNext}
                     disabled={generateQuestionMutation.isPending}
-                    className="flex items-center gap-1.5 px-5 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] text-xs font-bold rounded-lg cursor-pointer transition-all shadow-lg shadow-[#9B5CFF]/20"
+                    className="flex items-center gap-1.5 px-5 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-lg cursor-pointer transition-all shadow-lg shadow-[#8B5CF6]/20"
                   >
                     <span>Next Question #{questionIndex + 1}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -555,27 +555,27 @@ export const Interviews: React.FC = () => {
 
           {/* Right Panel: Criteria & Coaching Tips */}
           <div className="md:col-span-4 space-y-6">
-            <div className="bg-[#0D1016] border border-slate-800/80 p-6 rounded-xl space-y-4 shadow-xl">
-              <h5 className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-3">
-                <Award className="w-4.5 h-4.5 text-[#9B5CFF]" />
+            <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-xl space-y-4 shadow-xl">
+              <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-1.5 border-b border-[#25262D] pb-3">
+                <Award className="w-4.5 h-4.5 text-[#8B5CF6]" />
                 <span>Target Evaluation Criteria</span>
               </h5>
               
-              <p className="text-xs text-[#9299A8] leading-relaxed">
+              <p className="text-xs text-[#A1A1AA] leading-relaxed">
                 To maximize your evaluation grade, touch upon these specific concepts and architectural terms:
               </p>
               
-              <div className="p-4 rounded-lg bg-[#07080C] border border-slate-800 text-xs text-[#9299A8] font-mono leading-relaxed select-text">
+              <div className="p-4 rounded-lg bg-[#111318] border border-[#25262D] text-xs text-[#A1A1AA] font-mono leading-relaxed select-text">
                 {expectedPoints || "Launch a mock session to reveal targeted criteria."}
               </div>
             </div>
 
-            <div className="bg-[#0D1016]/60 border border-slate-800/80 p-6 rounded-xl space-y-2 text-xs text-slate-400 leading-relaxed shadow-lg">
-              <div className="flex items-center gap-2 font-bold text-[#F4F1EA]">
-                <Sparkles className="w-4 h-4 text-[#9B5CFF]" />
+            <div className="bg-[#15161C]/60 border border-[#25262D]/80 p-6 rounded-xl space-y-2 text-xs text-slate-400 leading-relaxed shadow-lg">
+              <div className="flex items-center gap-2 font-bold text-[#F4F4F5]">
+                <Sparkles className="w-4 h-4 text-[#8B5CF6]" />
                 <span>Interview Mastery Pro-Tip</span>
               </div>
-              <p className="text-[11px] text-[#9299A8] leading-relaxed">
+              <p className="text-[11px] text-[#A1A1AA] leading-relaxed">
                 Structure your technical answers using the <strong>STAR method</strong> (Situation, Task, Action, Result) and explicitly mention performance metrics (e.g. latency, concurrency, time complexities).
               </p>
             </div>
