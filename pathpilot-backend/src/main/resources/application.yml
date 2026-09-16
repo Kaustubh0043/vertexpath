@@ -39,7 +39,7 @@ jwt:
 
 ai:
   service:
-    url: ${AI_SERVICE_URL:http://localhost:8000}
+    url: ${AI_SERVICE_URL:https://pathpilot-ai-engine.onrender.com}
 
 r2:
   endpoint: ${R2_ENDPOINT:}
