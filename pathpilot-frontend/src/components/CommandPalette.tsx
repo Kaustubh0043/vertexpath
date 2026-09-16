@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { 
   Search, 
   Map, 
@@ -16,7 +17,10 @@ import {
   HelpCircle,
   Share2,
   FileCheck,
-  User
+  User,
+  Sun,
+  Moon,
+  Laptop
 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -33,10 +37,12 @@ interface CommandItem {
   path?: string;
   action?: () => void;
   shortcut?: string;
+  badge?: string;
 }
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const { setTheme } = useTheme();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -53,9 +59,42 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
       shortcut: 'TOUR'
     },
     {
+      id: 'theme-light',
+      title: 'Switch to Light Mode',
+      description: 'Clean high-contrast daytime interface',
+      category: 'Appearance',
+      icon: Sun,
+      action: () => {
+        setTheme('light');
+      },
+      shortcut: 'T L'
+    },
+    {
+      id: 'theme-dark',
+      title: 'Switch to Dark Mode',
+      description: 'Sleek low-glare Raycast dark aesthetic',
+      category: 'Appearance',
+      icon: Moon,
+      action: () => {
+        setTheme('dark');
+      },
+      shortcut: 'T D'
+    },
+    {
+      id: 'theme-system',
+      title: 'Use System Default Theme',
+      description: 'Automatically match operating system preferences',
+      category: 'Appearance',
+      icon: Laptop,
+      action: () => {
+        setTheme('system');
+      },
+      shortcut: 'T S'
+    },
+    {
       id: 'dashboard',
       title: 'Dashboard Overview',
-      description: 'View daily streak, technical drill & milestone readiness',
+      description: 'Command center showing completion, streaks, and milestone actions',
       category: 'Overview',
       icon: LayoutDashboard,
       path: '/dashboard',
@@ -63,17 +102,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     },
     {
       id: 'resume',
-      title: 'Resume & ATS Optimizer',
-      description: 'Score resume, match JDs & optimize Google XYZ bullet points',
+      title: 'Resume & ATS Scorer',
+      description: 'ATS audit, XYZ bullet optimizer, and RAG context sandbox',
       category: 'Build',
       icon: FileText,
       path: '/dashboard/resume',
       shortcut: 'G R'
     },
     {
-      id: 'learning',
-      title: 'Learning Paths',
-      description: 'Generate 4-week custom curriculum & printable PDF roadmaps',
+      id: 'roadmaps',
+      title: 'Learning Paths & Roadmaps',
+      description: 'Synthesize multi-week step-by-step curriculum milestones',
       category: 'Build',
       icon: Map,
       path: '/dashboard/roadmaps',
@@ -82,7 +121,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     {
       id: 'projects',
       title: 'Project Architect',
-      description: 'Synthesize folder layouts, database schemas & REST routes',
+      description: 'Model system directory structures and database schemas',
       category: 'Build',
       icon: Cpu,
       path: '/dashboard/projects',
@@ -91,7 +130,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     {
       id: 'interviews',
       title: 'Mock Voice Interviews',
-      description: 'Speech recognition interview simulator with audio AI',
+      badge: 'Interactive',
+      description: 'Practice role-specific voice interviews with live AI grading',
       category: 'Practice',
       icon: Mic,
       path: '/dashboard/interviews',
@@ -99,8 +139,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     },
     {
       id: 'coding',
-      title: 'Code Challenge & Complexity',
-      description: 'In-browser IDE with Time/Space O(n) complexity audits',
+      title: 'Live Code IDE & Complexity',
+      description: 'Monaco dark IDE with automated Time O(N) and Space O(1) complexity audits',
       category: 'Practice',
       icon: Terminal,
       path: '/dashboard/coding',
@@ -108,8 +148,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     },
     {
       id: 'jd-match',
-      title: 'Job Description Match',
-      description: 'Benchmark resume against target job description requirements',
+      title: 'Job Description Matcher',
+      description: 'Audit resume compatibility against target job descriptions',
       category: 'Get Hired',
       icon: FileCheck,
       path: '/dashboard/jd-match',
@@ -117,46 +157,37 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     },
     {
       id: 'outreach',
-      title: 'Outreach Copilot',
-      description: 'High-converting recruiter and engineering manager DMs',
+      title: 'Outreach & Recruiter Copilot',
+      description: 'Generate high-converting cold outreach DMs & pitch emails',
       category: 'Get Hired',
       icon: Mail,
       path: '/dashboard/outreach',
       shortcut: 'G O'
     },
     {
-      id: 'portfolio',
-      title: 'Public Developer Portfolio',
-      description: 'View & share your verified public career portfolio profile',
-      category: 'Get Hired',
-      icon: Share2,
-      path: '/portfolio/me',
-      shortcut: 'G V'
-    },
-    {
       id: 'compensation',
-      title: 'Salary & Negotiation Copilot',
-      description: 'Benchmark market percentiles & generate counter-offer scripts',
+      title: 'Salary & Offer Negotiation',
+      description: 'Benchmark market percentiles and generate counter-offer scripts',
       category: 'Career',
       icon: DollarSign,
       path: '/dashboard/compensation',
       shortcut: 'G S'
     },
     {
-      id: 'chat',
-      title: 'Senior AI Career Coach',
-      description: 'Interactive dialogue with personalized document context',
-      category: 'Career',
-      icon: MessageSquare,
-      path: '/dashboard/chat',
+      id: 'profile',
+      title: 'Career Profile Settings',
+      description: 'Update target roles, primary tech stacks, and learning styles',
+      category: 'System',
+      icon: User,
+      path: '/dashboard/profile',
       shortcut: 'G A'
     }
   ];
 
-  const filteredCommands = commands.filter(c => 
-    c.title.toLowerCase().includes(query.toLowerCase()) ||
-    c.description.toLowerCase().includes(query.toLowerCase()) ||
-    c.category.toLowerCase().includes(query.toLowerCase())
+  const filteredCommands = commands.filter(cmd => 
+    cmd.title.toLowerCase().includes(query.toLowerCase()) ||
+    cmd.description.toLowerCase().includes(query.toLowerCase()) ||
+    cmd.category.toLowerCase().includes(query.toLowerCase())
   );
 
   useEffect(() => {
@@ -167,9 +198,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
 
-      if (e.key === 'Escape') {
-        onClose();
-      } else if (e.key === 'ArrowDown') {
+      if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex(prev => (prev < filteredCommands.length - 1 ? prev + 1 : 0));
       } else if (e.key === 'ArrowUp') {
@@ -177,99 +206,99 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
         setSelectedIndex(prev => (prev > 0 ? prev - 1 : filteredCommands.length - 1));
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        const selected = filteredCommands[selectedIndex];
-        if (selected) {
-          if (selected.action) {
-            selected.action();
-          } else if (selected.path) {
-            navigate(selected.path);
-          }
-          onClose();
+        if (filteredCommands[selectedIndex]) {
+          handleSelect(filteredCommands[selectedIndex]);
         }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, selectedIndex, filteredCommands, navigate, onClose]);
+  }, [isOpen, filteredCommands, selectedIndex]);
+
+  const handleSelect = (cmd: CommandItem) => {
+    if (cmd.action) {
+      cmd.action();
+    } else if (cmd.path) {
+      navigate(cmd.path);
+    }
+    onClose();
+  };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-[#09090B]/80 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
       <div 
-        className="relative w-full max-w-xl bg-[#111318] border border-[#25262D] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-100"
+        className="relative w-full max-w-xl bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-[0_20px_70px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Search Header */}
-        <div className="flex items-center px-4 py-3 border-b border-[#25262D] gap-3 bg-[#15161C]">
-          <Search className="w-4 h-4 text-[#8B5CF6]" />
+        {/* Search Input Bar */}
+        <div className="flex items-center px-4 py-3.5 border-b border-[var(--border)] gap-3 bg-[var(--surface)]">
+          <Search className="w-5 h-5 text-[#8B5CF6] shrink-0" />
           <input
+            autoFocus
             type="text"
-            placeholder="Type a command or search (e.g. 'resume', 'coding', 'tour')..."
+            placeholder="Type a command, page name, or theme..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            autoFocus
-            className="flex-1 bg-transparent text-xs text-[#F4F4F5] placeholder:text-[#71717A] focus:outline-none border-none p-0 focus:ring-0"
+            className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm focus:outline-none border-none p-0"
           />
-          <button 
-            onClick={onClose}
-            className="text-[#71717A] hover:text-[#F4F4F5] p-1 rounded hover:bg-[#111318] cursor-pointer"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
+          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--text-muted)]">
+            ESC
+          </span>
         </div>
 
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-[#1D1E24] custom-scrollbar">
+        <div className="max-h-96 overflow-y-auto p-2 space-y-1 custom-scrollbar">
           {filteredCommands.length === 0 ? (
-            <div className="p-8 text-center text-xs text-[#71717A]">
-              No matching commands or tools found.
+            <div className="p-8 text-center text-xs text-[var(--text-muted)]">
+              No matching actions found for "{query}".
             </div>
           ) : (
-            filteredCommands.map((command, idx) => {
-              const Icon = command.icon;
+            filteredCommands.map((cmd, idx) => {
+              const Icon = cmd.icon;
               const isSelected = idx === selectedIndex;
               return (
                 <div
-                  key={command.id}
-                  onClick={() => {
-                    if (command.action) {
-                      command.action();
-                    } else if (command.path) {
-                      navigate(command.path);
-                    }
-                    onClose();
-                  }}
+                  key={cmd.id}
+                  onClick={() => handleSelect(cmd)}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-colors ${
-                    isSelected 
-                      ? 'bg-[#181A21] border border-[#353842] text-white' 
-                      : 'text-[#A1A1AA] hover:bg-[#15161C] border border-transparent'
-                  }`}
+                  className={`
+                    flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-100 group
+                    ${isSelected 
+                      ? 'bg-[#8B5CF6]/15 text-[var(--text-primary)]' 
+                      : 'text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'}
+                  `}
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className={`p-1.5 rounded-md ${isSelected ? 'bg-[#8B5CF6]/20 text-[#A78BFA]' : 'bg-[#15161C] text-[#71717A]'}`}>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={`p-1.5 rounded-lg transition-colors ${
+                      isSelected ? 'bg-[#8B5CF6] text-white' : 'bg-[var(--surface)] text-[var(--text-muted)] group-hover:text-[var(--text-primary)]'
+                    }`}>
                       <Icon className="w-4 h-4" />
                     </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[#F4F4F5] truncate">{command.title}</span>
-                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.2 bg-[#0D0E12] rounded text-[#71717A] font-mono border border-[#25262D]">
-                          {command.category}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-[#71717A] truncate">{command.description}</p>
+                    <div className="truncate">
+                      <p className={`text-xs font-semibold truncate ${isSelected ? 'text-[var(--text-primary)] font-bold' : ''}`}>
+                        {cmd.title}
+                      </p>
+                      <p className="text-[11px] text-[var(--text-muted)] truncate">
+                        {cmd.description}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 ml-2">
-                    {command.shortcut && (
-                      <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono bg-[#0D0E12] border border-[#25262D] rounded text-[#71717A]">
-                        {command.shortcut}
+                  <div className="flex items-center gap-2 shrink-0 ml-3">
+                    <span className="text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)]">
+                      {cmd.category}
+                    </span>
+                    {cmd.shortcut && (
+                      <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)]">
+                        {cmd.shortcut}
                       </kbd>
                     )}
-                    <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-[#8B5CF6]' : 'text-[#25262D]'}`} />
                   </div>
                 </div>
               );
@@ -277,14 +306,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
           )}
         </div>
 
-        {/* Footer shortcuts */}
-        <div className="flex items-center justify-between px-3.5 py-2 bg-[#0D0E12] border-t border-[#25262D] text-[10px] text-[#71717A]">
+        {/* Footer info bar */}
+        <div className="px-4 py-2 bg-[var(--surface)] border-t border-[var(--border)] flex items-center justify-between text-[11px] text-[var(--text-muted)]">
           <div className="flex items-center gap-3">
-            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">↑↓</kbd> Navigate</span>
-            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">↵</kbd> Select</span>
-            <span><kbd className="font-mono bg-[#15161C] px-1 py-0.5 rounded border border-[#25262D]">ESC</kbd> Close</span>
+            <span>Use <kbd className="font-mono text-[9px] bg-[var(--card)] px-1 rounded border border-[var(--border)]">↑</kbd> <kbd className="font-mono text-[9px] bg-[var(--card)] px-1 rounded border border-[var(--border)]">↓</kbd> to navigate</span>
+            <span><kbd className="font-mono text-[9px] bg-[var(--card)] px-1 rounded border border-[var(--border)]">↵</kbd> to select</span>
           </div>
-          <span className="font-mono text-[#52525B]">VertexPath v2.4</span>
+          <span className="font-mono text-[10px]">VertexPath Spotlight</span>
         </div>
       </div>
     </div>

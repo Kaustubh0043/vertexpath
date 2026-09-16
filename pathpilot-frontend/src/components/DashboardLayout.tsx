@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { CommandPalette } from './CommandPalette';
 import { ProductTour } from './ProductTour';
+import { ThemeToggle } from './ThemeToggle';
 
 export const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -73,7 +74,7 @@ export const DashboardLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-[#F4F4F5] flex overflow-hidden bg-[#09090B]">
+    <div className="relative min-h-screen text-[var(--text-primary)] flex overflow-hidden bg-[var(--bg-primary)] transition-colors duration-200">
       {/* Navigation Sidebar */}
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
@@ -84,18 +85,18 @@ export const DashboardLayout: React.FC = () => {
       <ProductTour />
 
       {/* Main Page Area */}
-      <div className="flex-1 flex flex-col lg:pl-64 min-w-0 bg-[#09090B]">
+      <div className="flex-1 flex flex-col lg:pl-64 min-w-0 bg-[var(--bg-primary)]">
         
         {/* Top Navigation Bar */}
-        <header className="h-14 flex items-center justify-between px-6 border-b border-[#25262D] bg-[#0D0E12]/80 backdrop-blur-md sticky top-0 z-30">
+        <header className="h-14 flex items-center justify-between px-6 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md sticky top-0 z-30 transition-colors duration-200">
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setSidebarOpen(true)}
-              className="p-1.5 -ml-1 rounded-md text-[#71717A] hover:text-[#F4F4F5] hover:bg-[#15161C] lg:hidden cursor-pointer"
+              className="p-1.5 -ml-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] lg:hidden cursor-pointer"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <h1 className="text-sm font-semibold text-[#F4F4F5] tracking-tight">
+            <h1 className="text-sm font-semibold text-[var(--text-primary)] tracking-tight">
               {getPageTitle()}
             </h1>
           </div>
@@ -106,24 +107,27 @@ export const DashboardLayout: React.FC = () => {
             <button
               data-tour="tour-quick-actions"
               onClick={() => setPaletteOpen(true)}
-              className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#111318] border border-[#25262D] text-xs text-[#A1A1AA] hover:text-[#F4F4F5] hover:border-[#353842] transition-all cursor-pointer"
+              className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[var(--surface)] border border-[var(--border)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
             >
               <Search className="w-3.5 h-3.5 text-[#8B5CF6]" />
               <span className="text-[11px]">Quick actions...</span>
-              <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-[#15161C] border border-[#25262D] rounded text-[#71717A]">Ctrl K</kbd>
+              <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-[var(--card)] border border-[var(--border)] rounded text-[var(--text-muted)]">Ctrl K</kbd>
             </button>
 
             {/* Subtle Study Streak */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#15161C] border border-[#25262D] rounded text-[#F59E0B] font-medium text-[11px]">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--card)] border border-[var(--border)] rounded text-[#F59E0B] font-medium text-[11px]">
               <Flame className="w-3.5 h-3.5 text-[#F59E0B]" />
               <span>{stats?.streakCount || 1}d streak</span>
             </div>
 
             {/* Target Role Indicator */}
-            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 rounded text-[#A78BFA] font-medium text-[10px] uppercase tracking-wider">
+            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 rounded text-[#8B5CF6] font-medium text-[10px] uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
               <span>{careerGoal}</span>
             </div>
+
+            {/* Light / Dark / System Theme Toggle */}
+            <ThemeToggle />
           </div>
         </header>
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { Loader2, Check, Plus, RefreshCw } from 'lucide-react';
+import { Loader2, Check, Plus, RefreshCw, Sun, Moon, Laptop } from 'lucide-react';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export const Profile: React.FC = () => {
   const queryClient = useQueryClient();
@@ -470,6 +471,19 @@ export const Profile: React.FC = () => {
         </div>
       )}
 
+    
+      {/* Appearance & Interface Theme Settings */}
+      <div className="bg-[var(--card)] border border-[var(--border)] p-6 rounded-xl space-y-4 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h4 className="text-sm font-bold text-[var(--text-primary)]">Interface Theme & Appearance</h4>
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+              Choose your preferred visual theme across all VertexPath tools and editors.
+            </p>
+          </div>
+          <ThemeToggle variant="segmented" />
+        </div>
+      </div>
     </div>
   );
 };

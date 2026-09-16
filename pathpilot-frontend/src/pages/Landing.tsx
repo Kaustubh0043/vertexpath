@@ -21,6 +21,7 @@ import {
   Check 
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -182,6 +183,7 @@ export const Landing: React.FC = () => {
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             {user ? (
               <button
                 onClick={() => navigate('/dashboard')}
@@ -473,6 +475,7 @@ export const Landing: React.FC = () => {
           <div className="relative w-full max-w-lg bg-[#111318] border border-[#25262D] rounded-xl p-6 space-y-4 shadow-2xl">
             <div className="flex items-center justify-between border-b border-[#25262D] pb-3">
               <div className="flex items-center gap-3">
+            <ThemeToggle />
                 <button
                   onClick={() => setActiveModalTab('terms')}
                   className={`text-xs font-bold pb-1 cursor-pointer ${
