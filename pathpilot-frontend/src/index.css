@@ -284,3 +284,28 @@ input.inline-editable-input:focus {
   outline: none !important;
   color: var(--text-primary) !important;
 }
+
+/* Slack-style active tour spotlight highlight */
+.tour-highlight-active {
+  position: relative !important;
+  z-index: 60 !important;
+  background-color: #1A2130 !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  border: 2px solid #9B5CFF !important;
+  box-shadow: 0 0 25px rgba(155, 92, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.tour-highlight-active span,
+.tour-highlight-active p,
+.tour-highlight-active div {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+.tour-highlight-active svg {
+  color: #9B5CFF !important;
+  opacity: 1 !important;
+}

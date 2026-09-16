@@ -4,8 +4,7 @@ import {
   X, 
   ArrowRight, 
   ArrowLeft, 
-  Sparkles, 
-  CheckCircle2 
+  Sparkles 
 } from 'lucide-react';
 
 interface TourStep {
@@ -22,7 +21,7 @@ export const ProductTour: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const activeElementRef = useRef<Element | null>(null);
 
   const steps: TourStep[] = [
     {
@@ -103,14 +102,33 @@ export const ProductTour: React.FC = () => {
     if (!isOpen) return;
     const current = steps[currentStep];
     const el = document.querySelector(current.targetSelector);
+    
+    // Clear previous highlight
+    if (activeElementRef.current && activeElementRef.current !== el) {
+      activeElementRef.current.classList.remove('tour-highlight-active');
+    }
+
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      el.classList.add('tour-highlight-active');
+      activeElementRef.current = el;
       const rect = el.getBoundingClientRect();
       setTargetRect(rect);
     } else {
       setTargetRect(null);
     }
   }, [isOpen, currentStep]);
+
+  const cleanupHighlight = () => {
+    if (activeElementRef.current) {
+      activeElementRef.current.classList.remove('tour-highlight-active');
+      activeElementRef.current = null;
+    }
+    // Also remove from any element that might have it
+    document.querySelectorAll('.tour-highlight-active').forEach(node => {
+      node.classList.remove('tour-highlight-active');
+    });
+  };
 
   useEffect(() => {
     const hasCompleted = localStorage.getItem('vertexpath_tour_completed');
@@ -140,6 +158,8 @@ export const ProductTour: React.FC = () => {
         window.removeEventListener('resize', updateTargetPosition);
         window.removeEventListener('scroll', updateTargetPosition, true);
       };
+    } else {
+      cleanupHighlight();
     }
   }, [isOpen, currentStep, updateTargetPosition]);
 
@@ -173,11 +193,13 @@ export const ProductTour: React.FC = () => {
   };
 
   const handleSkip = () => {
+    cleanupHighlight();
     localStorage.setItem('vertexpath_tour_completed', 'true');
     setIsOpen(false);
   };
 
   const handleComplete = () => {
+    cleanupHighlight();
     localStorage.setItem('vertexpath_tour_completed', 'true');
     setIsOpen(false);
   };
@@ -194,7 +216,7 @@ export const ProductTour: React.FC = () => {
   let popoverTop = window.innerHeight / 2 - popoverHeight / 2;
   let popoverLeft = window.innerWidth / 2 - popoverWidth / 2;
   let arrowSide: 'left' | 'right' | 'top' | 'bottom' = 'left';
-  let arrowOffset = 24; // offset along the side
+  let arrowOffset = 24;
 
   if (targetRect) {
     const placement = current.preferredPlacement;
@@ -204,9 +226,7 @@ export const ProductTour: React.FC = () => {
       popoverTop = targetRect.top + (targetRect.height / 2) - (popoverHeight / 2);
       arrowSide = 'left';
 
-      // Clamp vertical bounds
       const clampedTop = Math.max(16, Math.min(window.innerHeight - popoverHeight - 16, popoverTop));
-      // Calculate where on the left edge the arrow should sit to point at the exact center of target
       const targetCenterY = targetRect.top + targetRect.height / 2;
       arrowOffset = Math.max(16, Math.min(popoverHeight - 28, targetCenterY - clampedTop - arrowSize / 2));
       popoverTop = clampedTop;
@@ -234,33 +254,14 @@ export const ProductTour: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 pointer-events-none select-none">
       
-      {/* Dimmed backdrop */}
+      {/* Dark overlay with NO blur to keep highlighted item 100% crisp */}
       <div 
-        className="fixed inset-0 bg-[#07080C]/70 backdrop-blur-[1.5px] pointer-events-auto transition-opacity duration-300"
+        className="fixed inset-0 bg-[#07080C]/70 pointer-events-auto transition-opacity duration-300"
         onClick={handleSkip}
       />
 
-      {/* Slack-Style Highlight Target Cutout */}
-      {targetRect && (
-        <div
-          className="fixed pointer-events-none transition-all duration-300 ease-out z-50 rounded-lg"
-          style={{
-            top: `${targetRect.top - 4}px`,
-            left: `${targetRect.left - 4}px`,
-            width: `${targetRect.width + 8}px`,
-            height: `${targetRect.height + 8}px`,
-            boxShadow: '0 0 0 9999px rgba(7, 8, 12, 0.72), 0 0 25px rgba(155, 92, 255, 0.75)',
-            border: '2px solid #9B5CFF'
-          }}
-        >
-          {/* Subtle pulse aura */}
-          <div className="absolute inset-0 bg-[#9B5CFF]/15 rounded-lg animate-pulse" />
-        </div>
-      )}
-
       {/* Slack/Userpilot Style Popover Card */}
       <div
-        ref={popoverRef}
         className="fixed pointer-events-auto z-50 bg-[#121620] border-2 border-[#9B5CFF] rounded-2xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_30px_rgba(155,92,255,0.3)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
         style={{
           top: `${popoverTop}px`,
@@ -280,7 +281,6 @@ export const ProductTour: React.FC = () => {
               borderRight: `${arrowSize + 2}px solid #9B5CFF`,
             }}
           >
-            {/* Inner fill arrow */}
             <div
               className="absolute w-0 h-0"
               style={{
