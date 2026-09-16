@@ -119,7 +119,6 @@ class AIService:
         return json.loads(text)
 
     def chat_session(self, message: str, history: List[dict], profile: dict = None) -> str:
-        self._get_configured_genai()
         system_instruction = (
             "You are VertexPath's senior AI career coach. Offer actionable, concrete advice on software development, "
             "portfolio building, technical interviews, and job searching. Support code snippet formatting using standard markdown backticks."
@@ -138,26 +137,13 @@ class AIService:
                 f"Use this context to tailor advice directly to this user's situation."
             )
 
-        formatted_history = []
-        for item in history:
-            role = "user" if item.get("role") == "user" else "model"
-            formatted_history.append({
-                "role": role,
-                "parts": [item.get("content", "")]
-            })
+        conversation_context = ""
+        for item in history[-6:]:  # Keep recent turns for fast prompt token size
+            sender = "User" if item.get("role") == "user" else "AI Coach"
+            conversation_context += f"{sender}: {item.get('content', '')}\n"
 
-        for model_name in [self.active_model_name] + [m for m in CANDIDATE_MODELS if m != self.active_model_name]:
-            try:
-                model = genai.GenerativeModel(model_name, system_instruction=system_instruction)
-                chat = model.start_chat(history=formatted_history)
-                resp = chat.send_message(message)
-                self.active_model_name = model_name
-                return resp.text
-            except Exception as e:
-                logger.warning(f"Chat failed with {model_name}: {e}")
-
-        # Fallback to single-turn generate
-        return self._generate(f"User Question: {message}", json_mode=False, system_instruction=system_instruction)
+        prompt = f"{conversation_context}User: {message}\nAI Coach:"
+        return self._generate(prompt=prompt, json_mode=False, system_instruction=system_instruction)
 
     def generate_roadmap(self, topic: str) -> dict:
         prompt = (
