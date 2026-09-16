@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sidebar } from './Sidebar';
-import { Menu, Search, HelpCircle } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { CommandPalette } from './CommandPalette';
@@ -107,24 +107,15 @@ export const DashboardLayout: React.FC = () => {
 
           <div className="flex items-center gap-3 text-xs font-semibold text-[#9299A8]">
             
-            {/* Quick Command Palette Button */}
+            {/* Quick Command Palette Button with Tour Target */}
             <button
+              data-tour="tour-quick-actions"
               onClick={() => setPaletteOpen(true)}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#11151D] border border-slate-800 text-xs text-slate-400 hover:text-slate-200 hover:border-[#9B5CFF]/30 transition-all cursor-pointer shadow-sm"
             >
               <Search className="w-3.5 h-3.5 text-[#9B5CFF]" />
               <span className="text-[11px]">Quick actions...</span>
               <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-slate-900 border border-slate-800 rounded text-slate-400">Ctrl K</kbd>
-            </button>
-
-            {/* Product Tour Trigger Button */}
-            <button
-              onClick={() => window.dispatchEvent(new Event('startVertexTour'))}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 hover:border-[#9B5CFF]/40 text-slate-400 hover:text-[#C49AFF] text-[11px] font-bold transition-all cursor-pointer shadow-sm"
-              title="Launch Guided Product Tour"
-            >
-              <HelpCircle className="w-3.5 h-3.5 text-[#9B5CFF]" />
-              <span className="hidden md:inline">Tour</span>
             </button>
 
             {/* Subtle Study Streak */}

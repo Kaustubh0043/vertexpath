@@ -12,7 +12,6 @@ interface TourStep {
   title: string;
   badge: string;
   description: string;
-  highlightText: string;
   preferredPlacement: 'right' | 'bottom' | 'top' | 'left';
 }
 
@@ -25,10 +24,16 @@ export const ProductTour: React.FC = () => {
 
   const steps: TourStep[] = [
     {
+      targetSelector: '[data-tour="tour-quick-actions"]',
+      title: 'Global Command Palette (Ctrl + K)',
+      badge: 'TOP SHORTCUT',
+      description: 'Press Ctrl + K from anywhere on VertexPath to search tools, jump between pages, or copy your public portfolio link instantly.',
+      preferredPlacement: 'bottom'
+    },
+    {
       targetSelector: '[data-tour="tour-route-tracker"]',
       title: 'Career Route Tracker',
       badge: 'CAREER TIMELINE',
-      highlightText: 'Your live progress track',
       description: 'Your career milestones dynamically light up as you complete real actions. Click on any milestone node to instantly jump to that module.',
       preferredPlacement: 'bottom'
     },
@@ -36,7 +41,6 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-resume"]',
       title: 'Meet Resume & ATS Optimizer',
       badge: 'STAGE 01 / PROFILE',
-      highlightText: 'Audit & Google XYZ Formulas',
       description: 'Score your resume against high-bar ATS filters and generate metrics-driven bullet alternatives formatted with Google XYZ formula.',
       preferredPlacement: 'right'
     },
@@ -44,7 +48,6 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-roadmaps"]',
       title: 'Learning Paths & Syllabi',
       badge: 'STAGE 02 / FOUNDATION',
-      highlightText: 'Curriculum & PDF Export',
       description: 'Generate customized 4-week learning roadmaps tailored to your target engineering domain with 1-click printable PDF exports.',
       preferredPlacement: 'right'
     },
@@ -52,7 +55,6 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-interviews"]',
       title: 'Mock Voice Interviews',
       badge: 'STAGE 03 / PREPARATION',
-      highlightText: 'Speech Recognition Simulator',
       description: 'Practice real-time technical and behavioral interviews with Web Speech audio reading and AI evaluation scores.',
       preferredPlacement: 'right'
     },
@@ -60,7 +62,6 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-coding"]',
       title: 'Live Code Challenge IDE',
       badge: 'STAGE 03 / CODING',
-      highlightText: 'Big-O Complexity Analyzer',
       description: 'Write solutions in our Monaco-style dark IDE and receive automated Time O(N) & Space O(1) complexity audits with optimal refactors.',
       preferredPlacement: 'right'
     },
@@ -68,7 +69,6 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-outreach"]',
       title: 'Recruiter Outreach & DM Suite',
       badge: 'STAGE 04 / CONVERSION',
-      highlightText: '3 High-Converting Pitches',
       description: 'Craft personalized cold DMs for Recruiters, Engineering Managers, and Founders to maximize interview response rates.',
       preferredPlacement: 'right'
     },
@@ -76,23 +76,13 @@ export const ProductTour: React.FC = () => {
       targetSelector: '[data-tour="tour-compensation"]',
       title: 'Salary & Negotiation Copilot',
       badge: 'STAGE 04 / NEGOTIATION',
-      highlightText: 'Market Percentiles & Scripts',
       description: 'Benchmark base, equity, and bonus compensation percentiles and generate tailored counter-offer email scripts.',
       preferredPlacement: 'right'
-    },
-    {
-      targetSelector: '[data-tour="tour-quick-actions"]',
-      title: 'Command Palette (Ctrl + K)',
-      badge: 'SHORTCUTS',
-      highlightText: 'Instant Navigation',
-      description: 'Press Ctrl + K from anywhere on VertexPath to search tools, jump between pages, or copy your public portfolio link.',
-      preferredPlacement: 'bottom'
     },
     {
       targetSelector: '[data-tour="tour-portfolio"]',
       title: 'Public Developer Portfolio',
       badge: 'PROFILE / SHOWCASE',
-      highlightText: 'Shareable Profile URL',
       description: 'Share your verified public developer portfolio (/p/:username) directly with recruiters and hiring managers.',
       preferredPlacement: 'right'
     }
@@ -109,7 +99,10 @@ export const ProductTour: React.FC = () => {
     }
 
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      // Don't scroll sticky header buttons, scroll body items smoothly
+      if (current.targetSelector !== '[data-tour="tour-quick-actions"]') {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      }
       el.classList.add('tour-highlight-active');
       activeElementRef.current = el;
       const rect = el.getBoundingClientRect();
@@ -124,7 +117,6 @@ export const ProductTour: React.FC = () => {
       activeElementRef.current.classList.remove('tour-highlight-active');
       activeElementRef.current = null;
     }
-    // Also remove from any element that might have it
     document.querySelectorAll('.tour-highlight-active').forEach(node => {
       node.classList.remove('tour-highlight-active');
     });
@@ -150,7 +142,7 @@ export const ProductTour: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       updateTargetPosition();
-      const interval = setInterval(updateTargetPosition, 300);
+      const interval = setInterval(updateTargetPosition, 250);
       window.addEventListener('resize', updateTargetPosition);
       window.addEventListener('scroll', updateTargetPosition, true);
       return () => {
@@ -210,7 +202,7 @@ export const ProductTour: React.FC = () => {
 
   // Slack-Style Exact Positioning & Pointer Arrow Math
   const popoverWidth = Math.min(360, window.innerWidth - 32);
-  const popoverHeight = 220;
+  const popoverHeight = 210;
   const arrowSize = 12;
 
   let popoverTop = window.innerHeight / 2 - popoverHeight / 2;
@@ -254,7 +246,7 @@ export const ProductTour: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 pointer-events-none select-none">
       
-      {/* Dark overlay with NO blur to keep highlighted item 100% crisp */}
+      {/* Dark overlay with NO blur */}
       <div 
         className="fixed inset-0 bg-[#07080C]/70 pointer-events-auto transition-opacity duration-300"
         onClick={handleSkip}
@@ -364,7 +356,7 @@ export const ProductTour: React.FC = () => {
           </div>
         </div>
 
-        {/* Card Title & Content (Slack-Style) */}
+        {/* Card Title & Content */}
         <div className="space-y-1.5">
           <h4 className="text-base font-extrabold text-[#F4F1EA] tracking-tight leading-snug">
             {current.title}
@@ -374,7 +366,7 @@ export const ProductTour: React.FC = () => {
           </p>
         </div>
 
-        {/* Step Progress & Slack-style "Next / Let's Go" Buttons */}
+        {/* Step Progress & Buttons */}
         <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
           <button
             onClick={handleSkip}
