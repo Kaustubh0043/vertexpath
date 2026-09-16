@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   X, 
   ArrowRight, 
@@ -17,94 +17,117 @@ interface TourStep {
 
 export const ProductTour: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const activeElementRef = useRef<Element | null>(null);
 
+  // Sequenced precisely to match the new Information Architecture
   const steps: TourStep[] = [
     {
       targetSelector: '[data-tour="tour-quick-actions"]',
       title: 'Global Command Palette (Ctrl + K)',
-      badge: 'TOP SHORTCUT',
-      description: 'Press Ctrl + K from anywhere on VertexPath to search tools, jump between pages, or copy your public portfolio link instantly.',
+      badge: 'SYSTEM / SHORTCUT',
+      description: 'Press Ctrl + K from anywhere on VertexPath to search tools, jump between pages, and trigger AI copilots instantly.',
       preferredPlacement: 'bottom'
+    },
+    {
+      targetSelector: '[data-tour="tour-dashboard"]',
+      title: 'Command Center Dashboard',
+      badge: 'OVERVIEW / PHASE 0',
+      description: 'Your central hub displaying profile completion, career journey roadmap, daily technical drills, skill coverage, and recent activity.',
+      preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-route-tracker"]',
       title: 'Career Route Tracker',
       badge: 'CAREER TIMELINE',
-      description: 'Your career milestones dynamically light up as you complete real actions. Click on any milestone node to instantly jump to that module.',
+      description: 'Track your end-to-end career journey. Milestones dynamically light up as you build resumes, complete learning roadmaps, practice interviews, and launch applications.',
       preferredPlacement: 'bottom'
     },
     {
       targetSelector: '[data-tour="tour-resume"]',
-      title: 'Meet Resume & ATS Optimizer',
-      badge: 'STAGE 01 / PROFILE',
-      description: 'Score your resume against high-bar ATS filters and generate metrics-driven bullet alternatives formatted with Google XYZ formula.',
+      title: 'Resume & ATS Intelligence',
+      badge: 'BUILD / STAGE 01',
+      description: 'Audit your resume against strict ATS parser criteria, optimize XYZ impact bullet points, and query your resume context using vector RAG search.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-roadmaps"]',
       title: 'Learning Paths & Syllabi',
-      badge: 'STAGE 02 / FOUNDATION',
-      description: 'Generate customized 4-week learning roadmaps tailored to your target engineering domain with 1-click printable PDF exports.',
+      badge: 'BUILD / STAGE 02',
+      description: 'Generate customized multi-week structured learning roadmaps with interactive task checklists and 1-click printable PDF study guides.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-projects"]',
       title: 'Project Architect & Sandbox',
-      badge: 'STAGE 02 / ARCHITECTURE',
-      description: 'Synthesize copy-paste ready directory structures, normalized database schemas (SQL/NoSQL), and REST controller endpoint blueprints.',
-      preferredPlacement: 'right'
-    },
-    {
-      targetSelector: '[data-tour="tour-interviews"]',
-      title: 'Mock Voice Interviews',
-      badge: 'STAGE 03 / PREPARATION',
-      description: 'Practice real-time technical and behavioral interviews with Web Speech audio reading, voice dictation, and strict AI scoring.',
+      badge: 'BUILD / STAGE 03',
+      description: 'Synthesize production folder structures, normalized database schemas (SQL/NoSQL), and REST controller endpoint blueprints.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-coding"]',
       title: 'Live Code Challenge IDE',
-      badge: 'STAGE 03 / CODING',
-      description: 'Write solutions in our Monaco-style dark IDE and receive automated Time O(N) & Space O(1) complexity audits with optimal refactors.',
+      badge: 'PRACTICE / STAGE 01',
+      description: 'Solve real-world algorithmic problems with automated Time O(N) and Space O(1) complexity audits, test cases, and optimal refactors.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-interviews"]',
+      title: 'Mock Voice Interviews',
+      badge: 'PRACTICE / STAGE 02',
+      description: 'Practice realistic technical and behavioral interviews with Web Speech audio dictation, speech synthesis, and real-time AI scoring.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-daily-drill"]',
+      title: 'Daily Technical Drills',
+      badge: 'PRACTICE / STAGE 03',
+      description: 'Sharpen your engineering fundamentals every day to earn XP, maintain your study streak, and stay interview-ready.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-jd-match"]',
-      title: 'Job Match Audit',
-      badge: 'STAGE 03 / AUDIT',
-      description: 'Paste any target job description to run deep keyword compatibility checks, identify tech stack gaps, and prepare for tailored interview questions.',
+      title: 'Job Description Match Audit',
+      badge: 'GET HIRED / STAGE 01',
+      description: 'Compare your active resume profile against target job descriptions to identify stack gaps, match percentage, and customized interview prep.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-outreach"]',
-      title: 'Recruiter Outreach & DM Suite',
-      badge: 'STAGE 04 / CONVERSION',
-      description: 'Craft personalized cold DMs for Recruiters, Engineering Managers, and Founders to maximize interview response rates.',
-      preferredPlacement: 'right'
-    },
-    {
-      targetSelector: '[data-tour="tour-compensation"]',
-      title: 'Salary & Negotiation Copilot',
-      badge: 'STAGE 04 / NEGOTIATION',
-      description: 'Benchmark base, equity, and bonus compensation percentiles and generate tailored counter-offer email scripts.',
-      preferredPlacement: 'right'
-    },
-    {
-      targetSelector: '[data-tour="tour-chat"]',
-      title: 'Senior AI Career Coach',
-      badge: 'COACH / MENTOR',
-      description: 'Engage in dedicated 1-on-1 career coaching with conversational RAG context to review architectural decisions and interview strategies.',
+      title: 'Recruiter Outreach Suite',
+      badge: 'GET HIRED / STAGE 02',
+      description: 'Generate high-converting, personalized cold emails and LinkedIn pitches tailored for Recruiters, Engineering Managers, and Founders.',
       preferredPlacement: 'right'
     },
     {
       targetSelector: '[data-tour="tour-portfolio"]',
       title: 'Public Developer Portfolio',
-      badge: 'PROFILE / SHOWCASE',
-      description: 'Share your verified public developer portfolio (/p/:username) directly with recruiters and hiring managers.',
+      badge: 'GET HIRED / STAGE 03',
+      description: 'Share your verified public portfolio (/p/:username) with hiring managers to showcase your stack mastery, projects, and career milestones.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-compensation"]',
+      title: 'Salary & Negotiation Copilot',
+      badge: 'CAREER / STAGE 01',
+      description: 'Benchmark base, equity, and total compensation percentiles and generate tailored counter-offer negotiation scripts.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-career-badge"]',
+      title: 'Verified Career Badge',
+      badge: 'CAREER / STAGE 02',
+      description: 'Earn and showcase your verified VertexPath career credential badge on LinkedIn, GitHub repositories, and resumes.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-profile"]',
+      title: 'Developer Career Profile',
+      badge: 'SYSTEM / PROFILE',
+      description: 'Configure your target career roles, primary tech stack, years of experience, and platform preferences.',
       preferredPlacement: 'right'
     }
   ];
@@ -112,6 +135,8 @@ export const ProductTour: React.FC = () => {
   const updateTargetPosition = useCallback(() => {
     if (!isOpen) return;
     const current = steps[currentStep];
+    if (!current) return;
+
     const el = document.querySelector(current.targetSelector);
     
     // Clear previous highlight
@@ -144,29 +169,42 @@ export const ProductTour: React.FC = () => {
 
   useEffect(() => {
     const hasCompleted = localStorage.getItem('vertexpath_tour_completed');
-    if (!hasCompleted) {
-      const timer = setTimeout(() => setIsOpen(true), 900);
+    if (!hasCompleted && location.pathname === '/dashboard') {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setCurrentStep(0);
+      }, 800);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [location.pathname]);
 
+  // Handle manual trigger event
   useEffect(() => {
     const handleStartTour = () => {
-      setCurrentStep(0);
+      if (location.pathname !== '/dashboard') {
+        navigate('/dashboard');
+      }
       setIsOpen(true);
+      setCurrentStep(0);
     };
+
     window.addEventListener('startVertexTour', handleStartTour);
     return () => window.removeEventListener('startVertexTour', handleStartTour);
-  }, []);
+  }, [location.pathname, navigate]);
 
+  // Position recalculation
   useEffect(() => {
     if (isOpen) {
       updateTargetPosition();
-      const interval = setInterval(updateTargetPosition, 250);
+      const timer = setTimeout(updateTargetPosition, 100);
+      const timer2 = setTimeout(updateTargetPosition, 300);
+
       window.addEventListener('resize', updateTargetPosition);
       window.addEventListener('scroll', updateTargetPosition, true);
+
       return () => {
-        clearInterval(interval);
+        clearTimeout(timer);
+        clearTimeout(timer2);
         window.removeEventListener('resize', updateTargetPosition);
         window.removeEventListener('scroll', updateTargetPosition, true);
       };
@@ -175,9 +213,10 @@ export const ProductTour: React.FC = () => {
     }
   }, [isOpen, currentStep, updateTargetPosition]);
 
+  // Keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
       if (e.key === 'Escape') {
         handleSkip();
       } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
@@ -186,6 +225,7 @@ export const ProductTour: React.FC = () => {
         handlePrev();
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, currentStep]);
@@ -219,6 +259,7 @@ export const ProductTour: React.FC = () => {
   if (!isOpen) return null;
 
   const current = steps[currentStep];
+  if (!current) return null;
 
   const popoverWidth = Math.min(360, window.innerWidth - 32);
   const popoverHeight = 210;
@@ -265,22 +306,22 @@ export const ProductTour: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 pointer-events-none select-none">
       
-      {/* Dark overlay with NO blur */}
+      {/* Dark overlay with crisp contrast */}
       <div 
-        className="fixed inset-0 bg-[#07080C]/70 pointer-events-auto transition-opacity duration-300"
+        className="fixed inset-0 bg-[#09090B]/75 pointer-events-auto transition-opacity duration-300"
         onClick={handleSkip}
       />
 
-      {/* Slack/Userpilot Style Popover Card */}
+      {/* Popover Card */}
       <div
-        className="fixed pointer-events-auto z-50 bg-[#121620] border-2 border-[#9B5CFF] rounded-2xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_30px_rgba(155,92,255,0.3)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
+        className="fixed pointer-events-auto z-50 bg-[#15161C] border border-[#8B5CF6]/50 rounded-xl p-5 shadow-[0_12px_48px_rgba(0,0,0,0.9),0_0_24px_rgba(139,92,246,0.25)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
         style={{
           top: `${popoverTop}px`,
           left: `${popoverLeft}px`,
           width: `${popoverWidth}px`
         }}
       >
-        {/* Crisp Triangular Pointer Arrow touching target */}
+        {/* Pointer Arrow */}
         {arrowSide === 'left' && (
           <div
             className="absolute w-0 h-0 pointer-events-none"
@@ -289,17 +330,17 @@ export const ProductTour: React.FC = () => {
               top: `${arrowOffset}px`,
               borderTop: `${arrowSize}px solid transparent`,
               borderBottom: `${arrowSize}px solid transparent`,
-              borderRight: `${arrowSize + 2}px solid #9B5CFF`,
+              borderRight: `${arrowSize + 2}px solid rgba(139,92,246,0.5)`,
             }}
           >
             <div
               className="absolute w-0 h-0"
               style={{
-                left: '2px',
+                left: '1px',
                 top: `-${arrowSize}px`,
                 borderTop: `${arrowSize}px solid transparent`,
                 borderBottom: `${arrowSize}px solid transparent`,
-                borderRight: `${arrowSize}px solid #121620`,
+                borderRight: `${arrowSize}px solid #15161C`,
               }}
             />
           </div>
@@ -313,17 +354,17 @@ export const ProductTour: React.FC = () => {
               left: `${arrowOffset}px`,
               borderLeft: `${arrowSize}px solid transparent`,
               borderRight: `${arrowSize}px solid transparent`,
-              borderBottom: `${arrowSize + 2}px solid #9B5CFF`,
+              borderBottom: `${arrowSize + 2}px solid rgba(139,92,246,0.5)`,
             }}
           >
             <div
               className="absolute w-0 h-0"
               style={{
-                top: '2px',
+                top: '1px',
                 left: `-${arrowSize}px`,
                 borderLeft: `${arrowSize}px solid transparent`,
                 borderRight: `${arrowSize}px solid transparent`,
-                borderBottom: `${arrowSize}px solid #121620`,
+                borderBottom: `${arrowSize}px solid #15161C`,
               }}
             />
           </div>
@@ -337,17 +378,17 @@ export const ProductTour: React.FC = () => {
               left: `${arrowOffset}px`,
               borderLeft: `${arrowSize}px solid transparent`,
               borderRight: `${arrowSize}px solid transparent`,
-              borderTop: `${arrowSize + 2}px solid #9B5CFF`,
+              borderTop: `${arrowSize + 2}px solid rgba(139,92,246,0.5)`,
             }}
           >
             <div
               className="absolute w-0 h-0"
               style={{
-                bottom: '2px',
+                bottom: '1px',
                 left: `-${arrowSize}px`,
                 borderLeft: `${arrowSize}px solid transparent`,
                 borderRight: `${arrowSize}px solid transparent`,
-                borderTop: `${arrowSize}px solid #121620`,
+                borderTop: `${arrowSize}px solid #15161C`,
               }}
             />
           </div>
@@ -356,19 +397,19 @@ export const ProductTour: React.FC = () => {
         {/* Card Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#9B5CFF] animate-pulse" />
-            <span className="text-[10px] font-mono font-extrabold uppercase text-[#C49AFF] tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6] animate-pulse" />
+            <span className="text-[10px] font-mono font-bold uppercase text-[#A78BFA] tracking-wider">
               {current.badge}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-slate-400 font-bold">
-              {currentStep + 1} of {steps.length}
+            <span className="text-[10px] font-mono text-[#71717A] font-semibold">
+              {currentStep + 1} / {steps.length}
             </span>
             <button
               onClick={handleSkip}
-              className="text-slate-400 hover:text-white p-1 rounded-md hover:bg-slate-800/60 cursor-pointer"
+              className="text-[#71717A] hover:text-[#F4F4F5] p-1 rounded-md hover:bg-[#111318] cursor-pointer transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -377,19 +418,19 @@ export const ProductTour: React.FC = () => {
 
         {/* Card Title & Content */}
         <div className="space-y-1.5">
-          <h4 className="text-base font-extrabold text-[#F4F1EA] tracking-tight leading-snug">
+          <h4 className="text-sm font-bold text-[#F4F4F5] tracking-tight leading-snug">
             {current.title}
           </h4>
-          <p className="text-xs text-[#9299A8] leading-relaxed">
+          <p className="text-xs text-[#A1A1AA] leading-relaxed">
             {current.description}
           </p>
         </div>
 
         {/* Step Progress & Buttons */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
+        <div className="flex items-center justify-between pt-2 border-t border-[#25262D]">
           <button
             onClick={handleSkip}
-            className="text-[11px] font-semibold text-slate-400 hover:text-slate-200 cursor-pointer"
+            className="text-[11px] font-medium text-[#71717A] hover:text-[#A1A1AA] cursor-pointer transition-colors"
           >
             Skip
           </button>
@@ -398,7 +439,7 @@ export const ProductTour: React.FC = () => {
             {currentStep > 0 && (
               <button
                 onClick={handlePrev}
-                className="px-2.5 py-1.5 bg-[#1A202C] hover:bg-slate-700 text-[#F4F1EA] text-xs font-bold rounded-lg cursor-pointer"
+                className="px-2.5 py-1.5 bg-[#111318] hover:bg-[#25262D] text-[#F4F4F5] text-xs font-semibold rounded-lg border border-[#25262D] cursor-pointer transition-colors"
               >
                 Back
               </button>
@@ -406,9 +447,9 @@ export const ProductTour: React.FC = () => {
 
             <button
               onClick={handleNext}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-[#9B5CFF] hover:bg-[#A86FFF] text-[#07080C] text-xs font-extrabold rounded-lg shadow-[0_0_20px_rgba(155,92,255,0.4)] cursor-pointer active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow-[0_0_15px_rgba(139,92,246,0.35)] cursor-pointer active:scale-95 transition-all"
             >
-              <span>{currentStep === steps.length - 1 ? "Let's Go! 🚀" : "Next"}</span>
+              <span>{currentStep === steps.length - 1 ? "Finish Tour" : "Next"}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
