@@ -100,6 +100,7 @@ Best,
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!role.trim()) return;
+    localStorage.setItem('compensationCompleted', 'true');
     compMutation.mutate({
       role,
       level,

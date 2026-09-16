@@ -28,9 +28,9 @@ export const Landing: React.FC = () => {
     }
   }, [user]);
 
-  const getDotStyle = (node: 'start' | 'resume' | 'skills' | 'projects' | 'interviews' | 'destination') => {
+  const getDotStyle = (node: 'start' | 'resume' | 'skills' | 'projects' | 'interviews' | 'coding' | 'outreach' | 'destination') => {
     if (!user) {
-      if (node === 'start') return activeSection !== 'hero' ? 'bg-[#55D39A]' : 'bg-slate-800';
+      if (node === 'start') return activeSection !== 'hero' ? 'bg-[#55D39A]' : 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
       if (node === 'resume') {
         return activeSection === 'resume' ? 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15' :
                ['gaps', 'roadmap', 'blueprint', 'interview', 'destination'].includes(activeSection) ? 'bg-[#55D39A]' : 'bg-slate-800';
@@ -47,6 +47,12 @@ export const Landing: React.FC = () => {
         return activeSection === 'interview' ? 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15' :
                activeSection === 'destination' ? 'bg-[#55D39A]' : 'bg-slate-800';
       }
+      if (node === 'coding') {
+        return activeSection === 'destination' ? 'bg-[#55D39A]' : 'bg-slate-800';
+      }
+      if (node === 'outreach') {
+        return activeSection === 'destination' ? 'bg-[#55D39A]' : 'bg-slate-800';
+      }
       return activeSection === 'destination' ? 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15' : 'bg-slate-800';
     }
 
@@ -54,7 +60,8 @@ export const Landing: React.FC = () => {
     const totalSkills = userStats?.totalSkills || 0;
     const totalRoadmaps = userStats?.totalRoadmaps || 0;
     const interviewCompleted = localStorage.getItem('interviewCompleted') === 'true';
-    const jobMatchCompleted = localStorage.getItem('jobMatchCompleted') === 'true';
+    const codingCompleted = localStorage.getItem('codingCompleted') === 'true';
+    const outreachCompleted = localStorage.getItem('outreachCompleted') === 'true' || localStorage.getItem('compensationCompleted') === 'true' || localStorage.getItem('jobMatchCompleted') === 'true';
 
     if (node === 'start') return 'bg-[#55D39A]';
     if (node === 'resume') {
@@ -76,18 +83,29 @@ export const Landing: React.FC = () => {
       if (totalRoadmaps > 0) return 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
       return 'bg-slate-800';
     }
-    if (jobMatchCompleted) return 'bg-[#55D39A]';
-    if (interviewCompleted) return 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
+    if (node === 'coding') {
+      if (codingCompleted) return 'bg-[#55D39A]';
+      if (interviewCompleted) return 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
+      return 'bg-slate-800';
+    }
+    if (node === 'outreach') {
+      if (outreachCompleted) return 'bg-[#55D39A]';
+      if (codingCompleted) return 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
+      return 'bg-slate-800';
+    }
+    if (outreachCompleted) return 'bg-[#9B5CFF] ring-4 ring-[#9B5CFF]/15';
     return 'bg-slate-800';
   };
 
-  const getNodeOpacity = (node: 'start' | 'resume' | 'skills' | 'projects' | 'interviews' | 'destination') => {
+  const getNodeOpacity = (node: 'start' | 'resume' | 'skills' | 'projects' | 'interviews' | 'coding' | 'outreach' | 'destination') => {
     if (!user) {
       if (node === 'start') return activeSection !== 'hero' ? 'opacity-100' : 'opacity-40';
       if (node === 'resume') return ['resume', 'gaps', 'roadmap', 'blueprint', 'interview', 'destination'].includes(activeSection) ? 'opacity-100' : 'opacity-40';
       if (node === 'skills') return ['gaps', 'roadmap', 'blueprint', 'interview', 'destination'].includes(activeSection) ? 'opacity-100' : 'opacity-40';
       if (node === 'projects') return ['roadmap', 'blueprint', 'interview', 'destination'].includes(activeSection) ? 'opacity-100' : 'opacity-40';
       if (node === 'interviews') return ['interview', 'destination'].includes(activeSection) ? 'opacity-100' : 'opacity-40';
+      if (node === 'coding') return ['interview', 'destination'].includes(activeSection) ? 'opacity-100' : 'opacity-40';
+      if (node === 'outreach') return activeSection === 'destination' ? 'opacity-100' : 'opacity-40';
       return activeSection === 'destination' ? 'opacity-100' : 'opacity-40';
     }
     
@@ -95,16 +113,20 @@ export const Landing: React.FC = () => {
     const totalSkills = userStats?.totalSkills || 0;
     const totalRoadmaps = userStats?.totalRoadmaps || 0;
     const interviewCompleted = localStorage.getItem('interviewCompleted') === 'true';
+    const codingCompleted = localStorage.getItem('codingCompleted') === 'true';
+    const outreachCompleted = localStorage.getItem('outreachCompleted') === 'true' || localStorage.getItem('compensationCompleted') === 'true' || localStorage.getItem('jobMatchCompleted') === 'true';
 
     if (node === 'start') return 'opacity-100';
     if (node === 'resume') return 'opacity-100';
     if (node === 'skills') return totalDocs > 0 ? 'opacity-100' : 'opacity-40';
     if (node === 'projects') return totalSkills > 0 ? 'opacity-100' : 'opacity-40';
     if (node === 'interviews') return totalRoadmaps > 0 ? 'opacity-100' : 'opacity-40';
-    return interviewCompleted ? 'opacity-100' : 'opacity-40';
+    if (node === 'coding') return interviewCompleted ? 'opacity-100' : 'opacity-40';
+    if (node === 'outreach') return codingCompleted ? 'opacity-100' : 'opacity-40';
+    return outreachCompleted ? 'opacity-100' : 'opacity-40';
   };
-  
-  // Terms & Privacy Modals (Preserving existing logic)
+
+    // Terms & Privacy Modals (Preserving existing logic)
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [activeModalTab, setActiveModalTab] = useState<'terms' | 'privacy'>('terms');
 
@@ -372,14 +394,14 @@ export const Landing: React.FC = () => {
           <div className="space-y-4">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Navigation Map</span>
             
-            <div className="flex flex-col gap-6 relative pl-4 border-l border-slate-800/80">
+            <div className="flex flex-col gap-5 relative pl-4 border-l border-slate-800/80">
               
               {/* START Node */}
               <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('start')}`}>
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('start')}`} />
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F1EA]">START</p>
-                  <p className="text-[10px] text-slate-550">Initial checkout</p>
+                  <p className="text-[10px] text-slate-500">Initial profile checkout</p>
                 </div>
               </div>
 
@@ -387,8 +409,8 @@ export const Landing: React.FC = () => {
               <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('resume')}`}>
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('resume')}`} />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Resume</p>
-                  <p className="text-[10px] text-slate-550">Evaluation uploaded</p>
+                  <p className="text-xs font-bold text-[#F4F1EA]">Resume & ATS</p>
+                  <p className="text-[10px] text-slate-500">Score & Google XYZ optimization</p>
                 </div>
               </div>
 
@@ -396,8 +418,8 @@ export const Landing: React.FC = () => {
               <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('skills')}`}>
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('skills')}`} />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Skills Map</p>
-                  <p className="text-[10px] text-slate-550">Active Checkpoint (Spring Boot)</p>
+                  <p className="text-xs font-bold text-[#F4F1EA]">Skills & Roadmaps</p>
+                  <p className="text-[10px] text-slate-500">Curriculum & syllabus checkpoints</p>
                 </div>
               </div>
 
@@ -405,8 +427,8 @@ export const Landing: React.FC = () => {
               <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('projects')}`}>
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('projects')}`} />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Project Blueprint</p>
-                  <p className="text-[10px] text-slate-550">Scaffolding sandbox</p>
+                  <p className="text-xs font-bold text-[#F4F1EA]">Project Architect</p>
+                  <p className="text-[10px] text-slate-500">Full-stack specs & schema blueprints</p>
                 </div>
               </div>
 
@@ -414,8 +436,26 @@ export const Landing: React.FC = () => {
               <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('interviews')}`}>
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('interviews')}`} />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-[#F4F1EA]">Interviews</p>
-                  <p className="text-[10px] text-slate-555">Mock prep simulation</p>
+                  <p className="text-xs font-bold text-[#F4F1EA]">Mock Interviews</p>
+                  <p className="text-[10px] text-slate-500">Voice-powered technical screening</p>
+                </div>
+              </div>
+
+              {/* Coding Challenges Node */}
+              <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('coding')}`}>
+                <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('coding')}`} />
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-[#F4F1EA]">Live Code IDE</p>
+                  <p className="text-[10px] text-slate-500">Algorithmic Big-O complexity analyzer</p>
+                </div>
+              </div>
+
+              {/* Outreach & Salary Node */}
+              <div className={`flex items-center gap-3 relative transition-opacity duration-500 ${getNodeOpacity('outreach')}`}>
+                <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('outreach')}`} />
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-[#F4F1EA]">Outreach & Salary</p>
+                  <p className="text-[10px] text-slate-500">Recruiter DMs & counter-offer copilot</p>
                 </div>
               </div>
 
@@ -424,7 +464,7 @@ export const Landing: React.FC = () => {
                 <div className={`absolute -left-[21px] w-2.5 h-2.5 rounded-full transition-all duration-500 ${getDotStyle('destination')}`} />
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F1EA]">Destination</p>
-                  <p className="text-[10px] text-slate-550">Target role</p>
+                  <p className="text-[10px] text-slate-500">Target role & verified portfolio</p>
                 </div>
               </div>
 

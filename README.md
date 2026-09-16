@@ -1,63 +1,78 @@
-# VertexPath - AI-Powered Career Development Platform
+# VertexPath - Enterprise AI Career Operating System
 
 [![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot_3-F2F4F9?style=for-the-badge&logo=spring-boot&logoColor=6DB33F)](https://spring.io/projects/spring-boot)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75C2?style=for-the-badge&logo=google-gemini&logoColor=white)](https://ai.google.dev/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
 
-VertexPath is an all-in-one, microservice-ready AI Career Development Platform that helps students, freshers, and professionals accelerate their technical readiness through LLM-driven personalized roadmaps, mock voice interviews, ATS optimization, and code scaffolding.
+VertexPath is an all-in-one, microservice-ready **AI Career Development Operating System** designed to bridge fragmented developer tools into a single cohesive journey — from foundational ATS resume benchmarking to live algorithmic complexity audits, voice-powered mock interviews, recruiter cold outreach, compensation negotiation, and public shareable portfolios.
 
 ---
 
-## 📸 Product Screenshots
+## 📸 Product Showcase
 
-### 🔑 Secure OTP Account Verification
-![Authentication & Verification](screenshots/verification.png)
-
-### 📊 Gamified Skill Dashboard & Daily Drill
+### 📊 Gamified Skill Dashboard & Career Route Tracker
+Real-time milestone tracking that synchronizes with your actual progress across roadmaps, project blueprints, coding challenges, and mock interviews.
 ![Dashboard](screenshots/dashboard.png)
 
 ### 🗺️ AI-Generated Syllabus Roadmaps & Printable PDF Export
+Customized week-by-week curriculum roadmaps with estimated hours and 1-click Markdown or high-resolution PDF exports.
 ![Syllabus Roadmap](screenshots/roadmap.png)
 
 ### 🛠️ Developer Project Sandbox & Architecture Downloader
+Scaffolds copy-paste ready directory trees, PostgreSQL relational schemas, and REST endpoint blueprints.
 ![Project Generator](screenshots/project_generator.png)
+
+### 🔑 Secure OTP Email Verification & Profile Security
+Production-grade 6-digit numeric OTP authentication with token renewal and persistent session security.
+![Authentication & Verification](screenshots/verification.png)
 
 ---
 
-## 🌟 Core Feature Suite
+## 🌟 Complete Feature Suite
 
-1. **🎙️ Voice-Powered Mock Interview Simulator**:
-   - **Text-to-Speech (AI Voice)**: Questions read aloud using browser-native Web Speech synthesis.
-   - **Speech-to-Text (Voice Dictation)**: Real-time voice answer transcription with live waveform cues.
-   - **Timed Simulator**: Toggleable 2-minute countdown timer for high-pressure technical screening.
-   - **Strict Evaluator**: Grades answers 0–100% with detailed architectural critiques and model reference solutions.
+### 1. 💌 AI Cold Outreach & Recruiter DM Suite (`/dashboard/outreach`)
+- **Multi-Angle Generator**: Instantly crafts 3 high-converting pitches tailored to **Recruiters**, **Engineering Managers**, and **Founders / Hiring Leads**.
+- **Tone & Skill Tailoring**: Configurable by target company, role, skills, and energy level (Casual Startup, Direct & Technical, High Energy).
+- **1-Click Copy**: Instant clipboard copy with subject line recommendations.
 
-2. **✨ AI Resume Bullet Point Optimizer (Google XYZ Formula)**:
-   - Transforms passive resume bullets into 3 production-grade, metric-quantified ATS alternatives (Performance-focused, Scale-focused, and Business-focused).
+### 2. ⚡ Live Code Challenge & Complexity Analyzer (`/dashboard/coding`)
+- **In-Browser Monaco-Style IDE**: Dark-mode syntax editor with multi-language support (Python, JavaScript, TypeScript, Java, C++, Go).
+- **Automated Algorithmic Audit**: Calculates **Time Complexity $O(N)$** and **Space Complexity $O(1)$** with mathematical breakdowns.
+- **Edge-Case & Refactoring Engine**: Identifies unhandled edge cases and generates optimal production-grade refactored code.
 
-3. **📦 1-Click Export Suite**:
-   - **Roadmaps**: Export personalized learning checklists as clean **Markdown (.MD)** or **Print / Save as PDF**.
-   - **Project Sandbox**: 1-click **"Download Spec (.MD)"** bundling folder layouts, normalized PostgreSQL schemas, and REST endpoint blueprints.
-   - **Career Coach**: Export full interactive coaching dialogues as Markdown study sheets.
+### 3. 💼 Tech Salary & Negotiation Copilot (`/dashboard/compensation`)
+- **Market Compensation Breakdown**: Visualizes 25th, 50th (Median), 75th, and 90th percentile total compensation (Base + Equity + Bonus) by Role, Seniority, and Location (US, India, Europe, Remote).
+- **Leverage Assessment**: Evaluates negotiation leverage based on competing offers and niche domain experience.
+- **Counter-Offer Script Generator**: Generates professional, non-confrontational counter-offer email templates for +10% to +20% increases.
 
-4. **🎮 Gamified Dashboard, Daily Drill & Shareable Career Badge**:
-   - **5-Minute Daily Technical Challenge**: Scenario-based technical multiple-choice drills that award XP and boost daily study streaks.
-   - **Shareable Career Readiness Certificate**: Dark-mode certified badge with 1-click Markdown embed code for GitHub READMEs and LinkedIn sharing.
+### 4. 🌐 Public Shareable Developer Portfolio (`/p/:username` & `/portfolio/:username`)
+- **Public Profile URL**: Showcase verified skills, project blueprints, completed roadmaps, and social handles without requiring a login.
+- **Recruiter CTA**: Embedded 1-click "Reach Out" button and copyable markdown badge for GitHub READMEs.
 
-5. **📊 ATS Resume Analyzer & Cloudflare R2 / Neon Storage**:
-   - Computes ATS match scores, highlights missing technical keywords, and provides actionable formatting checklists.
+### 5. 🎙️ Voice-Powered Mock Interview Simulator (`/dashboard/interviews`)
+- **Text-to-Speech (AI Voice)**: Questions read aloud using browser-native Web Speech synthesis.
+- **Speech-to-Text (Voice Dictation)**: Real-time voice answer transcription with live waveform cues.
+- **Timed Simulator**: Toggleable 2-minute countdown timer for high-pressure technical screening.
+- **Strict Evaluator**: Grades answers 0–100% with detailed architectural critiques and model reference solutions.
 
-6. **🎯 Job Description (JD) Compatibility Match**:
-   - Evaluates resume alignment against pasted target job requirements, highlighting critical tech stack gaps and interview prep topics.
+### 6. ✨ AI Resume Bullet Point Optimizer (Google XYZ Formula) (`/dashboard/resume`)
+- Transforms raw, passive bullet points into 3 high-impact alternatives formatted with Google's `[Accomplished X, as measured by Y, by doing Z]` standard (Performance, Scale, Business).
 
-7. **📚 RAG Context Q&A Sandbox**:
-   - Indexes user-uploaded PDFs, DOCXs, and PPTXs in ChromaDB to answer domain questions grounded strictly in document data.
+### 7. 🎯 Job Description (JD) Compatibility Match (`/dashboard/jd-match`)
+- Evaluates resume alignment against pasted target job descriptions, highlighting critical tech stack gaps and interview prep topics.
 
-8. **🗺️ Interactive Weekly Curriculum Roadmaps**:
-   - Compiles personalized week-by-week syllabus tracks with estimated completion hours and interactive task checkboxes.
+### 8. ⌨️ Global Command Palette (`Ctrl + K` / `⌘ + K`)
+- Instant keyboard search modal accessible from any screen for quick navigation across all 10+ modules.
+
+### 9. 🧭 Interactive Product Tour
+- Multi-step onboarding walkthrough with step indicators, "Next", "Back", "Skip", and keyboard navigation.
+
+### 10. 🏆 Verified Career Readiness Badge & Daily Streak Booster
+- Gamified 5-minute technical drills that award XP and maintain daily study streaks, with dark-mode certified badges ready for LinkedIn.
 
 ---
 
@@ -65,17 +80,18 @@ VertexPath is an all-in-one, microservice-ready AI Career Development Platform t
 
 ```mermaid
 graph TD
-    Client[Browser Frontend - React 19 / Vite] -->|Vercel Host| ReactApp(Vite React UI)
-    ReactApp -->|REST API Calls HTTP/1.1| SpringBoot(Java Spring Boot Core)
+    Client[Browser Client - React 19 / Vite] -->|Vercel Host| ReactApp(Vite React UI + Outfit Font)
+    ReactApp -->|REST API Calls HTTP/1.1| SpringBoot(Java Spring Boot 3 Core)
     SpringBoot -->|Neon Cloud| PostgresDB[(PostgreSQL Database)]
-    SpringBoot -->|Internal REST Proxy| PythonAI(FastAPI Python Engine)
-    PythonAI -->|LangChain / Google SDK| GeminiAPI[Google Gemini 1.5 Flash]
+    SpringBoot -->|Internal REST Proxy| PythonAI(FastAPI Neural Engine)
+    PythonAI -->|LangChain / Google SDK| NeuralAPI[VertexPath Proprietary Intelligence Engine]
     PythonAI -->|Local Vector Engine| ChromaDB[(ChromaDB Embeddings)]
 ```
 
-- **Frontend**: React 19, Vite, TypeScript, Tailwind CSS, Lucide React, Axios, TanStack React Query.
+- **Frontend**: React 19, Vite, TypeScript, Tailwind CSS, Framer Motion, Lucide React, Axios, TanStack React Query.
 - **Backend Core**: Spring Boot 3, Java 21, Spring Data JPA, Spring Security, JWT, PostgreSQL (Neon.tech).
 - **AI Microservice**: Python 3.12, FastAPI, LangChain, ChromaDB, Google Gemini API.
+- **Typography**: Google Fonts (`Outfit` + `Plus Jakarta Sans` + `Inter`).
 - **Orchestration & Hosting**: Docker, Docker Compose, Vercel, Render.
 
 ---
@@ -84,7 +100,7 @@ graph TD
 
 ### 📋 Prerequisites
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-- Acquire a **Google Gemini API Key** from [Google AI Studio](https://aistudio.google.com/).
+- Acquire a **Google AI Studio API Key** from [Google AI Studio](https://aistudio.google.com/).
 
 ### 🐳 Option A: Running via Docker Compose (Recommended)
 
@@ -106,12 +122,7 @@ graph TD
 
 ### 🔧 Option B: Running Services Individually (Without Docker)
 
-#### 1. Setup PostgreSQL Database
-```sql
-CREATE DATABASE pathpilot;
-```
-
-#### 2. Start Python AI Service
+#### 1. Start Python AI Microservice
 ```bash
 cd pathpilot-ai-service
 python -m venv venv
@@ -124,13 +135,13 @@ pip install -r requirements.txt
 python app/main.py
 ```
 
-#### 3. Start Spring Boot Backend
+#### 2. Start Spring Boot Backend
 ```bash
 cd pathpilot-backend
 ./mvnw spring-boot:run
 ```
 
-#### 4. Start React Frontend
+#### 3. Start React Frontend
 ```bash
 cd pathpilot-frontend
 npm install
@@ -139,9 +150,16 @@ npm run dev
 
 ---
 
-## ☁️ Production Deployment (Vercel & Render)
+## ☁️ Live Cloud Deployments
 
-1. **Database**: PostgreSQL on [Neon.tech](https://neon.tech/) (free perpetual tier).
-2. **AI Microservice**: Deploy `pathpilot-ai-service` on Render (Docker runtime) with `GEMINI_API_KEY`.
-3. **Backend Core**: Deploy `pathpilot-backend` on Render with `DATABASE_URL`, `AI_SERVICE_URL`, `JWT_SECRET`.
-4. **Frontend**: Deploy `pathpilot-frontend` on Vercel with `VITE_API_BASE_URL` pointing to the backend URL.
+| Component | Provider | Live URL |
+| :--- | :--- | :--- |
+| **Frontend Application** | Vercel | [https://pathpilot-ai-gilt.vercel.app](https://pathpilot-ai-gilt.vercel.app) |
+| **Backend Core REST API** | Render | [https://pathpilot-ai-1-lde3.onrender.com](https://pathpilot-ai-1-lde3.onrender.com) |
+| **AI Neural Microservice** | Render | [https://pathpilot-ai-engine.onrender.com](https://pathpilot-ai-engine.onrender.com) |
+| **Database** | Neon Cloud | PostgreSQL Serverless Perpetual |
+
+---
+
+## 📄 License
+VertexPath is proprietary software developed for accelerated developer career readiness. All rights reserved.

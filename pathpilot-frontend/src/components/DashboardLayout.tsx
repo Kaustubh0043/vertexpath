@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sidebar } from './Sidebar';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search, HelpCircle } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { CommandPalette } from './CommandPalette';
+import { ProductTour } from './ProductTour';
 
 export const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -84,6 +85,9 @@ export const DashboardLayout: React.FC = () => {
       {/* Spotlight Command Palette */}
       <CommandPalette isOpen={paletteOpen} onClose={() => setPaletteOpen(false)} />
 
+      {/* Interactive Product Tour Modal */}
+      <ProductTour />
+
       {/* Main Page Area */}
       <div className="flex-1 flex flex-col lg:pl-64 min-w-0">
         
@@ -111,6 +115,16 @@ export const DashboardLayout: React.FC = () => {
               <Search className="w-3.5 h-3.5 text-[#9B5CFF]" />
               <span className="text-[11px]">Quick actions...</span>
               <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-slate-900 border border-slate-800 rounded text-slate-400">Ctrl K</kbd>
+            </button>
+
+            {/* Product Tour Trigger Button */}
+            <button
+              onClick={() => window.dispatchEvent(new Event('startVertexTour'))}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#11151D] hover:bg-[#1A202C] border border-slate-800 hover:border-[#9B5CFF]/40 text-slate-400 hover:text-[#C49AFF] text-[11px] font-bold transition-all cursor-pointer shadow-sm"
+              title="Launch Guided Product Tour"
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-[#9B5CFF]" />
+              <span className="hidden md:inline">Tour</span>
             </button>
 
             {/* Subtle Study Streak */}

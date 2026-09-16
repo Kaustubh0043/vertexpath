@@ -89,6 +89,7 @@ export const CodingChallenge: React.FC = () => {
 
   const handleEvaluate = () => {
     if (!code.trim() || !challengeMutation.data) return;
+    localStorage.setItem('codingCompleted', 'true');
     evaluateMutation.mutate({
       problemTitle: challengeMutation.data.title,
       problemDesc: challengeMutation.data.description,

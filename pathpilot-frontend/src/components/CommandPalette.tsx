@@ -13,7 +13,9 @@ import {
   MessageSquare,
   Sparkles,
   ArrowRight,
-  X
+  X,
+  HelpCircle,
+  Share2
 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -27,7 +29,8 @@ interface CommandItem {
   description: string;
   category: string;
   icon: React.ElementType;
-  path: string;
+  path?: string;
+  action?: () => void;
   shortcut?: string;
 }
 
@@ -38,13 +41,33 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
 
   const commands: CommandItem[] = [
     {
+      id: 'tour',
+      title: 'Take Interactive Product Tour',
+      description: 'Step-by-step interactive walkthrough of all VertexPath features',
+      category: 'Help',
+      icon: HelpCircle,
+      action: () => {
+        window.dispatchEvent(new Event('startVertexTour'));
+      },
+      shortcut: 'T O U R'
+    },
+    {
       id: 'dashboard',
-      title: 'Dashboard Overview',
+      title: 'Dashboard Overview & Career Route',
       description: 'View daily streak, technical drill & readiness badge',
       category: 'Overview',
       icon: LayoutDashboard,
       path: '/dashboard',
       shortcut: 'G D'
+    },
+    {
+      id: 'portfolio',
+      title: 'Public Developer Portfolio',
+      description: 'View & share your verified public career portfolio profile',
+      category: 'Overview',
+      icon: Share2,
+      path: '/portfolio/me',
+      shortcut: 'G P'
     },
     {
       id: 'resume',
@@ -144,8 +167,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
         setSelectedIndex(prev => (prev > 0 ? prev - 1 : filteredCommands.length - 1));
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        if (filteredCommands[selectedIndex]) {
-          navigate(filteredCommands[selectedIndex].path);
+        const selected = filteredCommands[selectedIndex];
+        if (selected) {
+          if (selected.action) {
+            selected.action();
+          } else if (selected.path) {
+            navigate(selected.path);
+          }
           onClose();
         }
       }
@@ -158,71 +186,80 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-[#07080C]/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-xl bg-[#0D1016] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-scale-up"
+        className="relative w-full max-w-2xl bg-[#0D1016] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-800/80 bg-[#11151D]/60">
-          <Search className="w-5 h-5 text-[#9B5CFF] shrink-0" />
+        {/* Search Header */}
+        <div className="flex items-center px-4 py-3.5 border-b border-slate-900 gap-3">
+          <Search className="w-5 h-5 text-[#9B5CFF]" />
           <input
             type="text"
-            autoFocus
-            placeholder="Type a command, tool name, or feature..."
+            placeholder="Type a command or search tools (e.g. 'coding', 'salary', 'tour')..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-transparent border-none text-sm text-[#F4F1EA] placeholder-slate-500 focus:outline-none focus:ring-0"
+            autoFocus
+            className="flex-1 bg-transparent text-sm text-[#F4F1EA] placeholder:text-slate-500 focus:outline-none"
           />
           <button 
             onClick={onClose}
-            className="p-1 text-slate-500 hover:text-slate-300 rounded-md transition-colors cursor-pointer"
+            className="text-slate-500 hover:text-slate-300 p-1 rounded-md hover:bg-slate-900 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Command List */}
-        <div className="max-h-[380px] overflow-y-auto p-2 space-y-1 custom-scrollbar">
+        {/* Results List */}
+        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-slate-900/50">
           {filteredCommands.length === 0 ? (
-            <div className="text-center py-10 space-y-2">
-              <Sparkles className="w-6 h-6 text-slate-600 mx-auto" />
-              <p className="text-xs text-slate-400 font-medium">No actions found for "{query}"</p>
+            <div className="p-8 text-center text-sm text-slate-500">
+              No matching commands or tools found.
             </div>
           ) : (
-            filteredCommands.map((item, index) => {
-              const isSelected = index === selectedIndex;
-              const Icon = item.icon;
+            filteredCommands.map((command, idx) => {
+              const Icon = command.icon;
+              const isSelected = idx === selectedIndex;
               return (
                 <div
-                  key={item.id}
+                  key={command.id}
                   onClick={() => {
-                    navigate(item.path);
+                    if (command.action) {
+                      command.action();
+                    } else if (command.path) {
+                      navigate(command.path);
+                    }
                     onClose();
                   }}
-                  onMouseEnter={() => setSelectedIndex(index)}
-                  className={`
-                    flex items-center justify-between px-3.5 py-3 rounded-xl cursor-pointer transition-all
-                    ${isSelected 
-                      ? 'bg-[#9B5CFF]/15 border border-[#9B5CFF]/30 text-[#F4F1EA]' 
-                      : 'hover:bg-[#11151D] border border-transparent text-[#9299A8]'}
-                  `}
+                  onMouseEnter={() => setSelectedIndex(idx)}
+                  className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${
+                    isSelected 
+                      ? 'bg-[#151A23] border border-[#9B5CFF]/30 text-white' 
+                      : 'text-slate-300 hover:bg-[#11151D] border border-transparent'
+                  }`}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-[#9B5CFF] text-[#07080C]' : 'bg-[#11151D] text-slate-400'}`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-[#9B5CFF]/20 text-[#C49AFF]' : 'bg-slate-900 text-slate-400'}`}>
                       <Icon className="w-4 h-4" />
                     </div>
-                    <div className="min-w-0">
+                    <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-[#F4F1EA] truncate">{item.title}</span>
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/5 text-slate-500 font-mono uppercase">{item.category}</span>
+                        <span className="text-xs font-bold text-[#F4F1EA]">{command.title}</span>
+                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 bg-slate-900 rounded text-slate-500 font-mono">
+                          {command.category}
+                        </span>
                       </div>
-                      <p className="text-[11px] text-[#9299A8] truncate mt-0.5">{item.description}</p>
+                      <p className="text-[11px] text-slate-400">{command.description}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
-                    <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'translate-x-0.5 text-[#9B5CFF]' : 'opacity-0'}`} />
+                  <div className="flex items-center gap-2">
+                    {command.shortcut && (
+                      <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono bg-slate-900/80 border border-slate-800 rounded text-slate-500">
+                        {command.shortcut}
+                      </kbd>
+                    )}
+                    <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? 'text-[#9B5CFF] translate-x-0.5' : 'text-slate-700'}`} />
                   </div>
                 </div>
               );
@@ -230,13 +267,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
           )}
         </div>
 
-        {/* Footer info */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#07080C] border-t border-slate-900 text-[10px] text-slate-500 font-mono">
-          <div className="flex items-center gap-2">
-            <span>Navigate: <kbd className="px-1 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">↑</kbd> <kbd className="px-1 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">↓</kbd></span>
-            <span>Select: <kbd className="px-1 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">↵</kbd></span>
+        {/* Footer shortcuts */}
+        <div className="flex items-center justify-between px-4 py-2.5 bg-[#090C10] border-t border-slate-900 text-[10px] text-slate-500">
+          <div className="flex items-center gap-3">
+            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">↑↓</kbd> Navigate</span>
+            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">↵</kbd> Select</span>
+            <span><kbd className="font-mono bg-slate-900 px-1 py-0.5 rounded border border-slate-800">ESC</kbd> Close</span>
           </div>
-          <span>Press <kbd className="px-1 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">ESC</kbd> to exit</span>
+          <span className="text-slate-600 font-mono">VertexPath Command v2.4</span>
         </div>
       </div>
     </div>

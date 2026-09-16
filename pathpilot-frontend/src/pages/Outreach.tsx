@@ -89,6 +89,7 @@ Best,
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!company.trim() || !role.trim()) return;
+    localStorage.setItem('outreachCompleted', 'true');
     outreachMutation.mutate({
       company,
       role,
