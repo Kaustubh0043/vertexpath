@@ -21,7 +21,7 @@ export const Projects: React.FC = () => {
   
   // Rotating loading messages
   const projectLoadingMessages = [
-    "VertexPath is contacting Gemini AI...",
+    "VertexPath Neural Engine is modeling directory patterns...",
     "Analyzing your target tech stack structure...",
     "Modeling folder layouts & directory architecture...",
     "Designing normalized PostgreSQL entity relationships...",

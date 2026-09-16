@@ -27,7 +27,7 @@ export const Roadmaps: React.FC = () => {
   
   // Rotating loading messages
   const roadmapLoadingMessages = [
-    "VertexPath is contacting Gemini AI...",
+    "VertexPath Neural Engine is synthesizing study parameters...",
     "Structuring progressive weekly learning modules...",
     "Drafting curriculum descriptions & syllabus tracks...",
     "Compiling weekly tasks & reference study resources...",

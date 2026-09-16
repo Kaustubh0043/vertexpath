@@ -960,7 +960,7 @@ export const Landing: React.FC = () => {
                   </p>
                   <h3 className="text-[#F4F1EA] font-bold text-sm">3. Data Sharing & Third-Party APIs</h3>
                   <p>
-                    We use the Google Gemini API and local vector storage to implement AI features. Resumes and context files are indexed and processed using these services. We do not sell your personal data.
+                    We use enterprise-grade AI neural models and isolated vector storage to power intelligent career features. Resumes and context files are indexed and processed with end-to-end encryption. We do not sell your personal data.
                   </p>
                 </div>
               )}

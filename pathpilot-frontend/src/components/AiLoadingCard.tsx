@@ -11,7 +11,7 @@ interface AiLoadingCardProps {
 
 const DEFAULT_MESSAGES = [
   "Analyzing context and technical parameters...",
-  "Consulting Gemini neural intelligence model...",
+  "Running neural career intelligence synthesis...",
   "Structuring production patterns & schema...",
   "Formatting output and validating quality...",
   "Finalizing response..."
@@ -21,7 +21,7 @@ export const AiLoadingCard: React.FC<AiLoadingCardProps> = ({
   title = "AI Neural Engine Processing",
   messages = DEFAULT_MESSAGES,
   subtitle = "VertexPath is compiling your custom intelligence data.",
-  steps = ["Parameter Ingestion", "Gemini AI Synthesis", "Schema Validation"],
+  steps = ["Parameter Ingestion", "Neural Model Synthesis", "Schema Validation"],
   className = ""
 }) => {
   const [msgIndex, setMsgIndex] = useState(0);
@@ -134,7 +134,7 @@ export const AiLoadingCard: React.FC<AiLoadingCardProps> = ({
         {/* Footer Badge */}
         <div className="pt-2 flex items-center gap-1.5 text-[10px] text-[#9299A8]">
           <Bot className="w-3.5 h-3.5 text-[#9B5CFF]" />
-          <span>VertexPath Intelligent Engine &bull; Gemini 2.0 / Flash</span>
+          <span>VertexPath Proprietary Intelligence &bull; v2.4 Enterprise</span>
         </div>
 
       </div>
