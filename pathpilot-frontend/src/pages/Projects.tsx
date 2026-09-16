@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AiLoadingCard } from '../components/AiLoadingCard';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { 
@@ -117,16 +118,13 @@ export const Projects: React.FC = () => {
       </div>
 
       {generateProjectMutation.isPending && (
-        <div className="bg-[#0D1016]/45 border border-slate-900 rounded-lg p-10 flex flex-col items-center justify-center space-y-4 animate-fade-in py-16">
-          <Loader2 className="w-8 h-8 text-[#9B5CFF] animate-spin" />
-          <div className="space-y-2 text-center">
-            <p className="text-sm font-extrabold text-[#F4F1EA] font-display min-h-[20px] transition-all">
-              {projectLoadingMessages[loadingMsgIndex]}
-            </p>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-normal">
-              VertexPath is compiling your custom architectural blueprint. Please stand by.
-            </p>
-          </div>
+        <div className="animate-fade-in my-6">
+          <AiLoadingCard
+            title="Architecting Blueprint"
+            subtitle={`VertexPath is modeling folder layouts, database schemas, and REST endpoints for "${stackInput}".`}
+            messages={projectLoadingMessages}
+            steps={["Analyzing Stack", "Synthesizing Schema", "Generating REST APIs"]}
+          />
         </div>
       )}
 

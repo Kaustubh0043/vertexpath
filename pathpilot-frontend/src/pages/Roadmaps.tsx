@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AiLoadingCard } from '../components/AiLoadingCard';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { 
@@ -239,31 +240,44 @@ export const Roadmaps: React.FC = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Target Stack / Domain</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. AWS Solutions Architect, Spring Boot Developer"
-                  value={topicInput}
-                  onChange={(e) => setTopicInput(e.target.value)}
-                  className="w-full text-xs"
+            {generateRoadmapMutation.isPending ? (
+              <div className="animate-fade-in">
+                <AiLoadingCard
+                  title="Generating Curriculum"
+                  subtitle={`VertexPath is structuring a progressive 4-week learning roadmap for "${topicInput}".`}
+                  messages={[
+                    "Analyzing target technology domain...",
+                    "Mapping progressive week-by-week modules...",
+                    "Assigning actionable hands-on coding drills...",
+                    "Calculating realistic completion hours...",
+                    "Compiling your custom roadmap..."
+                  ]}
+                  steps={["Domain Scoping", "Module Sequencing", "Drill Assignment"]}
                 />
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Target Stack / Domain</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. AWS Solutions Architect, Spring Boot Developer"
+                    value={topicInput}
+                    onChange={(e) => setTopicInput(e.target.value)}
+                    className="w-full text-xs"
+                  />
+                </div>
 
-              <button
-                type="submit"
-                disabled={generateRoadmapMutation.isPending}
-                className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
-              >
-                {generateRoadmapMutation.isPending ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
+                <button
+                  type="submit"
+                  disabled={generateRoadmapMutation.isPending || !topicInput.trim()}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#9B5CFF] hover:bg-[#C49AFF] text-[#07080C] rounded text-xs font-bold transition-all cursor-pointer"
+                >
                   <span>Generate roadmap →</span>
-                )}
-              </button>
-            </form>
+                </button>
+              </form>
+            )}
             {generateRoadmapMutation.isError && (
               <div className="flex items-start gap-2 p-3 bg-[#FF6577]/10 border border-[#FF6577]/20 text-[#FF6577] text-xs rounded max-w-md mt-4 animate-fade-in">
                 <span>

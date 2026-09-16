@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AiLoadingCard } from '../components/AiLoadingCard';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { 
@@ -526,7 +527,21 @@ export const Resume: React.FC = () => {
 
           {/* Right Results Panel */}
           <div className="md:col-span-7 space-y-6">
-            {!bulletResult ? (
+            {optimizeBulletMutation.isPending ? (
+              <div className="animate-fade-in">
+                <AiLoadingCard
+                  title="Optimizing Resume Bullet"
+                  subtitle="Transforming raw statement into 3 quantified, high-impact Google XYZ variations."
+                  messages={[
+                    "Critiquing action verb strength and ownership...",
+                    "Applying Google XYZ metric-driven formula...",
+                    "Injecting performance metrics & concurrency metrics...",
+                    "Validating ATS keywords and formatting..."
+                  ]}
+                  steps={["Critique Parsing", "XYZ Metric Framing", "ATS Keyword Injection"]}
+                />
+              </div>
+            ) : !bulletResult ? (
               <div className="bg-[#0D1016] border border-slate-900 rounded-xl p-12 flex flex-col items-center justify-center text-center space-y-3 min-h-[350px]">
                 <div className="p-3 bg-[#11151D] border border-slate-800 rounded-xl">
                   <Sparkles className="w-8 h-8 text-[#9B5CFF]" />

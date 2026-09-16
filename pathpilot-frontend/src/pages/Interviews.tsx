@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { AiLoadingCard } from '../components/AiLoadingCard';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { 
@@ -488,8 +489,19 @@ export const Interviews: React.FC = () => {
               </div>
             )}
 
+            {evaluateAnswerMutation.isPending && (
+              <div className="animate-fade-in my-6">
+                <AiLoadingCard
+                  title="Evaluating Interview Answer"
+                  subtitle="VertexPath AI Engine is scoring your technical depth, STAR structure, and keyword accuracy."
+                  messages={evaluationLoadingMessages}
+                  steps={["Keyword Parsing", "Technical Depth Analysis", "Scoring & Model Answer"]}
+                />
+              </div>
+            )}
+
             {/* Active Evaluation Panel */}
-            {evaluation && (
+            {evaluation && !evaluateAnswerMutation.isPending && (
               <div className="space-y-6 animate-fade-in bg-[#0D1016] border border-slate-800/80 p-6 rounded-xl shadow-xl">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   <h5 className="text-xs font-bold text-[#F4F1EA] uppercase tracking-wider flex items-center gap-2">
