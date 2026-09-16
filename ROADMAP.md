@@ -9,16 +9,16 @@
 ## 📌 Table of Contents
 1. [Current State & Completed v1.0 Architecture](#1-current-state--completed-v10-architecture)
 2. [Phase 1.5: High-Impact Polish & UX Optimizations (Immediate Priorities)](#2-phase-15-high-impact-polish--ux-optimizations-immediate-priorities)
-3. [Phase 2.0: Advanced Capabilities & Market Differentiators (Scale & Retention)](#3-phase-20-advanced-capabilities--market-differentiators-scale--retention)
+3. [Phase 2.0: Advanced Capabilities, Mobile App & Theme Engine (Scale & Retention)](#3-phase-20-advanced-capabilities-mobile-app--theme-engine-scale--retention)
 4. [Phase 3.0: Ecosystem & Platform Expansion (Long-Term Vision)](#4-phase-30-ecosystem--platform-expansion-long-term-vision)
-5. [Technical Architecture & API Specifications](#5-technical-architecture--api-specifications)
+5. [Technical Architecture & Theme System Specifications](#5-technical-architecture--theme-system-specifications)
 6. [Release Milestone Checklist](#6-release-milestone-checklist)
 
 ---
 
 ## 1. Current State & Completed v1.0 Architecture
 
-VertexPath currently provides a unified developer tool experience designed around the **70/15/10/5 Dark Color Discipline** (`#09090B`, `#111318`, `#15161C`, `#25262D`, `#8B5CF6`, `#F4F4F5`) with a Raycast/Linear design aesthetic:
+VertexPath currently provides a unified developer tool experience designed around a precision dark canvas with Raycast/Linear aesthetic:
 
 ### 🧭 Navigation & Information Architecture
 * **`OVERVIEW`**: Command Center Dashboard (`/dashboard`) + Dynamic Career Route Tracker.
@@ -32,9 +32,20 @@ VertexPath currently provides a unified developer tool experience designed aroun
 
 ## 2. Phase 1.5: High-Impact Polish & UX Optimizations (Immediate Priorities)
 
-These enhancements require minimal backend modifications and maximize immediate user satisfaction, retention, and viral product sharing.
+These enhancements maximize immediate user satisfaction, retention, and viral product sharing.
 
-### 🎯 2.1 One-Click JD-to-Resume Tailor
+### 🌓 2.1 Complete Theme Engine (Light Mode, Dark Mode & System Default)
+* **Goal**: Provide seamless support for **Light Mode**, **Dark Mode**, and **Auto System Preference** for developers who prefer day-time reading or high-ambient light environments.
+* **Feature Scope**:
+  - **3-Way Theme Switcher**: Added to the Header bar, Command Palette (`Ctrl + K`), and Career Profile settings:
+    - ☀️ **Light Mode**: Crisp, high-contrast Linear-style light aesthetic (`#FAFAFA` canvas, `#FFFFFF` cards, `#E4E4E7` borders, `#18181B` typography, `#8B5CF6` purple accents).
+    - 🌙 **Dark Mode**: Current sleek Raycast dark aesthetic (`#09090B` canvas, `#15161C` cards, `#25262D` borders, `#F4F4F5` typography).
+    - 💻 **System Default**: Automatically syncs with `window.matchMedia('(prefers-color-scheme: dark)')`.
+  - **Instant Transition**: CSS custom properties (`--bg-primary`, `--surface`, `--card`, `--border`, `--text-primary`) managed via `data-theme="dark|light"` on the root `<html>` element with zero page flicker.
+
+---
+
+### 🎯 2.2 One-Click JD-to-Resume Tailor
 * **Goal**: Seamlessly connect the **Job Description Matcher** with the **AI XYZ Bullet Optimizer**.
 * **User Flow**:
   1. User pastes a Job Description in `JdMatch.tsx` and runs the compatibility audit.
@@ -47,7 +58,7 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-### 🎙️ 2.2 Curated Mock Interview Question Packs
+### 🎙️ 2.3 Curated Mock Interview Question Packs
 * **Goal**: Eliminate blank-screen paralysis in `Interviews.tsx` by offering 1-click curated interview tracks.
 * **Feature Scope**:
   - Add quick-select category chips above the role input:
@@ -60,7 +71,7 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-### 📄 2.3 One-Click Exportable PDF Audit Reports
+### 📄 2.4 One-Click Exportable PDF Audit Reports
 * **Goal**: Enable developers to export and share their **ATS Resume Scorecards** and **Mock Interview Feedback Reports**.
 * **Feature Scope**:
   - Add a **`[📥 Download PDF Report]`** button on:
@@ -70,7 +81,7 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-### 👁️ 2.4 Public Portfolio Live Engagement Counter
+### 👁️ 2.5 Public Portfolio Live Engagement Counter
 * **Goal**: Create a positive psychological feedback loop that encourages developers to put `/p/:username` on their LinkedIn & GitHub.
 * **Feature Scope**:
   - Add engagement metrics to the Public Portfolio header and Dashboard:
@@ -81,7 +92,7 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-### 🐙 2.5 GitHub Profile & Repository Auto-Sync
+### 🐙 2.6 GitHub Profile & Repository Auto-Sync
 * **Goal**: Reduce manual data entry by pulling real project repositories directly from GitHub.
 * **Feature Scope**:
   - In **Career Profile** (`Profile.tsx`), user enters their GitHub username (e.g., `octocat`).
@@ -90,9 +101,25 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-## 3. Phase 2.0: Advanced Capabilities & Market Differentiators (Scale & Retention)
+## 3. Phase 2.0: Advanced Capabilities, Mobile App & Theme Engine (Scale & Retention)
 
-### 🏢 3.1 Company-Specific AI Interview & Culture Simulators
+### 📲 3.1 Smartphone Direct Distribution (Android APK & iOS Direct Install)
+* **Goal**: Enable users to install and run VertexPath on smartphones directly from the website without relying on Google Play / Apple App Store approval or paying 15%–30% in-app purchase taxes.
+* **Distribution Mechanics**:
+  - **Android Direct `.apk` Sideloading**:
+    - Build signed standalone APK (`vertexpath-mobile.apk`) and host on Cloudflare R2 / GitHub Releases.
+    - Add a download section on the landing page and dashboard: **`[🤖 Download Android APK (Free)]`**.
+    - Downloads directly in seconds; user taps Install with zero store overhead.
+  - **iOS Direct Web App Install (Safari PWA)**:
+    - Add Web App Manifest (`manifest.json`) and iOS Apple touch icons (`apple-touch-icon.png`).
+    - Prompts iPhone users with a 1-click **"Add to Home Screen"** modal.
+    - Runs full screen on iOS with standalone app window, home screen icon, and zero browser chrome.
+  - **Mobile Optimized Workflows**:
+    - Focuses mobile experience on: **Daily Drills**, **Streak Reminders**, **Voice Interview Practice**, and **Portfolio Analytics**.
+
+---
+
+### 🏢 3.2 Company-Specific AI Interview & Culture Simulators
 * **Goal**: Move beyond generic role interview practice to company-tailored interview rounds.
 * **Features**:
   - **Company Modes**:
@@ -104,22 +131,12 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-### 📡 3.2 Real-Time Developer Job Radar & Opportunity Feed
+### 📡 3.3 Real-Time Developer Job Radar & Opportunity Feed
 * **Goal**: Provide automated, skill-matched job recommendations directly inside VertexPath.
 * **Features**:
   - AI engine matches the user's verified skills & target role against active remote/onsite developer job postings.
   - Generates a **Match Score (0-100%)** for each live listing.
   - 1-Click action to generate a tailored cover letter and LinkedIn pitch via Outreach Copilot for each matched job.
-
----
-
-### 📱 3.3 Progressive Web App (PWA) & Desktop Mode
-* **Goal**: Give developers a native desktop application feel on macOS, Windows, and Linux.
-* **Features**:
-  - Web App Manifest (`manifest.json`) and service worker configuration.
-  - Standalone installable app window without browser URL bars.
-  - Offline-ready access for cached roadmaps and study notes.
-  - System-level shortcut to trigger Command Palette (`Cmd + Shift + K`).
 
 ---
 
@@ -145,9 +162,23 @@ These enhancements require minimal backend modifications and maximize immediate 
 
 ---
 
-## 5. Technical Architecture & API Specifications
+## 5. Technical Architecture & Theme System Specifications
 
-### New Backend Endpoints Needed for Upcoming Features
+### Dual-Theme Token Specification
+
+| Token Name | 🌙 Dark Mode (Default) | ☀️ Light Mode | Usage |
+|---|---|---|---|
+| `--bg-primary` | `#09090B` | `#FAFAFA` | Main Page Canvas Background |
+| `--bg-secondary`| `#0D0E12` | `#F4F4F5` | Sidebar & Header Bars |
+| `--surface` | `#111318` | `#FFFFFF` | Input Fields & Sub-surfaces |
+| `--card` | `#15161C` | `#FFFFFF` | Main Feature Cards & Modals |
+| `--border` | `#25262D` | `#E4E4E7` | Dividers, Card Outlines & Separators |
+| `--text-primary`| `#F4F4F5` | `#18181B` | Headings & Primary Values |
+| `--text-secondary`| `#A1A1AA` | `#52525B` | Body Text & Descriptions |
+| `--text-muted` | `#71717A` | `#71717A` | Captions, Timestamps & Kbd Badges |
+| `--brand-purple`| `#8B5CF6` | `#7C3AED` | Primary Brand CTAs & Active Indicators |
+
+### New Endpoints for Roadmap Features
 
 ```
 POST /api/ai/resume/tailor-for-jd
@@ -164,31 +195,22 @@ GET /api/integrations/github/{username}
 └── Response: { repos: Array<{ name: string, description: string, stars: number, language: string, url: string }> }
 ```
 
-### Design System Token Standards (Must Preserve)
-* **Background Primary**: `#09090B` (Canvas)
-* **Background Secondary**: `#0D0E12` (Sidebar/Header)
-* **Surface Panel**: `#111318` (Inputs/Sub-panels)
-* **Card Surface**: `#15161C` (Module Cards)
-* **Border Color**: `#25262D` (Structural Dividers)
-* **Brand Purple Accent**: `#8B5CF6` (10% Strategic Focus)
-* **Text High Contrast**: `#F4F4F5` (Headings & Values)
-* **Text Muted**: `#A1A1AA` / `#71717A` (Descriptions & Placeholders)
-
 ---
 
 ## 6. Release Milestone Checklist
 
 - [x] **v1.0 Core Release** — 100% Feature Complete, Responsive Design System, 15-Step Tour, Full Deployments.
 - [ ] **v1.5 Polish Release**
+  - [ ] Complete Theme Engine (Light Mode / Dark Mode / System Default)
   - [ ] 1-Click JD-to-Resume Tailor integration
   - [ ] Curated Mock Interview Question Packs (FAANG, System Design, Behavioral)
   - [ ] 1-Click PDF Export for ATS Resume & Interview Scorecards
   - [ ] Public Portfolio Live Views Tracker
   - [ ] GitHub API Repository Sync
-- [ ] **v2.0 Scale Release**
+- [ ] **v2.0 Scale & Mobile Release**
+  - [ ] Direct Smartphone App Distribution (Android .apk download & iOS Safari PWA)
   - [ ] Company-Specific Interview Simulators (Google/Amazon/Stripe)
   - [ ] Real-Time Tech Job Radar & Match Engine
-  - [ ] PWA Desktop Installable App Support
   - [ ] Weekly Performance & Streak Email Digest
 - [ ] **v3.0 Ecosystem Release**
   - [ ] WebRTC Peer Mock Interview Studio
