@@ -18,7 +18,7 @@ public class EmailService {
     private String fromEmail;
 
     public String getFromEmail() {
-        return fromEmail;
+        return fromEmail != null ? fromEmail.trim() : "";
     }
 
     public void sendTestEmail(String toEmail) {
