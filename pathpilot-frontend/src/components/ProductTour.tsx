@@ -52,10 +52,17 @@ export const ProductTour: React.FC = () => {
       preferredPlacement: 'right'
     },
     {
+      targetSelector: '[data-tour="tour-projects"]',
+      title: 'Project Architect & Sandbox',
+      badge: 'STAGE 02 / ARCHITECTURE',
+      description: 'Synthesize copy-paste ready directory structures, normalized database schemas (SQL/NoSQL), and REST controller endpoint blueprints.',
+      preferredPlacement: 'right'
+    },
+    {
       targetSelector: '[data-tour="tour-interviews"]',
       title: 'Mock Voice Interviews',
       badge: 'STAGE 03 / PREPARATION',
-      description: 'Practice real-time technical and behavioral interviews with Web Speech audio reading and AI evaluation scores.',
+      description: 'Practice real-time technical and behavioral interviews with Web Speech audio reading, voice dictation, and strict AI scoring.',
       preferredPlacement: 'right'
     },
     {
@@ -63,6 +70,13 @@ export const ProductTour: React.FC = () => {
       title: 'Live Code Challenge IDE',
       badge: 'STAGE 03 / CODING',
       description: 'Write solutions in our Monaco-style dark IDE and receive automated Time O(N) & Space O(1) complexity audits with optimal refactors.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-jd-match"]',
+      title: 'Job Match Audit',
+      badge: 'STAGE 03 / AUDIT',
+      description: 'Paste any target job description to run deep keyword compatibility checks, identify tech stack gaps, and prepare for tailored interview questions.',
       preferredPlacement: 'right'
     },
     {
@@ -77,6 +91,13 @@ export const ProductTour: React.FC = () => {
       title: 'Salary & Negotiation Copilot',
       badge: 'STAGE 04 / NEGOTIATION',
       description: 'Benchmark base, equity, and bonus compensation percentiles and generate tailored counter-offer email scripts.',
+      preferredPlacement: 'right'
+    },
+    {
+      targetSelector: '[data-tour="tour-chat"]',
+      title: 'Senior AI Career Coach',
+      badge: 'COACH / MENTOR',
+      description: 'Engage in dedicated 1-on-1 career coaching with conversational RAG context to review architectural decisions and interview strategies.',
       preferredPlacement: 'right'
     },
     {
@@ -99,7 +120,6 @@ export const ProductTour: React.FC = () => {
     }
 
     if (el) {
-      // Don't scroll sticky header buttons, scroll body items smoothly
       if (current.targetSelector !== '[data-tour="tour-quick-actions"]') {
         el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
@@ -200,7 +220,6 @@ export const ProductTour: React.FC = () => {
 
   const current = steps[currentStep];
 
-  // Slack-Style Exact Positioning & Pointer Arrow Math
   const popoverWidth = Math.min(360, window.innerWidth - 32);
   const popoverHeight = 210;
   const arrowSize = 12;
