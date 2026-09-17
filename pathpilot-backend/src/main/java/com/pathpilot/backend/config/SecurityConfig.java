@@ -63,18 +63,29 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        List<String> originsList = new ArrayList<>();
+        List<String> originPatterns = new ArrayList<>();
+        originPatterns.add("https://*.vercel.app");
+        originPatterns.add("https://vertexpath.vercel.app");
+        originPatterns.add("https://pathpilot-ai-gilt.vercel.app");
+        originPatterns.add("http://localhost:[*]");
+        originPatterns.add("http://127.0.0.1:[*]");
+        originPatterns.add("https://*.onrender.com");
+
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
             for (String origin : allowedOrigins.split(",")) {
-                originsList.add(origin.trim());
+                String clean = origin.trim();
+                if (!clean.isEmpty()) {
+                    originPatterns.add(clean);
+                }
             }
         }
-        // Always allow credentials and methods
-        configuration.setAllowedOrigins(originsList);
+
+        configuration.setAllowedOriginPatterns(originPatterns);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control"));
-        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Disposition"));
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
