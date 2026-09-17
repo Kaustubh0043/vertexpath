@@ -165,21 +165,21 @@ export const Landing: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen text-[#F4F4F5] flex flex-col bg-[#09090B]">
+    <div className="relative min-h-screen text-[var(--text-primary)] flex flex-col bg-[var(--bg-primary)] transition-colors duration-200">
       
       {/* 1. Header Navigation (Section 6) */}
-      <header className="sticky top-0 z-40 w-full border-b border-[#25262D] bg-[#09090B]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <img src={logoImg} alt="VertexPath Logo" className="w-7 h-7 object-contain" />
-            <span className="text-base font-bold tracking-tight text-[#F4F4F5] font-display">VertexPath</span>
+            <span className="text-base font-bold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#A1A1AA]">
-            <a href="#features" className="hover:text-[#F4F4F5] transition-colors">Features</a>
-            <a href="#journey" className="hover:text-[#F4F4F5] transition-colors">How It Works</a>
-            <a href="#faq" className="hover:text-[#F4F4F5] transition-colors">FAQ</a>
-            <a href="#contact" className="hover:text-[#F4F4F5] transition-colors">Contact</a>
+          <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[var(--text-secondary)]">
+            <a href="#features" className="hover:text-[var(--text-primary)] transition-colors">Features</a>
+            <a href="#journey" className="hover:text-[var(--text-primary)] transition-colors">How It Works</a>
+            <a href="#faq" className="hover:text-[var(--text-primary)] transition-colors">FAQ</a>
+            <a href="#contact" className="hover:text-[var(--text-primary)] transition-colors">Contact</a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -196,7 +196,7 @@ export const Landing: React.FC = () => {
               <>
                 <button
                   onClick={() => navigate('/auth')}
-                  className="text-xs font-medium text-[#A1A1AA] hover:text-[#F4F4F5] transition-colors px-2 py-1 cursor-pointer"
+                  className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors px-2 py-1 cursor-pointer"
                 >
                   Sign In
                 </button>
@@ -217,22 +217,22 @@ export const Landing: React.FC = () => {
         
         {/* Left Headline Column */}
         <div className="lg:col-span-7 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#15161C] border border-[#25262D]">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[var(--card)] border border-[var(--border)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#A1A1AA]">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)]">
               Career Operating System
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight font-display text-[#F4F4F5]">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight font-display text-[var(--text-primary)]">
             YOUR CAREER<br />ISN'T A STRAIGHT LINE.
           </h1>
 
-          <p className="text-base sm:text-lg text-[#A78BFA] font-medium">
+          <p className="text-base sm:text-lg text-[var(--brand-purple)] font-medium">
             Build skills. Ship projects. Practice interviews. Get hired.
           </p>
 
-          <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed max-w-lg">
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg">
             VertexPath brings your developer career workflow into one intelligent workspace — from building your skills and projects to preparing for interviews and launching your job search.
           </p>
 
@@ -254,12 +254,12 @@ export const Landing: React.FC = () => {
 
         {/* Right Subtle Career Journey Flow Visual (Section 6) */}
         <div className="lg:col-span-5 card-surface p-6 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#25262D]">
-            <span className="text-[10px] font-mono text-[#71717A] uppercase tracking-wider">CAREER WORKFLOW</span>
+          <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">CAREER WORKFLOW</span>
             <span className="text-[10px] text-[#34D399] font-mono font-semibold">● ACTIVE SYSTEM</span>
           </div>
 
-          <div className="space-y-3 relative pl-4 border-l border-[#25262D]">
+          <div className="space-y-3 relative pl-4 border-l border-[var(--border)]">
             {[
               { stage: 'PROFILE', title: 'Resume & Skill Benchmark', status: 'Completed', icon: '✓', done: true },
               { stage: 'BUILD', title: 'Learning Paths & Project Specs', status: 'Active', icon: '●', active: true },
@@ -272,21 +272,21 @@ export const Landing: React.FC = () => {
                   step.done 
                     ? 'bg-[#34D399]/20 border-[#34D399] text-[#34D399]'
                     : step.active
-                    ? 'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[#A78BFA]'
-                    : 'bg-[#15161C] border-[#25262D] text-[#71717A]'
+                    ? 'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[var(--brand-purple)]'
+                    : 'bg-[var(--card)] border-[var(--border)] text-[var(--text-muted)]'
                 }`}>
                   {step.icon}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold text-[#71717A] uppercase">{step.stage}</span>
+                    <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase">{step.stage}</span>
                     {step.active && (
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#8B5CF6]/15 text-[#A78BFA] font-mono">
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#8B5CF6]/15 text-[var(--brand-purple)] font-mono">
                         Active Stage
                       </span>
                     )}
                   </div>
-                  <p className="text-xs font-semibold text-[#F4F4F5] mt-0.5">{step.title}</p>
+                  <p className="text-xs font-semibold text-[var(--text-primary)] mt-0.5">{step.title}</p>
                 </div>
               </div>
             ))}
@@ -300,10 +300,10 @@ export const Landing: React.FC = () => {
         
         <div className="space-y-2 text-center max-w-2xl mx-auto">
           <p className="eyebrow-text">MODULAR SUITE</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F4F4F5] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight">
             Everything you need in one unified workspace.
           </h2>
-          <p className="text-xs sm:text-sm text-[#A1A1AA]">
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
             Feature-rich without being visually busy. Organize your developer preparation into four disciplined stages.
           </p>
         </div>
@@ -311,11 +311,11 @@ export const Landing: React.FC = () => {
         <div className="space-y-14">
           {featureSections.map((sec, sIdx) => (
             <div key={sIdx} className="space-y-4">
-              <div className="border-b border-[#25262D] pb-2">
+              <div className="border-b border-[var(--border)] pb-2">
                 <span className="text-[11px] font-mono font-bold text-[#8B5CF6] uppercase tracking-wider">
                   {sec.category}
                 </span>
-                <p className="text-xs text-[#71717A] mt-0.5">{sec.tagline}</p>
+                <p className="text-xs text-[var(--text-muted)] mt-0.5">{sec.tagline}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -328,18 +328,18 @@ export const Landing: React.FC = () => {
                       className="card-surface card-surface-hover p-5 space-y-3 cursor-pointer group flex flex-col justify-between"
                     >
                       <div className="space-y-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-[#111318] border border-[#25262D] flex items-center justify-center text-[#8B5CF6] group-hover:border-[#8B5CF6]/40 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[#8B5CF6] group-hover:border-[#8B5CF6]/40 transition-colors">
                           <Icon className="w-4 h-4" />
                         </div>
-                        <h3 className="text-sm font-semibold text-[#F4F4F5] tracking-tight group-hover:text-white">
+                        <h3 className="text-sm font-semibold text-[var(--text-primary)] tracking-tight group-hover:text-white">
                           {feat.title}
                         </h3>
-                        <p className="text-xs text-[#A1A1AA] leading-relaxed">
+                        <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                           {feat.desc}
                         </p>
                       </div>
 
-                      <div className="pt-2 flex items-center gap-1 text-[11px] font-semibold text-[#8B5CF6] group-hover:text-[#A78BFA] transition-colors">
+                      <div className="pt-2 flex items-center gap-1 text-[11px] font-semibold text-[#8B5CF6] group-hover:text-[var(--brand-purple)] transition-colors">
                         <span>View module</span>
                         <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                       </div>
@@ -357,7 +357,7 @@ export const Landing: React.FC = () => {
       <section id="faq" className="w-full max-w-4xl mx-auto px-6 py-16 space-y-6">
         <div className="text-center space-y-1">
           <p className="eyebrow-text">FAQ</p>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#F4F4F5]">Frequently Asked Questions</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">Frequently Asked Questions</h2>
         </div>
 
         <div className="space-y-2.5">
@@ -365,15 +365,15 @@ export const Landing: React.FC = () => {
             <div key={idx} className="card-surface overflow-hidden">
               <button
                 onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                className="w-full text-left p-4 flex items-center justify-between text-xs sm:text-sm font-semibold text-[#F4F4F5] hover:text-[#A78BFA] transition-colors cursor-pointer"
+                className="w-full text-left p-4 flex items-center justify-between text-xs sm:text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--brand-purple)] transition-colors cursor-pointer"
               >
                 <span>{faq.q}</span>
-                <ChevronDown className={`w-4 h-4 text-[#71717A] transition-transform duration-200 ${
+                <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${
                   activeFaq === idx ? 'rotate-180 text-[#8B5CF6]' : ''
                 }`} />
               </button>
               {activeFaq === idx && (
-                <div className="px-4 pb-4 text-xs text-[#A1A1AA] leading-relaxed border-t border-[#1D1E24] pt-3">
+                <div className="px-4 pb-4 text-xs text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-subtle)] pt-3">
                   {faq.a}
                 </div>
               )}
@@ -386,12 +386,12 @@ export const Landing: React.FC = () => {
       <section id="contact" className="w-full max-w-xl mx-auto px-6 py-16 space-y-4">
         <div className="text-center space-y-1">
           <p className="eyebrow-text">GET IN TOUCH</p>
-          <h2 className="text-xl font-bold text-[#F4F4F5]">Have a question or feedback?</h2>
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">Have a question or feedback?</h2>
         </div>
 
         <form onSubmit={handleContactSubmit} className="card-surface p-6 space-y-3.5">
           <div>
-            <label className="text-[10px] font-mono text-[#71717A] uppercase">Your Name</label>
+            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Your Name</label>
             <input
               type="text"
               placeholder="Alex Smith"
@@ -401,7 +401,7 @@ export const Landing: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-[10px] font-mono text-[#71717A] uppercase">Email Address</label>
+            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Email Address</label>
             <input
               type="email"
               required
@@ -412,7 +412,7 @@ export const Landing: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-[10px] font-mono text-[#71717A] uppercase">Message</label>
+            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Message</label>
             <textarea
               required
               rows={3}
@@ -437,11 +437,11 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* 6. Footer */}
-      <footer className="w-full border-t border-[#25262D] py-8 bg-[#0D0E12]">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717A]">
+      <footer className="w-full border-t border-[var(--border)] py-8 bg-[var(--bg-secondary)]">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
           <div className="flex items-center gap-2">
             <img src={logoImg} alt="VertexPath Logo" className="w-5 h-5 object-contain" />
-            <span className="font-bold text-[#F4F4F5]">VertexPath</span>
+            <span className="font-bold text-[var(--text-primary)]">VertexPath</span>
             <span>• Career Operating System for Developers</span>
           </div>
 
@@ -451,7 +451,7 @@ export const Landing: React.FC = () => {
                 setActiveModalTab('terms');
                 setShowTermsModal(true);
               }}
-              className="hover:text-[#F4F4F5] transition-colors cursor-pointer"
+              className="hover:text-[var(--text-primary)] transition-colors cursor-pointer"
             >
               Terms
             </button>
@@ -460,7 +460,7 @@ export const Landing: React.FC = () => {
                 setActiveModalTab('privacy');
                 setShowTermsModal(true);
               }}
-              className="hover:text-[#F4F4F5] transition-colors cursor-pointer"
+              className="hover:text-[var(--text-primary)] transition-colors cursor-pointer"
             >
               Privacy
             </button>
@@ -471,15 +471,15 @@ export const Landing: React.FC = () => {
 
       {/* Terms & Privacy Modal */}
       {showTermsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#09090B]/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-[#111318] border border-[#25262D] rounded-xl p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#25262D] pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--bg-primary)]/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
               <div className="flex items-center gap-3">
             <ThemeToggle />
                 <button
                   onClick={() => setActiveModalTab('terms')}
                   className={`text-xs font-bold pb-1 cursor-pointer ${
-                    activeModalTab === 'terms' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[#71717A]'
+                    activeModalTab === 'terms' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[var(--text-muted)]'
                   }`}
                 >
                   Terms of Service
@@ -487,7 +487,7 @@ export const Landing: React.FC = () => {
                 <button
                   onClick={() => setActiveModalTab('privacy')}
                   className={`text-xs font-bold pb-1 cursor-pointer ${
-                    activeModalTab === 'privacy' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[#71717A]'
+                    activeModalTab === 'privacy' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[var(--text-muted)]'
                   }`}
                 >
                   Privacy Policy
@@ -495,25 +495,25 @@ export const Landing: React.FC = () => {
               </div>
               <button 
                 onClick={() => setShowTermsModal(false)}
-                className="text-[#71717A] hover:text-[#F4F4F5] p-1"
+                className="text-[var(--text-muted)] hover:text-[var(--text-primary)] p-1"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="text-xs text-[#A1A1AA] space-y-2 max-h-72 overflow-y-auto custom-scrollbar leading-relaxed">
+            <div className="text-xs text-[var(--text-secondary)] space-y-2 max-h-72 overflow-y-auto custom-scrollbar leading-relaxed">
               {activeModalTab === 'terms' ? (
                 <>
-                  <p className="font-semibold text-[#F4F4F5]">1. Acceptance of Terms</p>
+                  <p className="font-semibold text-[var(--text-primary)]">1. Acceptance of Terms</p>
                   <p>By accessing or using VertexPath, you agree to comply with our standard terms of service regarding developer career data and personal project workflows.</p>
-                  <p className="font-semibold text-[#F4F4F5] mt-2">2. Usage Rights</p>
+                  <p className="font-semibold text-[var(--text-primary)] mt-2">2. Usage Rights</p>
                   <p>You retain full ownership of your uploaded resumes, generated project specifications, and public portfolio content.</p>
                 </>
               ) : (
                 <>
-                  <p className="font-semibold text-[#F4F4F5]">1. Data Protection</p>
+                  <p className="font-semibold text-[var(--text-primary)]">1. Data Protection</p>
                   <p>VertexPath processes your uploaded documents strictly for AI career coaching and ATS analysis. We do not sell your personal data or resume information to third parties.</p>
-                  <p className="font-semibold text-[#F4F4F5] mt-2">2. Account Security</p>
+                  <p className="font-semibold text-[var(--text-primary)] mt-2">2. Account Security</p>
                   <p>Authentication utilizes secure OTP verification and industry-standard JWT session tokens.</p>
                 </>
               )}

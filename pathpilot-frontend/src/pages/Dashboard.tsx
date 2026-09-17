@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="w-7 h-7 border-2 border-[#25262D] border-t-[#8B5CF6] rounded-full animate-spin" />
+        <div className="w-7 h-7 border-2 border-[var(--border)] border-t-[#8B5CF6] rounded-full animate-spin" />
       </div>
     );
   }
@@ -192,12 +192,12 @@ export const Dashboard: React.FC = () => {
   const activityMap = stats?.dailyActivity || {};
   const getActivityColor = (level: number) => {
     switch (level) {
-      case 0: return 'bg-[#15161C] border border-[#25262D]';
+      case 0: return 'bg-[var(--card)] border border-[var(--border)]';
       case 1: return 'bg-[#8B5CF6]/20 border border-[#8B5CF6]/20';
       case 2: return 'bg-[#8B5CF6]/40 border border-[#8B5CF6]/30';
       case 3: return 'bg-[#8B5CF6]/70 border border-[#8B5CF6]/40';
       case 4: return 'bg-[#8B5CF6] border border-[#A78BFA]';
-      default: return 'bg-[#15161C]';
+      default: return 'bg-[var(--card)]';
     }
   };
 
@@ -215,18 +215,18 @@ export const Dashboard: React.FC = () => {
     <div className="space-y-8">
       
       {/* 1. Dashboard Hero Header (Section 12) */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#25262D]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
         <div className="space-y-1.5">
           <p className="eyebrow-text">OVERVIEW</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F4F4F5] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight">
             Good evening, {stats?.fullName || 'Developer'}.
           </h2>
-          <div className="text-xs text-[#A1A1AA] flex items-center gap-2 flex-wrap">
+          <div className="text-xs text-[var(--text-secondary)] flex items-center gap-2 flex-wrap">
             <span>Your VertexPath journey</span>
-            <span className="text-[#71717A]">•</span>
+            <span className="text-[var(--text-muted)]">•</span>
             <span>Career profile completion — <span className="text-[#8B5CF6] font-semibold">{pathProgress}%</span></span>
-            <span className="text-[#71717A]">•</span>
-            <span className="text-[#71717A]">Target:</span>
+            <span className="text-[var(--text-muted)]">•</span>
+            <span className="text-[var(--text-muted)]">Target:</span>
             <input
               type="text"
               value={careerGoal}
@@ -243,11 +243,11 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2.5 flex-wrap">
+        {/* Action Controls - responsive grid for mobile */}
+        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2.5 w-full sm:w-auto">
           <button
             onClick={() => window.dispatchEvent(new Event('startVertexTour'))}
-            className="btn-secondary text-xs"
+            className="btn-secondary text-xs flex-1 sm:flex-initial justify-center py-2 px-3"
             title="Start Interactive Product Tour"
           >
             <Compass className="w-3.5 h-3.5 text-[#8B5CF6]" />
@@ -258,7 +258,7 @@ export const Dashboard: React.FC = () => {
             id="career-badge"
             data-tour="tour-career-badge"
             onClick={() => setShowBadgeModal(true)}
-            className="btn-secondary text-xs"
+            className="btn-secondary text-xs flex-1 sm:flex-initial justify-center py-2 px-3"
           >
             <Award className="w-3.5 h-3.5 text-[#F59E0B]" />
             <span>Career Badge</span>
@@ -266,7 +266,7 @@ export const Dashboard: React.FC = () => {
 
           <button
             onClick={() => incrementStreakMutation.mutate()}
-            className="btn-primary text-xs"
+            className="btn-primary text-xs col-span-2 sm:col-auto justify-center py-2 px-4"
           >
             <Flame className="w-3.5 h-3.5 text-[#F59E0B]" />
             <span>Sync Daily Log</span>
@@ -278,7 +278,7 @@ export const Dashboard: React.FC = () => {
       <div data-tour="tour-route-tracker" className="card-surface p-5 space-y-3">
         <div className="flex items-center justify-between">
           <p className="eyebrow-text">CAREER JOURNEY</p>
-          <span className="text-[11px] text-[#71717A] font-mono">
+          <span className="text-[11px] text-[var(--text-muted)] font-mono">
             {completedNodesCount} of 7 milestones active
           </span>
         </div>
@@ -287,7 +287,7 @@ export const Dashboard: React.FC = () => {
           <div className="flex items-center justify-between min-w-[720px] relative px-2">
             
             {/* Background connecting track */}
-            <div className="absolute top-3.5 left-4 right-4 h-[1px] bg-[#25262D] z-0" />
+            <div className="absolute top-3.5 left-4 right-4 h-[1px] bg-[var(--border)] z-0" />
             
             {journeyMilestones.map((m) => {
               return (
@@ -303,13 +303,13 @@ export const Dashboard: React.FC = () => {
                   }}
                   className="flex flex-col items-center gap-2 relative z-10 cursor-pointer group"
                 >
-                  {/* Indicator Dot */}
-                  <div className={`w-7 h-7 rounded-full border flex items-center justify-center text-xs font-semibold transition-all duration-150 ${
+                  {/* Indicator Dot with solid opaque background */}
+                  <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all duration-150 shadow-sm ${
                     m.isDone
-                      ? 'bg-[#34D399]/15 border-[#34D399] text-[#34D399]'
+                      ? 'bg-[var(--card)] border-[#34D399] text-[#34D399]'
                       : m.isActive
-                      ? 'bg-[#8B5CF6]/15 border-[#8B5CF6] text-[#A78BFA] ring-2 ring-[#8B5CF6]/25'
-                      : 'bg-[#15161C] border-[#25262D] text-[#71717A] group-hover:border-[#353842]'
+                      ? 'bg-[var(--card)] border-[#8B5CF6] text-[#8B5CF6] ring-4 ring-[#8B5CF6]/20'
+                      : 'bg-[var(--card)] border-[var(--border)] text-[var(--text-muted)] group-hover:border-[var(--brand-purple)]'
                   }`}>
                     {m.isDone ? '✓' : m.isActive ? '●' : '○'}
                   </div>
@@ -317,11 +317,11 @@ export const Dashboard: React.FC = () => {
                   {/* Label */}
                   <div className="text-center">
                     <p className={`text-xs font-medium transition-colors ${
-                      m.isActive ? 'text-[#F4F4F5] font-semibold' : m.isDone ? 'text-[#A1A1AA]' : 'text-[#71717A]'
+                      m.isActive ? 'text-[var(--text-primary)] font-semibold' : m.isDone ? 'text-[var(--text-secondary)]' : 'text-[var(--text-muted)]'
                     }`}>
                       {m.name}
                     </p>
-                    <p className="text-[10px] text-[#71717A]">
+                    <p className="text-[10px] text-[var(--text-muted)]">
                       {m.desc}
                     </p>
                   </div>
@@ -342,17 +342,17 @@ export const Dashboard: React.FC = () => {
           <div id="daily-drill" data-tour="tour-daily-drill" className="card-surface p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="p-1 rounded bg-[#111318] border border-[#25262D]">
+                <span className="p-1 rounded bg-[var(--surface)] border border-[var(--border)]">
                   <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
                 </span>
-                <span className="text-xs font-semibold text-[#F4F4F5]">Daily Technical Drill</span>
+                <span className="text-xs font-semibold text-[var(--text-primary)]">Daily Technical Drill</span>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111318] border border-[#25262D] text-[#71717A]">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)]">
                 SYSTEM ARCHITECTURE
               </span>
             </div>
 
-            <p className="text-xs font-medium text-[#F4F4F5] leading-relaxed">
+            <p className="text-xs font-medium text-[var(--text-primary)] leading-relaxed">
               "What is the primary architectural tradeoff when introducing a distributed caching layer (like Redis) in front of PostgreSQL?"
             </p>
 
@@ -381,8 +381,8 @@ export const Dashboard: React.FC = () => {
                       : drillAnswered && selectedDrillOption === idx && idx !== 1
                       ? 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]'
                       : selectedDrillOption === idx
-                      ? 'bg-[#8B5CF6]/15 border-[#8B5CF6] text-[#F4F4F5]'
-                      : 'bg-[#111318] border-[#25262D] text-[#A1A1AA] hover:border-[#353842] hover:text-[#F4F4F5]'
+                      ? 'bg-[#8B5CF6]/15 border-[#8B5CF6] text-[var(--text-primary)]'
+                      : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[#353842] hover:text-[var(--text-primary)]'
                   }`}
                 >
                   {option}
@@ -401,10 +401,10 @@ export const Dashboard: React.FC = () => {
           {/* Next Recommended Step Card (Section 44) */}
           <div className="card-surface p-6 space-y-3">
             <p className="eyebrow-text">YOUR NEXT STEP</p>
-            <h3 className="card-title text-[#F4F4F5]">
+            <h3 className="card-title text-[var(--text-primary)]">
               {nextStepTitle}
             </h3>
-            <p className="text-xs text-[#A1A1AA] leading-relaxed">
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
               {nextStepDesc}
             </p>
             <div className="pt-2">
@@ -432,20 +432,20 @@ export const Dashboard: React.FC = () => {
           <div className="card-surface p-5 space-y-3">
             <p className="eyebrow-text">CAREER SNAPSHOT</p>
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-[#111318] border border-[#25262D]">
-                <p className="text-[#71717A] text-[10px] font-mono uppercase">Resume Status</p>
-                <p className="font-semibold text-[#F4F4F5] mt-1">{isResumeDone ? '✓ Optimized' : '○ Pending'}</p>
+              <div className="p-3 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
+                <p className="text-[var(--text-muted)] text-[10px] font-mono uppercase">Resume Status</p>
+                <p className="font-semibold text-[var(--text-primary)] mt-1">{isResumeDone ? '✓ Optimized' : '○ Pending'}</p>
               </div>
-              <div className="p-3 rounded-lg bg-[#111318] border border-[#25262D]">
-                <p className="text-[#71717A] text-[10px] font-mono uppercase">Skills Tracked</p>
-                <p className="font-semibold text-[#F4F4F5] mt-1">{totalSkills} mapped</p>
+              <div className="p-3 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
+                <p className="text-[var(--text-muted)] text-[10px] font-mono uppercase">Skills Tracked</p>
+                <p className="font-semibold text-[var(--text-primary)] mt-1">{totalSkills} mapped</p>
               </div>
-              <div className="p-3 rounded-lg bg-[#111318] border border-[#25262D]">
-                <p className="text-[#71717A] text-[10px] font-mono uppercase">Roadmaps</p>
-                <p className="font-semibold text-[#F4F4F5] mt-1">{totalRoadmaps} generated</p>
+              <div className="p-3 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
+                <p className="text-[var(--text-muted)] text-[10px] font-mono uppercase">Roadmaps</p>
+                <p className="font-semibold text-[var(--text-primary)] mt-1">{totalRoadmaps} generated</p>
               </div>
-              <div className="p-3 rounded-lg bg-[#111318] border border-[#25262D]">
-                <p className="text-[#71717A] text-[10px] font-mono uppercase">Streak</p>
+              <div className="p-3 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
+                <p className="text-[var(--text-muted)] text-[10px] font-mono uppercase">Streak</p>
                 <p className="font-semibold text-[#F59E0B] mt-1">🔥 {stats?.streakCount || 1} days</p>
               </div>
             </div>
@@ -465,7 +465,7 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {showAddSkill && (
-              <form onSubmit={handleAddSkill} className="p-3 bg-[#111318] border border-[#25262D] rounded-lg space-y-2.5">
+              <form onSubmit={handleAddSkill} className="p-3 bg-[var(--surface)] border border-[var(--border)] rounded-lg space-y-2.5">
                 <input
                   type="text"
                   placeholder="Skill Name (e.g. Docker, Python, System Design)"
@@ -474,7 +474,7 @@ export const Dashboard: React.FC = () => {
                   className="w-full text-xs"
                 />
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-[#71717A] font-mono">{newSkillProgress}%</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono">{newSkillProgress}%</span>
                   <input
                     type="range"
                     min="10"
@@ -507,10 +507,10 @@ export const Dashboard: React.FC = () => {
                 stats.skills.map((skill: any, idx: number) => (
                   <div key={idx} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-[#F4F4F5]">{skill.skillName}</span>
+                      <span className="font-medium text-[var(--text-primary)]">{skill.skillName}</span>
                       <span className="text-[#8B5CF6] font-mono text-[11px]">{skill.progressPercentage}%</span>
                     </div>
-                    <div className="w-full bg-[#111318] h-1.5 rounded-full overflow-hidden border border-[#25262D]">
+                    <div className="w-full bg-[var(--surface)] h-1.5 rounded-full overflow-hidden border border-[var(--border)]">
                       <div
                         className="bg-[#8B5CF6] h-full rounded-full transition-all duration-300"
                         style={{ width: `${skill.progressPercentage}%` }}
@@ -519,7 +519,7 @@ export const Dashboard: React.FC = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-center py-4 text-xs text-[#71717A] space-y-1.5">
+                <div className="text-center py-4 text-xs text-[var(--text-muted)] space-y-1.5">
                   <p>No skills mapped yet.</p>
                   <button
                     onClick={() => setShowAddSkill(true)}
@@ -536,7 +536,7 @@ export const Dashboard: React.FC = () => {
           <div className="card-surface p-5 space-y-3">
             <div className="flex items-center justify-between">
               <p className="eyebrow-text">ACTIVITY HEATMAP</p>
-              <span className="text-[10px] text-[#71717A] font-mono">35-day window</span>
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">35-day window</span>
             </div>
             
             <div className="grid grid-cols-7 gap-1.5">
@@ -552,7 +552,7 @@ export const Dashboard: React.FC = () => {
               })}
             </div>
 
-            <div className="flex items-center justify-between text-[10px] text-[#71717A] font-mono pt-1">
+            <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono pt-1">
               <span>Less</span>
               <div className="flex items-center gap-1">
                 {[0, 1, 2, 3, 4].map((lvl) => (
@@ -570,7 +570,7 @@ export const Dashboard: React.FC = () => {
       {/* Shareable Career Badge Modal */}
       {showBadgeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#09090B]/80 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="relative w-full max-w-md bg-[#111318] border border-[#25262D] rounded-xl p-6 shadow-2xl space-y-5">
+          <div className="relative w-full max-w-md bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 shadow-2xl space-y-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-[#8B5CF6]" />
@@ -580,22 +580,22 @@ export const Dashboard: React.FC = () => {
               </div>
               <button 
                 onClick={() => setShowBadgeModal(false)}
-                className="text-[#71717A] hover:text-[#F4F4F5] p-1 rounded"
+                className="text-[var(--text-muted)] hover:text-[var(--text-primary)] p-1 rounded"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Badge Preview */}
-            <div className="p-5 bg-[#15161C] border border-[#25262D] rounded-lg text-center space-y-2.5">
+            <div className="p-5 bg-[var(--card)] border border-[var(--border)] rounded-lg text-center space-y-2.5">
               <div className="w-10 h-10 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center mx-auto text-[#A78BFA]">
                 <Award className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-[#F4F4F5]">
+                <h4 className="text-sm font-bold text-[var(--text-primary)]">
                   {careerGoal} Ready
                 </h4>
-                <p className="text-[11px] text-[#71717A] font-mono mt-0.5">
+                <p className="text-[11px] text-[var(--text-muted)] font-mono mt-0.5">
                   {stats?.fullName || 'Verified Developer'} • {pathProgress}% Track Complete
                 </p>
               </div>
