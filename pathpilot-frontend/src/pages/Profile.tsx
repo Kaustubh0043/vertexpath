@@ -47,6 +47,8 @@ export const Profile: React.FC = () => {
       ];
       
       if (profile.careerGoal) {
+        localStorage.setItem('careerGoal', profile.careerGoal);
+        window.dispatchEvent(new Event('careerGoalUpdated'));
         if (predefined.includes(profile.careerGoal)) {
           setCareerGoal(profile.careerGoal);
           setCustomCareerGoal('');

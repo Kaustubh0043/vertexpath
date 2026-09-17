@@ -2,7 +2,7 @@ import { ChangeTargetRoleModal } from '../components/ChangeTargetRoleModal';
 import { Pencil } from 'lucide-react';
 import { UserAvatar } from '../components/UserAvatar';
 import { AvatarPickerModal } from '../components/AvatarPickerModal';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { 
@@ -64,6 +64,13 @@ export const Dashboard: React.FC = () => {
     queryKey: ['dashboardStats'],
     queryFn: async () => {
       const res = await api.get('/api/dashboard/stats');
+  // Synchronize career goal with authentic backend data
+  useEffect(() => {
+    if (stats?.careerGoal) {
+      setCareerGoal(stats.careerGoal);
+      localStorage.setItem('careerGoal', stats.careerGoal);
+    }
+  }, [stats]);
       return res.data;
     },
   });
@@ -641,7 +648,17 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       )}
-
+      {/* Change Target Role Modal */}
+      <ChangeTargetRoleModal
+        isOpen={showTargetModal}
+        onClose={() => setShowTargetModal(false)}
+        currentRole={careerGoal}
+        onRoleChanged={(newRole) => {
+          setCareerGoal(newRole);
+          queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+          queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+        }}
+      />
     </div>
-  );
+);
 };

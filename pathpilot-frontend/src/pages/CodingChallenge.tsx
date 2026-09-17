@@ -107,14 +107,14 @@ export const CodingChallenge: React.FC = () => {
       {/* Title */}
       <div className="space-y-2">
         <p className="eyebrow-text">IDE / 08</p>
-        <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight">Live Code Challenge & Complexity Analyzer</h3>
-        <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-2xl">
+        <h3 className="text-2xl font-extrabold text-[var(--text-primary)] tracking-tight">Live Code Challenge & Complexity Analyzer</h3>
+        <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-2xl">
           Sharpen algorithmic mastery, system design state machines, and concurrency patterns. VertexPath audits your code for Time/Space Complexity ($O(n)$/$O(1)$) and generates optimized production alternatives.
         </p>
       </div>
 
       {/* Control Bar */}
-      <form onSubmit={handleGenerate} className="bg-[#15161C] border border-[#25262D]/80 p-4 rounded-2xl flex flex-wrap items-center gap-4 shadow-xl">
+      <form onSubmit={handleGenerate} className="bg-[var(--card)] border border-[var(--border)]/80 p-4 rounded-2xl flex flex-wrap items-center gap-4 shadow-xl">
         <div className="flex-1 min-w-[180px] space-y-1">
           <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Target Stack / Domain</label>
           <input
@@ -131,7 +131,7 @@ export const CodingChallenge: React.FC = () => {
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[#8B5CF6]"
           >
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
@@ -139,12 +139,12 @@ export const CodingChallenge: React.FC = () => {
           </select>
         </div>
 
-        <div className="w-[200px] space-y-1">
+        <div className="flex-1 min-w-[260px] space-y-1">
           <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Topic</label>
           <select
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[#8B5CF6]"
           >
             <option value="Algorithms & Data Structures">Algorithms & Data Structures</option>
             <option value="System Design & Rate Limiting">System Design & Rate Limiting</option>
@@ -182,12 +182,12 @@ export const CodingChallenge: React.FC = () => {
       )}
 
       {!challengeMutation.isPending && !challenge && (
-        <div className="bg-[#15161C] border border-[#25262D]/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
-          <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl">
+        <div className="bg-[var(--card)] border border-[var(--border)]/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
+          <div className="p-3 bg-[#11151D] border border-[var(--border)] rounded-xl">
             <Terminal className="w-8 h-8 text-[#8B5CF6]" />
           </div>
-          <h5 className="text-base font-bold text-[#F4F4F5]">No Coding Challenge Active</h5>
-          <p className="text-xs text-[#A1A1AA] max-w-sm leading-relaxed">
+          <h5 className="text-base font-bold text-[var(--text-primary)]">No Coding Challenge Active</h5>
+          <p className="text-xs text-[var(--text-secondary)] max-w-sm leading-relaxed">
             Click 'Generate Problem' above to load a customized technical challenge complete with in-browser editor and AI complexity audits.
           </p>
         </div>
@@ -198,17 +198,17 @@ export const CodingChallenge: React.FC = () => {
           
           {/* Left Problem Spec */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-4 shadow-xl">
-              <div className="flex items-center justify-between border-b border-[#25262D] pb-3">
+            <div className="bg-[var(--card)] border border-[var(--border)]/80 p-6 rounded-2xl space-y-4 shadow-xl">
+              <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
                 <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
                   {challenge.difficulty}
                 </span>
                 <span className="text-[10px] text-slate-500 font-mono">{challenge.category}</span>
               </div>
 
-              <h4 className="text-lg font-bold text-[#F4F4F5] font-display">{challenge.title}</h4>
+              <h4 className="text-lg font-bold text-[var(--text-primary)] font-display">{challenge.title}</h4>
               
-              <div className="text-xs text-slate-300 leading-relaxed font-sans whitespace-pre-line bg-[#111318] p-4 rounded-xl border border-[#25262D] select-text">
+              <div className="text-xs text-slate-300 leading-relaxed font-sans whitespace-pre-line bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] select-text">
                 {challenge.description}
               </div>
 
@@ -217,7 +217,7 @@ export const CodingChallenge: React.FC = () => {
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Sample Test Cases</span>
                 <div className="space-y-2">
                   {challenge.test_cases?.map((tc: any, idx: number) => (
-                    <div key={idx} className="p-3 rounded-lg bg-[#11151D] border border-[#25262D] text-[11px] font-mono space-y-1">
+                    <div key={idx} className="p-3 rounded-lg bg-[#11151D] border border-[var(--border)] text-[11px] font-mono space-y-1">
                       <div className="text-slate-400"><span className="text-[#8B5CF6]">Input:</span> {tc.input}</div>
                       <div className="text-[#55D39A]"><span className="text-slate-400">Expected:</span> {tc.expected}</div>
                     </div>
@@ -232,7 +232,7 @@ export const CodingChallenge: React.FC = () => {
                     <Sparkles className="w-3 h-3 text-[#55C8E8]" />
                     Architectural Hints
                   </span>
-                  <ul className="list-disc list-inside text-xs text-[#A1A1AA] space-y-1">
+                  <ul className="list-disc list-inside text-xs text-[var(--text-secondary)] space-y-1">
                     {challenge.hints.map((h: string, idx: number) => (
                       <li key={idx}>{h}</li>
                     ))}
@@ -246,11 +246,11 @@ export const CodingChallenge: React.FC = () => {
           <div className="lg:col-span-7 space-y-6">
             
             {/* Editor Box */}
-            <div className="bg-[#15161C] border border-[#25262D]/80 rounded-2xl overflow-hidden shadow-xl">
-              <div className="flex items-center justify-between px-4 py-3 bg-[#11151D] border-b border-[#25262D]">
+            <div className="bg-[var(--card)] border border-[var(--border)]/80 rounded-2xl overflow-hidden shadow-xl">
+              <div className="flex items-center justify-between px-4 py-3 bg-[#11151D] border-b border-[var(--border)]">
                 <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-[#8B5CF6]" />
-                  <span className="text-xs font-bold text-[#F4F4F5]">Solution Editor</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)]">Solution Editor</span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -262,7 +262,7 @@ export const CodingChallenge: React.FC = () => {
                         setCode(challenge.starter_code[e.target.value]);
                       }
                     }}
-                    className="text-[11px] font-mono bg-[#111318] border border-[#25262D] text-slate-300 rounded px-2 py-1"
+                    className="text-[11px] font-mono bg-[var(--surface)] border border-[var(--border)] text-slate-300 rounded px-2 py-1"
                   >
                     <option value="python">Python</option>
                     <option value="javascript">JavaScript</option>
@@ -284,7 +284,7 @@ export const CodingChallenge: React.FC = () => {
               </div>
 
               {/* Code TextArea */}
-              <div className="p-4 bg-[#111318]">
+              <div className="p-4 bg-[var(--surface)]">
                 <textarea
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
@@ -295,7 +295,7 @@ export const CodingChallenge: React.FC = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between px-4 py-3 bg-[#11151D] border-t border-[#25262D]">
+              <div className="flex items-center justify-between px-4 py-3 bg-[#11151D] border-t border-[var(--border)]">
                 <span className="text-[10px] text-slate-500 font-mono">Lines: {code.split('\n').length} &bull; Chars: {code.length}</span>
                 <button
                   onClick={handleEvaluate}
@@ -325,8 +325,8 @@ export const CodingChallenge: React.FC = () => {
 
             {/* Evaluation Results Box */}
             {!evaluateMutation.isPending && evaluation && (
-              <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-6 shadow-xl animate-fade-in">
-                <div className="flex items-center justify-between border-b border-[#25262D] pb-4">
+              <div className="bg-[var(--card)] border border-[var(--border)]/80 p-6 rounded-2xl space-y-6 shadow-xl animate-fade-in">
+                <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
                   <div className="flex items-center gap-2">
                     {evaluation.status === 'PASS' ? (
                       <CheckCircle2 className="w-5 h-5 text-[#55D39A]" />
@@ -334,17 +334,17 @@ export const CodingChallenge: React.FC = () => {
                       <AlertCircle className="w-5 h-5 text-[#E9B84B]" />
                     )}
                     <div>
-                      <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">{evaluation.status}</h5>
+                      <h5 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">{evaluation.status}</h5>
                       <p className="text-[11px] text-slate-500 font-mono">Algorithmic Grade: {evaluation.score}/100</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[#25262D] text-[11px] font-mono text-[#8B5CF6]">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[var(--border)] text-[11px] font-mono text-[#8B5CF6]">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{evaluation.time_complexity}</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[#25262D] text-[11px] font-mono text-[#55C8E8]">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[var(--border)] text-[11px] font-mono text-[#55C8E8]">
                       <HardDrive className="w-3.5 h-3.5" />
                       <span>{evaluation.space_complexity}</span>
                     </div>
@@ -353,14 +353,14 @@ export const CodingChallenge: React.FC = () => {
 
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Architectural Critique</span>
-                  <p className="text-xs text-slate-300 leading-relaxed bg-[#111318] p-4 rounded-xl border border-[#25262D]">
+                  <p className="text-xs text-slate-300 leading-relaxed bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)]">
                     {evaluation.analysis}
                   </p>
                 </div>
 
                 {/* Edge Cases */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1.5">
+                  <div className="p-3 bg-[#11151D] border border-[var(--border)] rounded-xl space-y-1.5">
                     <span className="text-[10px] font-bold text-[#55D39A] uppercase tracking-widest block">Edge Cases Handled</span>
                     <ul className="list-disc list-inside text-[11px] text-slate-400 space-y-0.5">
                       {evaluation.edge_cases_handled?.map((ec: string, i: number) => (
@@ -369,7 +369,7 @@ export const CodingChallenge: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1.5">
+                  <div className="p-3 bg-[#11151D] border border-[var(--border)] rounded-xl space-y-1.5">
                     <span className="text-[10px] font-bold text-[#FF6577] uppercase tracking-widest block">Edge Cases Missed</span>
                     <ul className="list-disc list-inside text-[11px] text-slate-400 space-y-0.5">
                       {evaluation.edge_cases_missed?.map((ec: string, i: number) => (
@@ -396,7 +396,7 @@ export const CodingChallenge: React.FC = () => {
                         <span>{copiedCode ? 'Copied' : 'Copy Code'}</span>
                       </button>
                     </div>
-                    <pre className="p-4 bg-[#111318] border border-[#25262D] rounded-xl overflow-x-auto text-xs font-mono text-[#cbd5e1] leading-relaxed custom-scrollbar">
+                    <pre className="p-4 bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-x-auto text-xs font-mono text-[#cbd5e1] leading-relaxed custom-scrollbar">
                       <code>{evaluation.optimized_solution}</code>
                     </pre>
                   </div>

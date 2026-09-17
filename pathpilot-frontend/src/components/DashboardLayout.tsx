@@ -40,6 +40,12 @@ export const DashboardLayout: React.FC = () => {
     queryKey: ['dashboardStats'],
     queryFn: async () => {
       const res = await api.get('/api/dashboard/stats');
+  useEffect(() => {
+    if (stats?.careerGoal) {
+      setCareerGoal(stats.careerGoal);
+      localStorage.setItem('careerGoal', stats.careerGoal);
+    }
+  }, [stats]);
       return res.data;
     },
     refetchInterval: 60000,
