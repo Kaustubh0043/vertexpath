@@ -1,3 +1,5 @@
+import { ChangeTargetRoleModal } from '../components/ChangeTargetRoleModal';
+import { Pencil } from 'lucide-react';
 import { UserAvatar } from '../components/UserAvatar';
 import { AvatarPickerModal } from '../components/AvatarPickerModal';
 import React, { useState } from 'react';
@@ -41,6 +43,7 @@ export const Dashboard: React.FC = () => {
   const [selectedDrillOption, setSelectedDrillOption] = useState<number | null>(null);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [showTargetModal, setShowTargetModal] = useState(false);
   const [copiedBadge, setCopiedBadge] = useState(false);
 
   // Editable Career Goal from localStorage
@@ -117,15 +120,21 @@ export const Dashboard: React.FC = () => {
   const isCodingDone = codingCompleted;
   const isOutreachDone = outreachCompleted || compensationCompleted || jobMatchCompleted;
 
-  let completedNodesCount = 1; // Profile is setup
-  if (isResumeDone) completedNodesCount++;
-  if (isSkillsDone) completedNodesCount++;
-  if (isRoadmapsDone) completedNodesCount++;
-  if (isProjectsDone) completedNodesCount++;
-  if (isInterviewsDone) completedNodesCount++;
-  if (isCodingDone || isOutreachDone) completedNodesCount++;
+  // Check if current career track was reset by user switching targets
+  const isTrackReset = localStorage.getItem(`trackReset_${careerGoal}`) === 'true';
 
-  const pathProgress = Math.min(Math.round((completedNodesCount / 7) * 100), 100);
+  let completedNodesCount = 0;
+  if (!isTrackReset) {
+    completedNodesCount = 1; // Profile is setup
+    if (isResumeDone) completedNodesCount++;
+    if (isSkillsDone) completedNodesCount++;
+    if (isRoadmapsDone) completedNodesCount++;
+    if (isProjectsDone) completedNodesCount++;
+    if (isInterviewsDone) completedNodesCount++;
+    if (isCodingDone || isOutreachDone) completedNodesCount++;
+  }
+
+  const pathProgress = isTrackReset ? 0 : Math.min(Math.round((completedNodesCount / 7) * 100), 100);
 
   // Dynamic active navigation indicator stage mapping
   let activeStage = 'Resume';
@@ -230,19 +239,15 @@ export const Dashboard: React.FC = () => {
             <span>Career profile completion — <span className="text-[#8B5CF6] font-semibold">{pathProgress}%</span></span>
             <span className="text-[var(--text-muted)]">•</span>
             <span className="text-[var(--text-muted)]">Target:</span>
-            <input
-              type="text"
-              value={careerGoal}
-              onChange={(e) => {
-                const val = e.target.value;
-                setCareerGoal(val);
-                localStorage.setItem('careerGoal', val);
-                window.dispatchEvent(new Event('careerGoalUpdated'));
-              }}
-              placeholder="e.g. Software Engineer"
-              className="inline-editable-input focus:outline-none"
-              style={{ width: `${(careerGoal.length || 10) + 0.5}ch` }}
-            />
+            <button
+              type="button"
+              onClick={() => setShowTargetModal(true)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#8B5CF6] hover:bg-[#8B5CF6]/25 font-bold text-xs transition-colors cursor-pointer group"
+              title="Change Target Career Track"
+            >
+              <span>{careerGoal || 'Software Engineer'}</span>
+              <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[#8B5CF6]" />
+            </button>
           </div>
         </div>
 

@@ -1,3 +1,4 @@
+import { ChangeTargetRoleModal } from './ChangeTargetRoleModal';
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -12,6 +13,7 @@ import { ThemeToggle } from './ThemeToggle';
 export const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [targetModalOpen, setTargetModalOpen] = useState(false);
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
 
@@ -83,6 +85,12 @@ export const DashboardLayout: React.FC = () => {
 
       {/* Interactive Product Tour Modal */}
       <ProductTour />
+      <ChangeTargetRoleModal
+        isOpen={targetModalOpen}
+        onClose={() => setTargetModalOpen(false)}
+        currentRole={careerGoal}
+        onRoleChanged={(newRole) => setCareerGoal(newRole)}
+      />
 
       {/* Main Page Area */}
       <div className="flex-1 flex flex-col lg:pl-64 min-w-0 bg-[var(--bg-primary)]">
@@ -121,10 +129,15 @@ export const DashboardLayout: React.FC = () => {
             </div>
 
             {/* Target Role Indicator */}
-            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 rounded text-[#8B5CF6] font-medium text-[10px] uppercase tracking-wider">
+            <button
+              type="button"
+              onClick={() => setTargetModalOpen(true)}
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#8B5CF6]/10 hover:bg-[#8B5CF6]/20 border border-[#8B5CF6]/20 rounded text-[#8B5CF6] font-semibold text-[10px] uppercase tracking-wider transition-colors cursor-pointer group"
+              title="Click to change target track"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
               <span>{careerGoal}</span>
-            </div>
+            </button>
 
             {/* Light / Dark / System Theme Toggle */}
             <ThemeToggle />
