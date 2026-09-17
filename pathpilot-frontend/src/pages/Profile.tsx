@@ -1,3 +1,6 @@
+import { UserAvatar } from '../components/UserAvatar';
+import { AvatarPickerModal } from '../components/AvatarPickerModal';
+import { Camera } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
@@ -10,6 +13,7 @@ export const Profile: React.FC = () => {
   const { user, setUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   // Profile Form States
   const [careerGoal, setCareerGoal] = useState('');
@@ -179,23 +183,57 @@ export const Profile: React.FC = () => {
     <div className="space-y-8 max-w-4xl">
       
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#25262D]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
         <div className="space-y-1">
-          <p className="eyebrow-text">Profile / Career settings</p>
-          <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight font-display">Manage Career Profile</h3>
-          <p className="text-xs text-slate-500 max-w-lg font-medium">
-            Review and adjust your target goals, learning speeds, and engineering stack gaps to tune PathPilot's personalized guides.
+          <p className="eyebrow-text">PROFILE / IDENTITY & PREFERENCES</p>
+          <h3 className="text-2xl font-extrabold text-[var(--text-primary)] tracking-tight font-display">Manage Career Profile</h3>
+          <p className="text-xs text-[var(--text-muted)] max-w-lg font-medium">
+            Manage your developer avatar, target engineering goals, learning velocity, and system preferences.
           </p>
         </div>
         
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="self-start sm:self-center px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
+            className="btn-primary text-xs py-2 px-4 self-start sm:self-auto"
           >
             Edit Career Profile
           </button>
         )}
+      </div>
+
+      {/* User Identity & Avatar Studio Card */}
+      <div className="card-surface p-6 flex flex-col sm:flex-row items-center justify-between gap-6 border border-[var(--border)] rounded-xl">
+        <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+          <div className="relative group cursor-pointer shrink-0" onClick={() => setShowAvatarModal(true)}>
+            <UserAvatar name={user?.fullName || 'Developer'} size="2xl" showOnlineIndicator border />
+            <div className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition-opacity">
+              <Camera className="w-5 h-5 mb-0.5 text-[#8B5CF6]" />
+              <span className="text-[9px] font-bold">Change</span>
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">{user?.fullName || 'Developer'}</h2>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] font-medium">
+                ● Active
+              </span>
+            </div>
+            <p className="text-xs text-[var(--text-muted)] font-mono">{user?.email}</p>
+            <p className="text-[11px] text-[var(--text-secondary)]">
+              Target Goal: <span className="font-semibold text-[#8B5CF6]">{profile?.careerGoal || 'Software Engineer'}</span>
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setShowAvatarModal(true)}
+          className="btn-secondary text-xs py-2 px-4 flex items-center gap-2"
+        >
+          <Camera className="w-3.5 h-3.5 text-[#8B5CF6]" />
+          <span>Change Avatar</span>
+        </button>
       </div>
 
       {successMsg && (
@@ -484,6 +522,9 @@ export const Profile: React.FC = () => {
           <ThemeToggle variant="segmented" />
         </div>
       </div>
+
+      {/* Avatar Picker Modal */}
+      <AvatarPickerModal isOpen={showAvatarModal} onClose={() => setShowAvatarModal(false)} userName={user?.fullName || 'Developer'} />
     </div>
   );
 };

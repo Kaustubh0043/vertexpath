@@ -1,3 +1,5 @@
+import { UserAvatar } from '../components/UserAvatar';
+import { AvatarPickerModal } from '../components/AvatarPickerModal';
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
@@ -38,6 +40,7 @@ export const Dashboard: React.FC = () => {
   });
   const [selectedDrillOption, setSelectedDrillOption] = useState<number | null>(null);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [copiedBadge, setCopiedBadge] = useState(false);
 
   // Editable Career Goal from localStorage

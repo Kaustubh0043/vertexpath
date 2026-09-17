@@ -1,3 +1,5 @@
+import { UserAvatar } from './UserAvatar';
+import { AvatarPickerModal } from './AvatarPickerModal';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -26,6 +28,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+  const [showAvatarModal, setShowAvatarModal] = React.useState(false);
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
@@ -106,16 +109,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </span>
         </div>
 
-        {/* User Card */}
-        <div className="px-5 py-3.5 border-b border-[var(--border)] bg-[var(--surface)]/50 flex items-center justify-between shrink-0">
+        {/* User Card with Interactive Avatar */}
+        <div className="px-4 py-3 border-b border-[var(--border)] bg-[var(--surface)]/50 flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            onClick={() => setShowAvatarModal(true)}
+            className="relative cursor-pointer group"
+            title="Change Avatar"
+          >
+            <UserAvatar name={user?.fullName || 'Developer'} size="sm" showOnlineIndicator border />
+            <span className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[9px] text-white font-bold transition-opacity">
+              Edit
+            </span>
+          </button>
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-xs text-[var(--text-primary)] truncate">{user?.fullName || 'Developer'}</p>
-            <p className="text-[11px] text-[var(--text-muted)] truncate font-mono">{user?.email}</p>
+            <p className="text-[10px] text-[var(--text-muted)] truncate font-mono">{user?.email}</p>
           </div>
           <NavLink 
             to="/dashboard/profile"
-            className="text-[var(--text-muted)] hover:text-[#8B5CF6] transition-colors p-1"
-            title="Edit Profile"
+            className="text-[var(--text-muted)] hover:text-[#8B5CF6] hover:bg-[var(--card)] rounded-md transition-colors p-1.5"
+            title="Career Profile"
           >
             <User className="w-3.5 h-3.5" />
           </NavLink>
@@ -167,6 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <span>Sign Out</span>
           </button>
         </div>
+        <AvatarPickerModal isOpen={showAvatarModal} onClose={() => setShowAvatarModal(false)} userName={user?.fullName || 'Developer'} />
       </aside>
     </>
   );
