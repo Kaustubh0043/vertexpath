@@ -183,8 +183,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <span>Sign Out</span>
           </button>
         </div>
-        <AvatarPickerModal isOpen={showAvatarModal} onClose={() => setShowAvatarModal(false)} userName={user?.fullName || 'Developer'} />
       </aside>
+      <AvatarPickerModal isOpen={showAvatarModal} onClose={() => setShowAvatarModal(false)} userName={user?.fullName || 'Developer'} />
     </>
   );
 };

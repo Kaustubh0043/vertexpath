@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Upload, Check, RefreshCw, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { UserAvatar } from './UserAvatar';
 
@@ -63,7 +64,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
     reader.readAsDataURL(file);
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         
@@ -245,6 +246,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
