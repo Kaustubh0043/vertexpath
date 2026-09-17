@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { api } from '../services/api';
 import { createPortal } from 'react-dom';
 import { X, Upload, Check, RefreshCw, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { UserAvatar } from './UserAvatar';
@@ -38,9 +39,14 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSaveAvatar = (url: string) => {
+  const handleSaveAvatar = async (url: string) => {
     localStorage.setItem('userAvatar', url);
     window.dispatchEvent(new Event('userAvatarUpdated'));
+    try {
+      await api.post('/api/user/profile', { avatarUrl: url });
+    } catch (err) {
+      console.warn('Could not save avatar to database:', err);
+    }
     onClose();
   };
 

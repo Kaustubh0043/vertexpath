@@ -22,5 +22,6 @@ public class UserProfileDto {
     private String weeklyCommitment;
     private String optionalLearningStyle;
     private String optionalJobPreference;
+    private String avatarUrl;
     private LocalDateTime onboardingCompletedAt;
 }

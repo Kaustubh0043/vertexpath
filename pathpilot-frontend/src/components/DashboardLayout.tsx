@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sidebar } from './Sidebar';
-import { Menu, Search, Flame } from 'lucide-react';
+import { Menu, Search, Flame, LayoutDashboard, FileText, Map, Terminal, User } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { CommandPalette } from './CommandPalette';
@@ -40,6 +41,28 @@ export const DashboardLayout: React.FC = () => {
     queryKey: ['dashboardStats'],
     queryFn: async () => {
       const res = await api.get('/api/dashboard/stats');
+
+  // Synchronize profile avatar & target goal across all devices
+  useQuery({
+    queryKey: ['userProfileSync'],
+    queryFn: async () => {
+      try {
+        const res = await api.get('/api/user/profile');
+        if (res.data?.avatarUrl) {
+          localStorage.setItem('userAvatar', res.data.avatarUrl);
+          window.dispatchEvent(new Event('userAvatarUpdated'));
+        }
+        if (res.data?.careerGoal) {
+          setCareerGoal(res.data.careerGoal);
+          localStorage.setItem('careerGoal', res.data.careerGoal);
+        }
+        return res.data;
+      } catch (e) {
+        return null;
+      }
+    },
+    staleTime: 60000,
+  });
   useEffect(() => {
     if (stats?.careerGoal) {
       setCareerGoal(stats.careerGoal);
@@ -151,7 +174,7 @@ export const DashboardLayout: React.FC = () => {
         </header>
 
         {/* Content Viewport */}
-        <main ref={mainRef} className="flex-1 overflow-y-auto p-4 sm:p-8 relative z-10 custom-scrollbar">
+        <main ref={mainRef} className="flex-1 overflow-y-auto p-4 sm:p-8 pb-24 lg:pb-8 relative z-10 custom-scrollbar">
           <div className="max-w-5xl mx-auto space-y-8">
             <motion.div
               key={location.pathname}
@@ -164,6 +187,59 @@ export const DashboardLayout: React.FC = () => {
           </div>
         </main>
       </div>
+
+      {/* Mobile Floating Bottom Navigation Bar */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--bg-secondary)]/95 backdrop-blur-md border-t border-[var(--border)] px-3 py-2 flex items-center justify-around shadow-2xl safe-bottom">
+        <NavLink
+          to="/dashboard"
+          end
+          className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
+            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <LayoutDashboard className="w-4 h-4" />
+          <span>Overview</span>
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/resume"
+          className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
+            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <FileText className="w-4 h-4" />
+          <span>Resume</span>
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/roadmaps"
+          className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
+            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <Map className="w-4 h-4" />
+          <span>Roadmaps</span>
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/coding"
+          className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
+            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <Terminal className="w-4 h-4" />
+          <span>Code IDE</span>
+        </NavLink>
+
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          className="flex flex-col items-center gap-1 text-[10px] font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
+        >
+          <Menu className="w-4 h-4" />
+          <span>Menu</span>
+        </button>
+      </nav>
     </div>
   );
 };

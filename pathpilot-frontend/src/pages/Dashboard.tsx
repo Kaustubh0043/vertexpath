@@ -245,16 +245,18 @@ export const Dashboard: React.FC = () => {
             <span className="text-[var(--text-muted)]">•</span>
             <span>Career profile completion — <span className="text-[#8B5CF6] font-semibold">{pathProgress}%</span></span>
             <span className="text-[var(--text-muted)]">•</span>
-            <span className="text-[var(--text-muted)]">Target:</span>
-            <button
-              type="button"
-              onClick={() => setShowTargetModal(true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#8B5CF6] hover:bg-[#8B5CF6]/25 font-bold text-xs transition-colors cursor-pointer group"
-              title="Change Target Career Track"
-            >
-              <span>{careerGoal || 'Software Engineer'}</span>
-              <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[#8B5CF6]" />
-            </button>
+            <div className="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0">
+              <span className="text-[var(--text-muted)]">Target:</span>
+              <button
+                type="button"
+                onClick={() => setShowTargetModal(true)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#8B5CF6] hover:bg-[#8B5CF6]/25 font-bold text-xs transition-colors cursor-pointer group"
+                title="Change Target Career Track"
+              >
+                <span>{careerGoal || 'Software Engineer'}</span>
+                <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[#8B5CF6]" />
+              </button>
+            </div>
           </div>
         </div>
 

@@ -11,7 +11,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   mail:
     host: ${SMTP_HOST:smtp.gmail.com}
-    port: ${SMTP_PORT:465}
+    port: ${SMTP_PORT:587}
     username: ${SMTP_EMAIL:}
     password: ${SMTP_PASSWORD:}
     properties:
@@ -19,9 +19,13 @@ spring:
         smtp:
           auth: true
           starttls:
-            enable: ${SMTP_STARTTLS_ENABLE:false}
+            enable: true
+            required: true
           ssl:
-            enable: ${SMTP_SSL_ENABLE:true}
+            trust: "*"
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
   jpa:
     hibernate:
       ddl-auto: update
@@ -38,4 +42,10 @@ jwt:
 
 ai:
   service:
-    url: ${AI_SERVICE_URL:http://localhost:8000}
+    url: ${AI_SERVICE_URL:https://pathpilot-ai-engine.onrender.com}
+
+r2:
+  endpoint: ${R2_ENDPOINT:}
+  access-key: ${R2_ACCESS_KEY:}
+  secret-key: ${R2_SECRET_KEY:}
+  bucket-name: ${R2_BUCKET_NAME:}

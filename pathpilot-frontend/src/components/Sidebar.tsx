@@ -29,6 +29,13 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const [showAvatarModal, setShowAvatarModal] = React.useState(false);
+  React.useEffect(() => {
+    const handleTourSidebar = (e: any) => {
+      setIsOpen(e.detail === true);
+    };
+    window.addEventListener('toggleSidebarTour', handleTourSidebar);
+    return () => window.removeEventListener('toggleSidebarTour', handleTourSidebar);
+  }, [setIsOpen]);
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 

@@ -34,6 +34,7 @@ public class ProfileController {
                 .weeklyCommitment(user.getWeeklyCommitment())
                 .optionalLearningStyle(user.getOptionalLearningStyle())
                 .optionalJobPreference(user.getOptionalJobPreference())
+                .avatarUrl(user.getAvatarUrl())
                 .onboardingCompletedAt(user.getOnboardingCompletedAt())
                 .build();
 
@@ -56,6 +57,7 @@ public class ProfileController {
         user.setWeeklyCommitment(dto.getWeeklyCommitment());
         user.setOptionalLearningStyle(dto.getOptionalLearningStyle());
         user.setOptionalJobPreference(dto.getOptionalJobPreference());
+        if (dto.getAvatarUrl() != null) user.setAvatarUrl(dto.getAvatarUrl());
         
         if (dto.isOnboardingCompleted() && user.getOnboardingCompletedAt() == null) {
             user.setOnboardingCompletedAt(LocalDateTime.now());

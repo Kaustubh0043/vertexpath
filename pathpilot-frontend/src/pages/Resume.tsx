@@ -219,20 +219,20 @@ export const Resume: React.FC = () => {
   return (
     <div className="space-y-10">
       
-      {/* Workspace Tabs */}
-      <div className="flex flex-wrap gap-4 border-b border-[#25262D]">
+      {/* Workspace Tabs - responsive single-row scroll on mobile */}
+      <div className="flex items-center gap-2 border-b border-[var(--border)] overflow-x-auto no-scrollbar pb-1">
         <button
           onClick={() => setActiveTab('ats')}
-          className={`pb-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 cursor-pointer ${
-            activeTab === 'ats' ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-[#A1A1AA] hover:text-[#F4F4F5]'
+          className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer shrink-0 ${
+            activeTab === 'ats' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <span>Resume Scorer</span>
         </button>
         <button
           onClick={() => setActiveTab('optimizer')}
-          className={`pb-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
-            activeTab === 'optimizer' ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-[#A1A1AA] hover:text-[#F4F4F5]'
+          className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer flex items-center gap-1.5 shrink-0 ${
+            activeTab === 'optimizer' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
@@ -241,8 +241,8 @@ export const Resume: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('rag')}
-          className={`pb-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 cursor-pointer ${
-            activeTab === 'rag' ? 'border-[#8B5CF6] text-[#F4F4F5]' : 'border-transparent text-[#A1A1AA] hover:text-[#F4F4F5]'
+          className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer shrink-0 ${
+            activeTab === 'rag' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <span>Context Q&A Sandbox</span>

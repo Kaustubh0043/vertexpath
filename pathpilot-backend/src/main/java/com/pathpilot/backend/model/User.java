@@ -83,6 +83,9 @@ public class User {
     @Column(name = "optional_job_preference")
     private String optionalJobPreference;
 
+    @Column(name = "avatar_url", columnDefinition = "TEXT")
+    private String avatarUrl;
+
     @Column(name = "onboarding_completed_at")
     private LocalDateTime onboardingCompletedAt;
 
