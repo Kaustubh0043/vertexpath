@@ -170,8 +170,10 @@ export const Landing: React.FC = () => {
       {/* 1. Header Navigation (Section 6) */}
       <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <img src={logoImg} alt="VertexPath Logo" className="w-7 h-7 object-contain" />
+                    <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div className="w-8 h-8 rounded-lg bg-[#15161C] border border-[#25262D] p-1 flex items-center justify-center shadow-sm shrink-0">
+              <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain" />
+            </div>
             <span className="text-base font-bold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           </div>
 
@@ -439,10 +441,16 @@ export const Landing: React.FC = () => {
       {/* 6. Footer */}
       <footer className="w-full border-t border-[var(--border)] py-8 bg-[var(--bg-secondary)]">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
-          <div className="flex items-center gap-2">
-            <img src={logoImg} alt="VertexPath Logo" className="w-5 h-5 object-contain" />
-            <span className="font-bold text-[var(--text-primary)]">VertexPath</span>
-            <span>• Career Operating System for Developers</span>
+          <div className="flex flex-col gap-1 text-center sm:text-left">
+            <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <div className="w-6 h-6 rounded-md bg-[#15161C] border border-[#25262D] p-0.5 flex items-center justify-center shadow-sm shrink-0">
+                <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain" />
+              </div>
+              <span className="font-bold text-sm text-[var(--text-primary)] font-display">VertexPath</span>
+            </div>
+            <p className="text-[11px] text-[var(--text-muted)] font-medium">
+              • Career Operating System for Developers
+            </p>
           </div>
 
           <div className="flex items-center gap-4">
