@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { Target, AlertTriangle, ArrowRight, RotateCcw, Check, X, Sparkles } from 'lucide-react';
+import { 
+  Target, 
+  AlertCircle, 
+  ArrowRight, 
+  RotateCcw, 
+  Check, 
+  X, 
+  Sparkles, 
+  Layers, 
+  BrainCircuit, 
+  Layout, 
+  Server, 
+  Cloud, 
+  Smartphone, 
+  Database, 
+  ShieldCheck, 
+  ChevronRight 
+} from 'lucide-react';
 import { api } from '../services/api';
 
 interface ChangeTargetRoleModalProps {
@@ -9,15 +26,80 @@ interface ChangeTargetRoleModalProps {
   onRoleChanged: (newRole: string) => void;
 }
 
-const POPULAR_ROLES = [
-  { id: 'fullstack', name: 'Full Stack Developer', icon: '💻', desc: 'React, Node, Spring Boot, Databases' },
-  { id: 'ai-ml', name: 'AI / ML Engineer', icon: '🤖', desc: 'LLMs, PyTorch, LangChain, Vector DBs' },
-  { id: 'frontend', name: 'Frontend Developer', icon: '🎨', desc: 'React, TypeScript, Next.js, UI/UX' },
-  { id: 'backend', name: 'Backend Developer', icon: '⚙️', desc: 'Java, Microservices, Distributed Systems' },
-  { id: 'devops', name: 'DevOps / Cloud Engineer', icon: '☁️', desc: 'Kubernetes, Docker, CI/CD, AWS' },
-  { id: 'mobile', name: 'Mobile Developer', icon: '📱', desc: 'Flutter, React Native, iOS, Android' },
-  { id: 'data-scientist', name: 'Data Scientist', icon: '📊', desc: 'Python, Analytics, Machine Learning' },
-  { id: 'security', name: 'Cybersecurity Engineer', icon: '🔒', desc: 'AppSec, Penetration Testing, Cloud Sec' },
+interface RoleOption {
+  id: string;
+  name: string;
+  icon: React.FC<{ className?: string }>;
+  color: string;
+  badge: string;
+  desc: string;
+}
+
+const ROLES: RoleOption[] = [
+  {
+    id: 'fullstack',
+    name: 'Full Stack Developer',
+    icon: Layers,
+    color: 'from-violet-500/20 to-purple-500/20 text-[#A78BFA] border-[#8B5CF6]/30',
+    badge: 'React • Node • SQL • Spring',
+    desc: 'End-to-end web architectures, APIs, and modern frontends',
+  },
+  {
+    id: 'ai-ml',
+    name: 'AI / ML Engineer',
+    icon: BrainCircuit,
+    color: 'from-fuchsia-500/20 to-pink-500/20 text-[#F472B6] border-[#EC4899]/30',
+    badge: 'LLMs • PyTorch • RAG • Agents',
+    desc: 'Generative AI pipelines, model fine-tuning, and vector stores',
+  },
+  {
+    id: 'frontend',
+    name: 'Frontend Developer',
+    icon: Layout,
+    color: 'from-cyan-500/20 to-blue-500/20 text-[#38BDF8] border-[#0284C7]/30',
+    badge: 'React • TypeScript • Next.js • Tailwind',
+    desc: 'High-performance UI/UX, animations, and state systems',
+  },
+  {
+    id: 'backend',
+    name: 'Backend Developer',
+    icon: Server,
+    color: 'from-emerald-500/20 to-teal-500/20 text-[#34D399] border-[#059669]/30',
+    badge: 'Java • Go • Distributed Systems • Redis',
+    desc: 'High-concurrency microservices, DB design, and caching',
+  },
+  {
+    id: 'devops',
+    name: 'DevOps / Cloud Engineer',
+    icon: Cloud,
+    color: 'from-sky-500/20 to-indigo-500/20 text-[#60A5FA] border-[#3B82F6]/30',
+    badge: 'K8s • Docker • AWS • Terraform',
+    desc: 'Infrastructure as code, CI/CD pipelines, and cloud security',
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile Developer',
+    icon: Smartphone,
+    color: 'from-amber-500/20 to-orange-500/20 text-[#FBBF24] border-[#D97706]/30',
+    badge: 'Flutter • React Native • iOS • Android',
+    desc: 'Cross-platform mobile applications and native integrations',
+  },
+  {
+    id: 'data',
+    name: 'Data Scientist',
+    icon: Database,
+    color: 'from-teal-500/20 to-emerald-500/20 text-[#2DD4BF] border-[#0D9488]/30',
+    badge: 'Python • Pandas • ML • Analytics',
+    desc: 'Statistical modeling, data warehousing, and predictions',
+  },
+  {
+    id: 'security',
+    name: 'Cybersecurity Engineer',
+    icon: ShieldCheck,
+    color: 'from-rose-500/20 to-red-500/20 text-[#FB7185] border-[#E11D48]/30',
+    badge: 'AppSec • PenTesting • Auth • SOC2',
+    desc: 'Application vulnerability audits and cloud infrastructure defense',
+  },
 ];
 
 export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
@@ -53,7 +135,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
     try {
       const newRole = selectedRole.trim();
 
-      // 1. Reset all local journey milestone flags to start 0% fresh
+      // Reset all milestone trackers for authentic 0% new journey
       localStorage.setItem('careerGoal', newRole);
       localStorage.setItem(`trackReset_${newRole}`, 'true');
       localStorage.removeItem('projectCompleted');
@@ -63,14 +145,13 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
       localStorage.removeItem('compensationCompleted');
       localStorage.removeItem('jobMatchCompleted');
 
-      // 2. Persist new target goal to backend if possible
+      // Persist to backend database
       try {
         await api.post('/api/user/profile', { careerGoal: newRole });
       } catch (err) {
         console.warn('Backend profile update deferred:', err);
       }
 
-      // 3. Emit global event and invoke callback
       window.dispatchEvent(new Event('careerGoalUpdated'));
       onRoleChanged(newRole);
       onClose();
@@ -81,24 +162,29 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6]">
+        {/* Header Bar */}
+        <div className="px-6 py-4.5 border-b border-[var(--border)] flex items-center justify-between bg-[var(--surface)]/40">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#7C3AED]/30 to-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6] shrink-0">
               <Target className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[var(--text-primary)]">
-                {step === 'select' ? 'Change Target Career Goal' : 'Confirm Career Track Switch'}
+              <h3 className="text-sm font-bold text-[var(--text-primary)] font-display tracking-tight">
+                {step === 'select' ? 'Select Target Career Track' : 'Confirm Track Calibration'}
               </h3>
               <p className="text-[11px] text-[var(--text-muted)]">
-                {step === 'select' ? `Current Target: ${currentRole}` : 'Review track impact before switching'}
+                {step === 'select' ? (
+                  <>Active Goal: <span className="font-semibold text-[#8B5CF6]">{currentRole}</span></>
+                ) : (
+                  'Review track transition and progress recalibration'
+                )}
               </p>
             </div>
           </div>
+          
           <button
             onClick={() => {
               setStep('select');
@@ -110,125 +196,148 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
           </button>
         </div>
 
-        {/* STEP 1: SELECT NEW ROLE */}
+        {/* STEP 1: SELECT ENGINEERING TRACK */}
         {step === 'select' && (
           <div className="p-6 overflow-y-auto space-y-5 custom-scrollbar">
-            <div>
-              <label className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider block mb-2.5">
-                Select Engineering Track
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {POPULAR_ROLES.map((r) => {
-                  const isCurrent = r.name.toLowerCase() === currentRole.toLowerCase();
-                  return (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => handleRoleClick(r.name)}
-                      className={`flex items-start gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                        isCurrent
-                          ? 'bg-[#8B5CF6]/10 border-[#8B5CF6] ring-1 ring-[#8B5CF6]/30'
-                          : 'bg-[var(--surface)] border-[var(--border)] hover:border-[var(--brand-purple)]/50 hover:bg-[var(--surface)]/80'
-                      }`}
-                    >
-                      <span className="text-xl shrink-0">{r.icon}</span>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs font-bold text-[var(--text-primary)] truncate">{r.name}</p>
-                          {isCurrent && (
-                            <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#8B5CF6] text-white">
-                              Active
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[10px] text-[var(--text-muted)] mt-0.5 truncate">{r.desc}</p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {ROLES.map((r) => {
+                const isCurrent = r.name.toLowerCase() === currentRole.toLowerCase();
+                const IconComponent = r.icon;
+
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => handleRoleClick(r.name)}
+                    className={`group relative flex items-start gap-3.5 p-3.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
+                      isCurrent
+                        ? 'bg-[#8B5CF6]/10 border-[#8B5CF6] shadow-sm'
+                        : 'bg-[var(--surface)]/50 border-[var(--border)] hover:border-[#8B5CF6]/40 hover:bg-[var(--surface)]'
+                    }`}
+                  >
+                    <div className={`w-9 h-9 rounded-lg bg-gradient-to-tr ${r.color} border flex items-center justify-center shrink-0`}>
+                      <IconComponent className="w-4.5 h-4.5" />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <p className="text-xs font-bold text-[var(--text-primary)] truncate group-hover:text-[#8B5CF6] transition-colors">
+                          {r.name}
+                        </p>
+                        {isCurrent ? (
+                          <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#8B5CF6] text-white font-semibold">
+                            Current
+                          </span>
+                        ) : (
+                          <ChevronRight className="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block mt-0.5 truncate">
+                        {r.badge}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Custom Role Input */}
-            <form onSubmit={handleCustomSubmit} className="pt-2 border-t border-[var(--border)] space-y-2">
-              <label className="text-xs font-semibold text-[var(--text-secondary)]">Or specify a custom role:</label>
+            {/* Custom Track Form */}
+            <form onSubmit={handleCustomSubmit} className="pt-3 border-t border-[var(--border)] space-y-2">
+              <span className="text-[11px] font-medium text-[var(--text-secondary)] block">
+                Targeting a specialized domain?
+              </span>
               <div className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="e.g. Distributed Systems Engineer"
+                  placeholder="e.g. Distributed Systems & Core Java Architect"
                   value={customRoleInput}
                   onChange={(e) => setCustomRoleInput(e.target.value)}
-                  className="flex-1 px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[#8B5CF6]"
+                  className="flex-1 px-3.5 py-2 text-xs rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[#8B5CF6] transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={!customRoleInput.trim()}
-                  className="btn-primary text-xs py-2 px-3.5 disabled:opacity-50"
+                  className="btn-primary text-xs py-2 px-4 shrink-0 disabled:opacity-40"
                 >
-                  <span>Select</span>
+                  <span>Select Track</span>
                 </button>
               </div>
             </form>
           </div>
         )}
 
-        {/* STEP 2: ARE YOU SURE WARNING / CONFIRMATION */}
+        {/* STEP 2: PROFESSIONAL CONFIRMATION SCREEN */}
         {step === 'confirm' && (
           <div className="p-6 overflow-y-auto space-y-5 custom-scrollbar">
             
-            {/* Warning Alert Box */}
-            <div className="p-4 rounded-xl bg-[#F59E0B]/10 border border-[#F59E0B]/30 flex items-start gap-3.5">
-              <div className="p-2 rounded-lg bg-[#F59E0B]/20 text-[#F59E0B] shrink-0">
-                <AlertTriangle className="w-5 h-5" />
+            {/* Track Comparison Header */}
+            <div className="p-4 rounded-xl bg-[var(--surface)]/70 border border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">Current Track</span>
+                <p className="text-xs font-bold text-[var(--text-primary)]">{currentRole}</p>
+              </div>
+
+              <div className="w-8 h-8 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6] shrink-0 rotate-90 sm:rotate-0">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#8B5CF6]">New Target Track</span>
+                <p className="text-xs font-bold text-[#8B5CF6]">{selectedRole}</p>
+              </div>
+            </div>
+
+            {/* Warning Alert Banner */}
+            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-transparent border border-amber-500/30 flex items-start gap-3.5">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <AlertCircle className="w-4.5 h-4.5" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-xs font-bold text-[#F59E0B]">
-                  Your journey for {currentRole} is not completed yet!
+                <h4 className="text-xs font-bold text-amber-300">
+                  Your journey for {currentRole} is not completed yet.
                 </h4>
                 <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
-                  Are you sure you want to switch tracks? Changing your goal from <strong className="text-[var(--text-primary)]">{currentRole}</strong> to <strong className="text-[#8B5CF6]">{selectedRole}</strong> will recalibrate your entire learning path.
+                  Switching targets will recalibrate your developer workflow. Your current milestone progress will be reset so you can begin tracking your genuine roadmap for <strong className="text-[var(--text-primary)]">{selectedRole}</strong>.
                 </p>
               </div>
             </div>
 
-            {/* What will happen breakdown */}
-            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 space-y-3 text-xs">
-              <span className="font-bold text-[var(--text-primary)] block text-[11px] uppercase tracking-wider text-[var(--text-muted)]">
-                Track Switch Impact:
-              </span>
-              
-              <div className="flex items-start gap-2.5 text-[var(--text-secondary)]">
-                <RotateCcw className="w-4 h-4 text-[#EF4444] shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-[var(--text-primary)]">Career Profile completion will reset to 0%</strong> so you can track your genuine progress for {selectedRole}.
+            {/* Transition Details */}
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--surface)]/40 border border-[var(--border)]">
+                <RotateCcw className="w-4 h-4 text-[#EF4444] shrink-0" />
+                <span className="text-[var(--text-secondary)]">
+                  <strong className="text-[var(--text-primary)]">Career Profile Completion resets to 0%</strong> (Fresh 7-step journey).
                 </span>
               </div>
 
-              <div className="flex items-start gap-2.5 text-[var(--text-secondary)]">
-                <Sparkles className="w-4 h-4 text-[#8B5CF6] shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-[var(--text-primary)]">Fresh AI blueprints & roadmaps</strong>: VertexPath will generate new week-by-week syllabi and project architectures specific to {selectedRole}.
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--surface)]/40 border border-[var(--border)]">
+                <Sparkles className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                <span className="text-[var(--text-secondary)]">
+                  <strong className="text-[var(--text-primary)]">Personalized Syllabi & Architectures</strong> will calibrate for {selectedRole}.
                 </span>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-2.5 justify-end">
+            <div className="pt-2 flex flex-col-reverse sm:flex-row gap-2.5 justify-end">
               <button
                 type="button"
                 onClick={() => setStep('select')}
-                className="btn-secondary text-xs py-2 px-4 justify-center"
+                className="btn-secondary text-xs py-2.5 px-4 justify-center"
               >
-                Cancel, Keep {currentRole}
+                Keep Current Track
               </button>
+              
               <button
                 type="button"
                 onClick={handleConfirmSwitch}
                 disabled={isSubmitting}
-                className="btn-primary text-xs py-2 px-4 justify-center bg-gradient-to-r from-[#7C3AED] to-[#6D28D9] shadow-lg shadow-purple-900/30"
+                className="btn-primary text-xs py-2.5 px-5 justify-center font-semibold bg-gradient-to-r from-[#7C3AED] to-[#6D28D9] shadow-lg shadow-purple-950/40"
               >
                 <Check className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? 'Switching...' : `Yes, Switch to ${selectedRole} (Reset to 0%)`}</span>
+                <span>{isSubmitting ? 'Switching...' : `Confirm & Begin 0% Journey`}</span>
               </button>
             </div>
 

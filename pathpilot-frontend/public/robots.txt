@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /p/
+Allow: /dashboard/roadmaps
+Disallow: /api/
+
+Sitemap: https://vertexpath.vercel.app/sitemap.xml
