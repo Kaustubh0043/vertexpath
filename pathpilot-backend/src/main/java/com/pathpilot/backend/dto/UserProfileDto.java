@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class UserProfileDto {
-    private boolean onboardingCompleted;
+    private Boolean onboardingCompleted;
     private String careerGoal;
     private String customCareerGoal;
     private String experienceLevel;

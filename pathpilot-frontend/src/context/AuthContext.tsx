@@ -36,7 +36,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: String) => {
     const response = await api.post('/api/auth/login', { email, password });
-    const { token, refreshToken, userId, fullName, onboardingCompleted } = response.data;
+    const { token, refreshToken, userId, fullName, onboardingCompleted, avatarUrl, careerGoal } = response.data;
+    if (avatarUrl) localStorage.setItem('userAvatar', avatarUrl);
+    if (careerGoal) localStorage.setItem('careerGoal', careerGoal);
     
     const userData = { userId, email, fullName, onboardingCompleted };
     localStorage.setItem('token', token);
@@ -63,7 +65,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const verifyCode = async (email: string, code: string) => {
     const response = await api.post('/api/auth/verify', { email, code });
-    const { token, refreshToken, userId, fullName, onboardingCompleted } = response.data;
+    const { token, refreshToken, userId, fullName, onboardingCompleted, avatarUrl, careerGoal } = response.data;
+    if (avatarUrl) localStorage.setItem('userAvatar', avatarUrl);
+    if (careerGoal) localStorage.setItem('careerGoal', careerGoal);
     
     const userData = { userId, email, fullName, onboardingCompleted };
     localStorage.setItem('token', token);

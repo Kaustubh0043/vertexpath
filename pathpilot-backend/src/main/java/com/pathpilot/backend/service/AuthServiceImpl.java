@@ -97,6 +97,8 @@ public class AuthServiceImpl implements AuthService {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .onboardingCompleted(user.isOnboardingCompleted())
+                .avatarUrl(user.getAvatarUrl())
+                .careerGoal(user.getCareerGoal())
                 .build();
     }
 
@@ -121,6 +123,8 @@ public class AuthServiceImpl implements AuthService {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .onboardingCompleted(user.isOnboardingCompleted())
+                .avatarUrl(user.getAvatarUrl())
+                .careerGoal(user.getCareerGoal())
                 .build();
     }
 

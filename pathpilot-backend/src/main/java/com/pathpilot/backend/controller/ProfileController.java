@@ -41,26 +41,28 @@ public class ProfileController {
         return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("/profile")
+        @PostMapping("/profile")
     public ResponseEntity<UserProfileDto> updateProfile(@RequestBody UserProfileDto dto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
-        user.setOnboardingCompleted(dto.isOnboardingCompleted());
-        user.setCareerGoal(dto.getCareerGoal());
-        user.setCustomCareerGoal(dto.getCustomCareerGoal());
-        user.setExperienceLevel(dto.getExperienceLevel());
-        user.setTechnologies(dto.getTechnologies());
-        user.setCareerObjective(dto.getCareerObjective());
-        user.setSkillGaps(dto.getSkillGaps());
-        user.setWeeklyCommitment(dto.getWeeklyCommitment());
-        user.setOptionalLearningStyle(dto.getOptionalLearningStyle());
-        user.setOptionalJobPreference(dto.getOptionalJobPreference());
+        if (dto.getCareerGoal() != null) user.setCareerGoal(dto.getCareerGoal());
+        if (dto.getCustomCareerGoal() != null) user.setCustomCareerGoal(dto.getCustomCareerGoal());
+        if (dto.getExperienceLevel() != null) user.setExperienceLevel(dto.getExperienceLevel());
+        if (dto.getTechnologies() != null) user.setTechnologies(dto.getTechnologies());
+        if (dto.getCareerObjective() != null) user.setCareerObjective(dto.getCareerObjective());
+        if (dto.getSkillGaps() != null) user.setSkillGaps(dto.getSkillGaps());
+        if (dto.getWeeklyCommitment() != null) user.setWeeklyCommitment(dto.getWeeklyCommitment());
+        if (dto.getOptionalLearningStyle() != null) user.setOptionalLearningStyle(dto.getOptionalLearningStyle());
+        if (dto.getOptionalJobPreference() != null) user.setOptionalJobPreference(dto.getOptionalJobPreference());
         if (dto.getAvatarUrl() != null) user.setAvatarUrl(dto.getAvatarUrl());
         
-        if (dto.isOnboardingCompleted() && user.getOnboardingCompletedAt() == null) {
-            user.setOnboardingCompletedAt(LocalDateTime.now());
+        if (dto.getOnboardingCompleted() != null) {
+            user.setOnboardingCompleted(dto.getOnboardingCompleted());
+            if (dto.getOnboardingCompleted() && user.getOnboardingCompletedAt() == null) {
+                user.setOnboardingCompletedAt(LocalDateTime.now());
+            }
         }
 
         User savedUser = userRepository.save(user);
@@ -76,6 +78,7 @@ public class ProfileController {
                 .weeklyCommitment(savedUser.getWeeklyCommitment())
                 .optionalLearningStyle(savedUser.getOptionalLearningStyle())
                 .optionalJobPreference(savedUser.getOptionalJobPreference())
+                .avatarUrl(savedUser.getAvatarUrl())
                 .onboardingCompletedAt(savedUser.getOnboardingCompletedAt())
                 .build();
 

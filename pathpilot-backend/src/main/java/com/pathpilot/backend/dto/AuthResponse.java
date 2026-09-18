@@ -19,4 +19,6 @@ public class AuthResponse {
     private String fullName;
     private String message;
     private boolean onboardingCompleted;
+    private String avatarUrl;
+    private String careerGoal;
 }

@@ -59,11 +59,16 @@ export const Dashboard: React.FC = () => {
   const compensationCompleted = localStorage.getItem('compensationCompleted') === 'true';
   const projectCompleted = localStorage.getItem('projectCompleted') === 'true';
 
-  // Fetch Dashboard statistics
+  // Fetch Dashboard statistics with 5-min staleTime for instant loading
   const { data: stats, isLoading } = useQuery({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
       const res = await api.get('/api/dashboard/stats');
+      return res.data;
+    },
+    staleTime: 300000,
+  });
+
   // Synchronize career goal with authentic backend data
   useEffect(() => {
     if (stats?.careerGoal) {
@@ -71,9 +76,6 @@ export const Dashboard: React.FC = () => {
       localStorage.setItem('careerGoal', stats.careerGoal);
     }
   }, [stats]);
-      return res.data;
-    },
-  });
 
   // Mutate skills
   const addSkillMutation = useMutation({
