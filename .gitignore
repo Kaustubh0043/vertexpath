@@ -12,3 +12,4 @@
 
 # Maven build output
 /pathpilot-backend/target/
+/docker-compose.yml
