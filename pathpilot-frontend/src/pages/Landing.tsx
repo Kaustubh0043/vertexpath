@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { LegalModal } from '../components/LegalModal';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -22,6 +23,7 @@ import {
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { CareerJourneyLine } from '../components/CareerJourneyLine';
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -168,6 +170,7 @@ export const Landing: React.FC = () => {
     <div className="relative min-h-screen text-[var(--text-primary)] flex flex-col bg-[var(--bg-primary)] transition-colors duration-200">
       
       {/* 1. Header Navigation (Section 6) */}
+      <CareerJourneyLine className="landing-career-path" />
       <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
@@ -177,7 +180,7 @@ export const Landing: React.FC = () => {
             <span className="text-base font-bold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[var(--text-secondary)]">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--text-secondary)]">
             <a href="#features" className="hover:text-[var(--text-primary)] transition-colors">Features</a>
             <a href="#journey" className="hover:text-[var(--text-primary)] transition-colors">How It Works</a>
             <a href="#faq" className="hover:text-[var(--text-primary)] transition-colors">FAQ</a>
@@ -220,14 +223,14 @@ export const Landing: React.FC = () => {
         {/* Left Headline Column */}
         <div className="lg:col-span-7 space-y-6 text-left">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[var(--card)] border border-[var(--border)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)]">
               Career Operating System
             </span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight font-display text-[var(--text-primary)]">
-            YOUR CAREER<br />ISN'T A STRAIGHT LINE.
+            Your career<br />isn't a straight line.
           </h1>
 
           <p className="text-base sm:text-lg text-[var(--brand-purple)] font-medium">
@@ -255,7 +258,7 @@ export const Landing: React.FC = () => {
         </div>
 
         {/* Right Subtle Career Journey Flow Visual (Section 6) */}
-        <div className="lg:col-span-5 card-surface p-6 space-y-4">
+        <div className="lg:col-span-5 card-surface ai-gradient-border p-6 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
             <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">CAREER WORKFLOW</span>
             <span className="text-[10px] text-[#34D399] font-mono font-semibold">● ACTIVE SYSTEM</span>
@@ -274,7 +277,7 @@ export const Landing: React.FC = () => {
                   step.done 
                     ? 'bg-[#34D399]/20 border-[#34D399] text-[#34D399]'
                     : step.active
-                    ? 'bg-[#8B5CF6]/20 border-[#8B5CF6] text-[var(--brand-purple)]'
+                    ? 'bg-[var(--brand-primary)]/20 border-[var(--brand-primary)] text-[var(--brand-purple)]'
                     : 'bg-[var(--card)] border-[var(--border)] text-[var(--text-muted)]'
                 }`}>
                   {step.icon}
@@ -283,7 +286,7 @@ export const Landing: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase">{step.stage}</span>
                     {step.active && (
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#8B5CF6]/15 text-[var(--brand-purple)] font-mono">
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[var(--brand-primary)]/15 text-[var(--brand-purple)] font-mono">
                         Active Stage
                       </span>
                     )}
@@ -295,6 +298,46 @@ export const Landing: React.FC = () => {
           </div>
         </div>
 
+      </section>
+
+      
+      {/* 2.5 Scroll-driven Career Journey (Skiper 19 SVG Line Integration) */}
+      <section id="journey" className="relative w-full max-w-6xl mx-auto px-6 py-20 space-y-12 overflow-hidden">
+
+        
+        <div className="relative z-10 text-center space-y-3 max-w-2xl mx-auto">
+          <p className="eyebrow-text">CAREER PROGRESSION LIFECYCLE</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight font-display">
+            The Guided Path to Senior Engineering
+          </h2>
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+            Follow the guided journey track as you progress through each career milestone — turning scattered tutorials into verified hiring readiness.
+          </p>
+        </div>
+
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+          {[
+            { step: '01', title: 'Audit & Benchmark', desc: 'Audit resume against FAANG ATS filters and rewrite bullets using Google XYZ formatting.', tag: 'Foundation' },
+            { step: '02', title: 'Architect & Build', desc: 'Synthesize production folder trees, relational schemas, and microservice blueprints.', tag: 'Architecture' },
+            { step: '03', title: 'Voice & Code Drills', desc: 'Practice live voice screenings with Web Speech dictation and in-browser O(N) complexity audits.', tag: 'Screening' },
+            { step: '04', title: 'Targeted Placement', desc: 'Diff resume keywords against real JDs and generate tailored cold recruiter DMs.', tag: 'Hired' }
+          ].map((item, idx) => (
+            <div key={idx} className="card-surface card-surface-hover p-5 flex flex-col justify-between space-y-3 bg-[var(--card)]/90 backdrop-blur-sm">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-extrabold text-[var(--brand-primary)]">{item.step}</span>
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)] uppercase">{item.tag}</span>
+                </div>
+                <h3 className="text-sm font-bold text-[var(--text-primary)] font-display">{item.title}</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+              </div>
+              <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] font-semibold text-[var(--brand-primary)]">
+                <span>Milestone {item.step}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* 3. Structured Feature Sections (Section 7) */}
@@ -314,7 +357,7 @@ export const Landing: React.FC = () => {
           {featureSections.map((sec, sIdx) => (
             <div key={sIdx} className="space-y-4">
               <div className="border-b border-[var(--border)] pb-2">
-                <span className="text-[11px] font-mono font-bold text-[#8B5CF6] uppercase tracking-wider">
+                <span className="text-[11px] font-mono font-bold text-[var(--brand-primary)] uppercase tracking-wider">
                   {sec.category}
                 </span>
                 <p className="text-xs text-[var(--text-muted)] mt-0.5">{sec.tagline}</p>
@@ -330,7 +373,7 @@ export const Landing: React.FC = () => {
                       className="card-surface card-surface-hover p-5 space-y-3 cursor-pointer group flex flex-col justify-between"
                     >
                       <div className="space-y-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[#8B5CF6] group-hover:border-[#8B5CF6]/40 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--brand-primary)] group-hover:border-[var(--brand-primary)]/40 transition-colors">
                           <Icon className="w-4 h-4" />
                         </div>
                         <h3 className="text-sm font-semibold text-[var(--text-primary)] tracking-tight group-hover:text-white">
@@ -341,7 +384,7 @@ export const Landing: React.FC = () => {
                         </p>
                       </div>
 
-                      <div className="pt-2 flex items-center gap-1 text-[11px] font-semibold text-[#8B5CF6] group-hover:text-[var(--brand-purple)] transition-colors">
+                      <div className="pt-2 flex items-center gap-1 text-[11px] font-semibold text-[var(--brand-primary)] group-hover:text-[var(--brand-purple)] transition-colors">
                         <span>View module</span>
                         <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                       </div>
@@ -371,7 +414,7 @@ export const Landing: React.FC = () => {
               >
                 <span>{faq.q}</span>
                 <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${
-                  activeFaq === idx ? 'rotate-180 text-[#8B5CF6]' : ''
+                  activeFaq === idx ? 'rotate-180 text-[var(--brand-primary)]' : ''
                 }`} />
               </button>
               {activeFaq === idx && (
@@ -477,59 +520,10 @@ export const Landing: React.FC = () => {
         </div>
       </footer>
 
-      {/* Terms & Privacy Modal */}
-      {showTermsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--bg-primary)]/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
-              <div className="flex items-center gap-3">
-            <ThemeToggle />
-                <button
-                  onClick={() => setActiveModalTab('terms')}
-                  className={`text-xs font-bold pb-1 cursor-pointer ${
-                    activeModalTab === 'terms' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[var(--text-muted)]'
-                  }`}
-                >
-                  Terms of Service
-                </button>
-                <button
-                  onClick={() => setActiveModalTab('privacy')}
-                  className={`text-xs font-bold pb-1 cursor-pointer ${
-                    activeModalTab === 'privacy' ? 'text-[#8B5CF6] border-b-2 border-[#8B5CF6]' : 'text-[var(--text-muted)]'
-                  }`}
-                >
-                  Privacy Policy
-                </button>
-              </div>
-              <button 
-                onClick={() => setShowTermsModal(false)}
-                className="text-[var(--text-muted)] hover:text-[var(--text-primary)] p-1"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="text-xs text-[var(--text-secondary)] space-y-2 max-h-72 overflow-y-auto custom-scrollbar leading-relaxed">
-              {activeModalTab === 'terms' ? (
-                <>
-                  <p className="font-semibold text-[var(--text-primary)]">1. Acceptance of Terms</p>
-                  <p>By accessing or using VertexPath, you agree to comply with our standard terms of service regarding developer career data and personal project workflows.</p>
-                  <p className="font-semibold text-[var(--text-primary)] mt-2">2. Usage Rights</p>
-                  <p>You retain full ownership of your uploaded resumes, generated project specifications, and public portfolio content.</p>
-                </>
-              ) : (
-                <>
-                  <p className="font-semibold text-[var(--text-primary)]">1. Data Protection</p>
-                  <p>VertexPath processes your uploaded documents strictly for AI career coaching and ATS analysis. We do not sell your personal data or resume information to third parties.</p>
-                  <p className="font-semibold text-[var(--text-primary)] mt-2">2. Account Security</p>
-                  <p>Authentication utilizes secure OTP verification and industry-standard JWT session tokens.</p>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <LegalModal open={showTermsModal} activeTab={activeModalTab} onTabChange={setActiveModalTab} onClose={() => setShowTermsModal(false)} />
 
     </div>
   );
 };
+
+

@@ -259,7 +259,7 @@ export const Interviews: React.FC = () => {
           <p className="eyebrow-text">Prepare / 05</p>
           <h3 className="text-2xl font-extrabold text-[#F4F4F5] tracking-tight flex items-center gap-2.5">
             <span>Voice-Powered Interview Simulator</span>
-            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30 rounded">
+            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30 rounded">
               AI PRO
             </span>
           </h3>
@@ -270,7 +270,7 @@ export const Interviews: React.FC = () => {
 
         {currentQuestion && !evaluation && (
           <div className="flex items-center gap-3 bg-[#15161C] border border-[#25262D]/80 px-4 py-2 rounded-lg">
-            <Timer className={`w-4 h-4 ${timeLeft < 30 ? 'text-[#FF6577] animate-pulse' : 'text-[#8B5CF6]'}`} />
+            <Timer className={`w-4 h-4 ${timeLeft < 30 ? 'text-[#FF6577] animate-pulse' : 'text-[var(--brand-primary)]'}`} />
             <div className="text-left">
               <span className="text-[10px] uppercase font-bold text-slate-500 block">Time Remaining</span>
               <span className={`text-sm font-mono font-extrabold ${timeLeft < 30 ? 'text-[#FF6577]' : 'text-[#F4F4F5]'}`}>
@@ -286,7 +286,7 @@ export const Interviews: React.FC = () => {
         <div className="bg-[#15161C] border border-[#25262D] p-8 rounded-xl max-w-lg mx-auto space-y-6 text-center shadow-xl">
           <div className="space-y-2">
             <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl w-fit mx-auto shadow-inner">
-              <Sparkles className="w-8 h-8 text-[#8B5CF6]" />
+              <Sparkles className="w-8 h-8 text-[var(--brand-primary)]" />
             </div>
             <h4 className="text-base font-bold text-[#F4F4F5]">Start Your Mock Screening</h4>
             <p className="text-xs text-[#A1A1AA] leading-relaxed max-w-sm mx-auto">
@@ -303,7 +303,7 @@ export const Interviews: React.FC = () => {
                 placeholder="e.g. Senior Java Developer, Full Stack Engineer, AWS DevOps"
                 value={roleInput}
                 onChange={(e) => setRoleInput(e.target.value)}
-                className="w-full text-xs text-center py-2.5 bg-[#111318] border border-[#25262D] rounded focus:border-[#8B5CF6] text-[#F4F4F5]"
+                className="w-full text-xs text-center py-2.5 bg-[#111318] border border-[#25262D] rounded focus:border-[var(--brand-primary)] text-[#F4F4F5]"
               />
             </div>
 
@@ -323,21 +323,21 @@ export const Interviews: React.FC = () => {
 
             <div className="flex items-center justify-between px-3 py-2 bg-[#11151D] border border-[#25262D]/80 rounded text-xs">
               <span className="text-slate-400 font-medium text-[11px] flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <Clock className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                 Enable 2-Min Answer Timer
               </span>
               <input
                 type="checkbox"
                 checked={timerEnabled}
                 onChange={(e) => setTimerEnabled(e.target.checked)}
-                className="accent-[#8B5CF6] cursor-pointer"
+                className="accent-[var(--brand-primary)] cursor-pointer"
               />
             </div>
 
             <button
               type="submit"
               disabled={generateQuestionMutation.isPending || !roleInput.trim()}
-              className="w-full py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+              className="w-full py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
             >
               {generateQuestionMutation.isPending ? (
                 <div className="flex items-center gap-2">
@@ -369,7 +369,7 @@ export const Interviews: React.FC = () => {
             
             {/* Immersive Question Header with Audio Player */}
             <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-xl space-y-4 shadow-xl">
-              <div className="flex items-center justify-between text-[11px] font-mono text-[#8B5CF6]">
+              <div className="flex items-center justify-between text-[11px] font-mono text-[var(--brand-primary)]">
                 <span className="flex items-center gap-1.5 font-bold">
                   <Radio className="w-3.5 h-3.5 animate-pulse text-[#55D39A]" />
                   QUESTION {String(questionIndex).padStart(2, '0')} / 10
@@ -380,8 +380,8 @@ export const Interviews: React.FC = () => {
                   type="button"
                   className={`flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold rounded-md border transition-all cursor-pointer ${
                     isSpeaking 
-                      ? 'bg-[#8B5CF6]/20 text-[#8B5CF6] border-[#8B5CF6] animate-pulse' 
-                      : 'bg-[#11151D] text-slate-300 border-[#25262D] hover:border-[#8B5CF6]/50'
+                      ? 'bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] border-[var(--brand-primary)] animate-pulse' 
+                      : 'bg-[#11151D] text-slate-300 border-[#25262D] hover:border-[var(--brand-primary)]/50'
                   }`}
                   title={isSpeaking ? 'Stop speaking' : 'Read question aloud'}
                 >
@@ -392,7 +392,7 @@ export const Interviews: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <Volume2 className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                      <Volume2 className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                       <span>Listen to AI</span>
                     </>
                   )}
@@ -421,7 +421,7 @@ export const Interviews: React.FC = () => {
                           className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-bold transition-all cursor-pointer ${
                             isListening
                               ? 'bg-[#FF6577]/20 text-[#FF6577] border border-[#FF6577] animate-pulse'
-                              : 'bg-[#11151D] hover:bg-[#1A202C] text-[#8B5CF6] border border-[#25262D]'
+                              : 'bg-[#11151D] hover:bg-[#1A202C] text-[var(--brand-primary)] border border-[#25262D]'
                           }`}
                         >
                           {isListening ? (
@@ -452,7 +452,7 @@ export const Interviews: React.FC = () => {
                       placeholder="Type or speak your explanation, system architecture tradeoffs, code examples, or STAR framework response..."
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
-                      className="w-full text-xs font-sans leading-relaxed p-4 bg-[#111318] border border-[#25262D] rounded-lg focus:border-[#8B5CF6] text-[#F4F4F5] placeholder-slate-600"
+                      className="w-full text-xs font-sans leading-relaxed p-4 bg-[#111318] border border-[#25262D] rounded-lg focus:border-[var(--brand-primary)] text-[#F4F4F5] placeholder-slate-600"
                     />
                   </div>
 
@@ -473,7 +473,7 @@ export const Interviews: React.FC = () => {
                     <button
                       type="submit"
                       disabled={evaluateAnswerMutation.isPending || !userAnswer.trim()}
-                      className="px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+                      className="px-6 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
                     >
                       {evaluateAnswerMutation.isPending ? (
                         <div className="flex items-center gap-2">
@@ -542,7 +542,7 @@ export const Interviews: React.FC = () => {
                   <button
                     onClick={handleNext}
                     disabled={generateQuestionMutation.isPending}
-                    className="flex items-center gap-1.5 px-5 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-lg cursor-pointer transition-all shadow-lg shadow-[#8B5CF6]/20"
+                    className="flex items-center gap-1.5 px-5 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded-lg cursor-pointer transition-all shadow-lg shadow-[var(--brand-primary)]/20"
                   >
                     <span>Next Question #{questionIndex + 1}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -557,7 +557,7 @@ export const Interviews: React.FC = () => {
           <div className="md:col-span-4 space-y-6">
             <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-xl space-y-4 shadow-xl">
               <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-1.5 border-b border-[#25262D] pb-3">
-                <Award className="w-4.5 h-4.5 text-[#8B5CF6]" />
+                <Award className="w-4.5 h-4.5 text-[var(--brand-primary)]" />
                 <span>Target Evaluation Criteria</span>
               </h5>
               
@@ -572,7 +572,7 @@ export const Interviews: React.FC = () => {
 
             <div className="bg-[#15161C]/60 border border-[#25262D]/80 p-6 rounded-xl space-y-2 text-xs text-slate-400 leading-relaxed shadow-lg">
               <div className="flex items-center gap-2 font-bold text-[#F4F4F5]">
-                <Sparkles className="w-4 h-4 text-[#8B5CF6]" />
+                <Sparkles className="w-4 h-4 text-[var(--brand-primary)]" />
                 <span>Interview Mastery Pro-Tip</span>
               </div>
               <p className="text-[11px] text-[#A1A1AA] leading-relaxed">

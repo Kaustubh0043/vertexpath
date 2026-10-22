@@ -238,7 +238,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
       >
         {/* Search Input Bar */}
         <div className="flex items-center px-4 py-3.5 border-b border-[var(--border)] gap-3 bg-[var(--surface)]">
-          <Search className="w-5 h-5 text-[#8B5CF6] shrink-0" />
+          <Search className="w-5 h-5 text-[var(--brand-primary)] shrink-0" />
           <input
             autoFocus
             type="text"
@@ -270,13 +270,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
                   className={`
                     flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-100 group
                     ${isSelected 
-                      ? 'bg-[#8B5CF6]/15 text-[var(--text-primary)]' 
+                      ? 'bg-[var(--brand-primary)]/15 text-[var(--text-primary)]' 
                       : 'text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'}
                   `}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`p-1.5 rounded-lg transition-colors ${
-                      isSelected ? 'bg-[#8B5CF6] text-white' : 'bg-[var(--surface)] text-[var(--text-muted)] group-hover:text-[var(--text-primary)]'
+                      isSelected ? 'bg-[var(--brand-primary)] text-white' : 'bg-[var(--surface)] text-[var(--text-muted)] group-hover:text-[var(--text-primary)]'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>

@@ -224,7 +224,7 @@ export const Resume: React.FC = () => {
         <button
           onClick={() => setActiveTab('ats')}
           className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer shrink-0 ${
-            activeTab === 'ats' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            activeTab === 'ats' ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <span>Resume Scorer</span>
@@ -232,17 +232,17 @@ export const Resume: React.FC = () => {
         <button
           onClick={() => setActiveTab('optimizer')}
           className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer flex items-center gap-1.5 shrink-0 ${
-            activeTab === 'optimizer' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            activeTab === 'optimizer' ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
+          <Sparkles className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
           <span>AI Bullet Optimizer</span>
-          <span className="px-1.5 py-0.2 bg-[#8B5CF6]/20 text-[#8B5CF6] text-[9px] rounded font-mono">XYZ</span>
+          <span className="px-1.5 py-0.2 bg-[var(--brand-primary)]/20 text-[var(--brand-primary)] text-[9px] rounded font-mono">XYZ</span>
         </button>
         <button
           onClick={() => setActiveTab('rag')}
           className={`pb-2.5 px-3 text-xs font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap cursor-pointer shrink-0 ${
-            activeTab === 'rag' ? 'border-[#8B5CF6] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            activeTab === 'rag' ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <span>Context Q&A Sandbox</span>
@@ -258,14 +258,14 @@ export const Resume: React.FC = () => {
             <div className="bg-[#15161C] border border-[#25262D] p-6 rounded-lg space-y-4">
               <h4 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Upload Resume</h4>
               <form onSubmit={handleResumeUpload} className="space-y-4">
-                <div className="border border-dashed border-[#25262D] hover:border-[#8B5CF6]/50 rounded p-6 text-center transition-all bg-[#111318] relative cursor-pointer group">
+                <div className="border border-dashed border-[#25262D] hover:border-[var(--brand-primary)]/50 rounded p-6 text-center transition-all bg-[#111318] relative cursor-pointer group">
                   <input
                     type="file"
                     accept=".pdf,.docx"
                     onChange={(e) => e.target.files && setSelectedFile(e.target.files[0])}
                     className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                   />
-                  <Upload className="w-6 h-6 text-slate-500 group-hover:text-[#8B5CF6] mx-auto transition-colors" />
+                  <Upload className="w-6 h-6 text-slate-500 group-hover:text-[var(--brand-primary)] mx-auto transition-colors" />
                   <p className="text-xs text-slate-300 font-semibold mt-3 truncate">
                     {selectedFile ? selectedFile.name : 'Select PDF or Word File'}
                   </p>
@@ -275,7 +275,7 @@ export const Resume: React.FC = () => {
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
                   >
                     {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>Upload & Evaluate</span>}
                   </button>
@@ -287,7 +287,7 @@ export const Resume: React.FC = () => {
               <h4 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Processed Resumes</h4>
               <div className="space-y-1.5 max-h-[220px] overflow-y-auto pr-1 custom-scrollbar">
                 {loadingDocs ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-[#8B5CF6] mx-auto py-4" />
+                  <Loader2 className="w-4 h-4 animate-spin text-[var(--brand-primary)] mx-auto py-4" />
                 ) : resumes.length === 0 ? (
                   <p className="text-xs text-slate-500 text-center py-4">No resumes uploaded yet.</p>
                 ) : (
@@ -303,7 +303,7 @@ export const Resume: React.FC = () => {
                       `}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <FileCheck className="w-4 h-4 shrink-0 text-[#8B5CF6]" />
+                        <FileCheck className="w-4 h-4 shrink-0 text-[var(--brand-primary)]" />
                         <span className="truncate">{doc.filename}</span>
                       </div>
                       <button
@@ -328,7 +328,7 @@ export const Resume: React.FC = () => {
               /* Empty state */
               <div className="flex-1 flex flex-col items-center justify-center text-center py-16 space-y-3">
                 <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-lg">
-                  <FileCheck className="w-8 h-8 text-[#8B5CF6]" />
+                  <FileCheck className="w-8 h-8 text-[var(--brand-primary)]" />
                 </div>
                 <h4 className="text-base font-bold text-[#F4F4F5]">ATS Scorecard & Gaps</h4>
                 <p className="text-xs text-[#A1A1AA] max-w-xs leading-normal">
@@ -337,7 +337,7 @@ export const Resume: React.FC = () => {
               </div>
             ) : loadingAnalysis ? (
               <div className="flex-1 flex flex-col items-center justify-center p-8 bg-[#15161C]/45 border border-[#25262D] rounded-lg space-y-4 py-16 animate-fade-in text-center">
-                <Loader2 className="w-8 h-8 text-[#8B5CF6] animate-spin" />
+                <Loader2 className="w-8 h-8 text-[var(--brand-primary)] animate-spin" />
                 <div className="space-y-1.5">
                   <p className="text-xs font-bold text-[#F4F4F5] font-display min-h-[16px]">
                     {resumeLoadingMessages[resumeLoadingIndex]}
@@ -414,7 +414,7 @@ export const Resume: React.FC = () => {
                       const numberPrefix = String(idx + 1).padStart(2, '0');
                       return (
                         <div key={idx} className="flex gap-4 items-start p-3 bg-[#11151D] border border-[#25262D] rounded">
-                          <span className="font-mono text-xs font-bold text-[#8B5CF6]">{numberPrefix}</span>
+                          <span className="font-mono text-xs font-bold text-[var(--brand-primary)]">{numberPrefix}</span>
                           <p className="text-xs text-[#A1A1AA] leading-relaxed">{item}</p>
                         </div>
                       );
@@ -441,7 +441,7 @@ export const Resume: React.FC = () => {
             <div className="bg-[#15161C] border border-[#25262D] p-6 rounded-xl space-y-5 shadow-xl">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 bg-[#8B5CF6]/15 text-[#8B5CF6] rounded-lg">
+                  <div className="p-2 bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] rounded-lg">
                     <Wand2 className="w-4 h-4" />
                   </div>
                   <h4 className="text-sm font-bold text-[#F4F4F5]">Google XYZ Formula Optimizer</h4>
@@ -468,7 +468,7 @@ export const Resume: React.FC = () => {
                     placeholder="e.g. Senior Java Engineer, Data Analyst, Cloud DevOps"
                     value={targetRoleInput}
                     onChange={(e) => setTargetRoleInput(e.target.value)}
-                    className="w-full text-xs bg-[#111318] border border-[#25262D] rounded px-3 py-2 text-[#F4F4F5] focus:border-[#8B5CF6]"
+                    className="w-full text-xs bg-[#111318] border border-[#25262D] rounded px-3 py-2 text-[#F4F4F5] focus:border-[var(--brand-primary)]"
                   />
                 </div>
 
@@ -482,7 +482,7 @@ export const Resume: React.FC = () => {
                     placeholder="e.g. Created backend APIs for users and worked on fixing database queries in PostgreSQL."
                     value={bulletInput}
                     onChange={(e) => setBulletInput(e.target.value)}
-                    className="w-full text-xs bg-[#111318] border border-[#25262D] rounded p-3 text-[#F4F4F5] focus:border-[#8B5CF6] leading-relaxed"
+                    className="w-full text-xs bg-[#111318] border border-[#25262D] rounded p-3 text-[#F4F4F5] focus:border-[var(--brand-primary)] leading-relaxed"
                   />
                 </div>
 
@@ -510,7 +510,7 @@ export const Resume: React.FC = () => {
                 <button
                   type="submit"
                   disabled={optimizeBulletMutation.isPending || !bulletInput.trim()}
-                  className="w-full py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+                  className="w-full py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
                 >
                   {optimizeBulletMutation.isPending ? (
                     <div className="flex items-center gap-2">
@@ -544,7 +544,7 @@ export const Resume: React.FC = () => {
             ) : !bulletResult ? (
               <div className="bg-[#15161C] border border-[#25262D] rounded-xl p-12 flex flex-col items-center justify-center text-center space-y-3 min-h-[350px]">
                 <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl">
-                  <Sparkles className="w-8 h-8 text-[#8B5CF6]" />
+                  <Sparkles className="w-8 h-8 text-[var(--brand-primary)]" />
                 </div>
                 <h5 className="text-sm font-bold text-[#F4F4F5]">AI-Powered Resume Enhancer</h5>
                 <p className="text-xs text-[#A1A1AA] max-w-xs leading-relaxed">
@@ -579,10 +579,10 @@ export const Resume: React.FC = () => {
                     return (
                       <div 
                         key={idx}
-                        className="p-5 bg-[#15161C] border border-[#25262D] hover:border-[#8B5CF6]/40 rounded-xl space-y-3 transition-all shadow-md group"
+                        className="p-5 bg-[#15161C] border border-[#25262D] hover:border-[var(--brand-primary)]/40 rounded-xl space-y-3 transition-all shadow-md group"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
+                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30">
                             {v.label}
                           </span>
 
@@ -602,7 +602,7 @@ export const Resume: React.FC = () => {
                               </>
                             ) : (
                               <>
-                                <Copy className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                                <Copy className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                                 <span>Copy Bullet</span>
                               </>
                             )}
@@ -640,14 +640,14 @@ export const Resume: React.FC = () => {
             <div className="bg-[#15161C] border border-[#25262D] p-6 rounded-lg space-y-4">
               <h4 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Index Reference Files</h4>
               <form onSubmit={handleRagUpload} className="space-y-4">
-                <div className="border border-dashed border-[#25262D] hover:border-[#8B5CF6]/50 rounded p-6 text-center transition-all bg-[#111318] relative cursor-pointer group">
+                <div className="border border-dashed border-[#25262D] hover:border-[var(--brand-primary)]/50 rounded p-6 text-center transition-all bg-[#111318] relative cursor-pointer group">
                   <input
                     type="file"
                     accept=".pdf,.docx,.pptx,.txt"
                     onChange={(e) => e.target.files && setRagFile(e.target.files[0])}
                     className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                   />
-                  <Upload className="w-6 h-6 text-slate-500 group-hover:text-[#8B5CF6] mx-auto transition-colors" />
+                  <Upload className="w-6 h-6 text-slate-500 group-hover:text-[var(--brand-primary)] mx-auto transition-colors" />
                   <p className="text-xs text-slate-300 font-semibold mt-3 truncate">
                     {ragFile ? ragFile.name : 'Select Study Materials'}
                   </p>
@@ -657,7 +657,7 @@ export const Resume: React.FC = () => {
                   <button
                     type="submit"
                     disabled={ragUploading}
-                    className="w-full flex items-center justify-center gap-2 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer"
                   >
                     {ragUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>Index Document</span>}
                   </button>
@@ -669,7 +669,7 @@ export const Resume: React.FC = () => {
               <h4 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Active Reference Docs</h4>
               <div className="space-y-1.5 max-h-[220px] overflow-y-auto pr-1 custom-scrollbar">
                 {loadingDocs ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-[#8B5CF6] mx-auto py-4" />
+                  <Loader2 className="w-4 h-4 animate-spin text-[var(--brand-primary)] mx-auto py-4" />
                 ) : ragDocs.length === 0 ? (
                   <p className="text-xs text-slate-500 text-center py-4">No reference files indexed.</p>
                 ) : (
@@ -765,7 +765,7 @@ export const Resume: React.FC = () => {
               <button
                 type="submit"
                 disabled={!ragQuery.trim() || ragQueryMutation.isPending || ragDocs.length === 0}
-                className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-sm"
+                className="px-4 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-sm"
               >
                 <span>Send</span>
               </button>

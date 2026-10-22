@@ -36,11 +36,11 @@ export const PublicPortfolio: React.FC = () => {
       {/* Top Brand Navbar */}
       <div className="max-w-4xl mx-auto flex items-center justify-between pb-8 border-b border-[#25262D]">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-[#8B5CF6] to-[#C49AFF] flex items-center justify-center shadow-[0_0_15px_rgba(155,92,255,0.4)]">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-[var(--brand-primary)] to-[var(--brand-hover)] flex items-center justify-center shadow-[0_0_15px_rgba(194,248,79,0.24)]">
             <Sparkles className="w-4 h-4 text-[#111318]" />
           </div>
           <span className="font-display font-extrabold text-lg tracking-tight">VertexPath</span>
-          <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
+          <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30">
             VERIFIED PORTFOLIO
           </span>
         </Link>
@@ -49,7 +49,7 @@ export const PublicPortfolio: React.FC = () => {
           onClick={handleShare}
           className="flex items-center gap-2 px-4 py-2 bg-[#11151D] hover:bg-[#1A202C] text-[#F4F4F5] text-xs font-bold rounded-xl border border-[#25262D] transition-all cursor-pointer shadow-sm"
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-[#55D39A]" /> : <Share2 className="w-3.5 h-3.5 text-[#8B5CF6]" />}
+          {copied ? <Check className="w-3.5 h-3.5 text-[#55D39A]" /> : <Share2 className="w-3.5 h-3.5 text-[var(--brand-primary)]" />}
           <span>{copied ? 'Link Copied!' : 'Share Portfolio'}</span>
         </button>
       </div>
@@ -58,11 +58,11 @@ export const PublicPortfolio: React.FC = () => {
         
         {/* Profile Hero Card */}
         <div className="relative overflow-hidden rounded-3xl bg-[#15161C] border border-[#25262D]/80 p-8 sm:p-10 shadow-2xl">
-          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#8B5CF6]/10 blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[var(--brand-primary)]/10 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div className="flex items-center gap-5">
-              <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-[#11151D] to-[#1A202C] border-2 border-[#8B5CF6]/40 flex items-center justify-center text-2xl font-extrabold font-display text-[#F4F4F5] shadow-xl">
+              <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-[#11151D] to-[#1A202C] border-2 border-[var(--brand-primary)]/40 flex items-center justify-center text-2xl font-extrabold font-display text-[#F4F4F5] shadow-xl">
                 {displayName.charAt(0)}
               </div>
 
@@ -71,7 +71,7 @@ export const PublicPortfolio: React.FC = () => {
                   <h1 className="text-2xl font-bold font-display text-[#F4F4F5]">{displayName}</h1>
                   <ShieldCheck className="w-5 h-5 text-[#55D39A]" />
                 </div>
-                <p className="text-sm font-semibold text-[#8B5CF6]">Full Stack & Systems Software Engineer</p>
+                <p className="text-sm font-semibold text-[var(--brand-primary)]">Full Stack & Systems Software Engineer</p>
                 <p className="text-xs text-[#A1A1AA]">Open to Software Engineering & Architecture Roles</p>
               </div>
             </div>
@@ -103,17 +103,17 @@ export const PublicPortfolio: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-bold font-display text-[#F4F4F5] flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-[#8B5CF6]" />
+              <Cpu className="w-5 h-5 text-[var(--brand-primary)]" />
               <span>Architectural Blueprints & Systems</span>
             </h3>
             <span className="text-xs text-slate-500 font-mono">Verified Specs</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#15161C] border border-[#25262D]/80 hover:border-[#8B5CF6]/40 rounded-2xl p-6 space-y-4 shadow-xl transition-all">
+            <div className="bg-[#15161C] border border-[#25262D]/80 hover:border-[var(--brand-primary)]/40 rounded-2xl p-6 space-y-4 shadow-xl transition-all">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-[#F4F4F5]">Real-Time Analytics & Ingestion Gateway</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#8B5CF6]/15 text-[#8B5CF6]">FastAPI + Redis</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[var(--brand-primary)]/15 text-[var(--brand-primary)]">FastAPI + Redis</span>
               </div>
               <p className="text-xs text-[#A1A1AA] leading-relaxed">
                 Designed and scaffolded a high-throughput event ingestion gateway capable of handling 15k RPS with low-latency Redis caching and distributed worker queues.
@@ -124,7 +124,7 @@ export const PublicPortfolio: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#15161C] border border-[#25262D]/80 hover:border-[#8B5CF6]/40 rounded-2xl p-6 space-y-4 shadow-xl transition-all">
+            <div className="bg-[#15161C] border border-[#25262D]/80 hover:border-[var(--brand-primary)]/40 rounded-2xl p-6 space-y-4 shadow-xl transition-all">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-[#F4F4F5]">Enterprise E-Commerce Microservices</span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#55D39A]/15 text-[#55D39A]">Spring Boot + Postgres</span>
@@ -143,7 +143,7 @@ export const PublicPortfolio: React.FC = () => {
         {/* Verified Curriculums */}
         <div className="space-y-4">
           <h3 className="text-lg font-bold font-display text-[#F4F4F5] flex items-center gap-2">
-            <Map className="w-5 h-5 text-[#8B5CF6]" />
+            <Map className="w-5 h-5 text-[var(--brand-primary)]" />
             <span>Mastered Learning Paths</span>
           </h3>
 
@@ -182,7 +182,7 @@ export const PublicPortfolio: React.FC = () => {
 
           <Link
             to="/auth"
-            className="px-6 py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-xl transition-all shadow-lg shadow-[#8B5CF6]/20 flex items-center gap-2 cursor-pointer"
+            className="px-6 py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded-xl transition-all shadow-lg shadow-[var(--brand-primary)]/20 flex items-center gap-2 cursor-pointer"
           >
             <span>Create Your Verified Profile</span>
             <ArrowRight className="w-4 h-4" />

@@ -157,7 +157,7 @@ export const Chat: React.FC = () => {
       }
       if (trimmed.startsWith('## ')) {
         return (
-          <h4 key={lineIndex} className="text-sm font-extrabold text-[#8B5CF6] mt-5 mb-2.5">
+          <h4 key={lineIndex} className="text-sm font-extrabold text-[var(--brand-primary)] mt-5 mb-2.5">
             {parseInlineFormatting(trimmed.substring(3))}
           </h4>
         );
@@ -246,7 +246,7 @@ export const Chat: React.FC = () => {
                         return (
                           <td key={cIdx} className="px-4 py-2.5 text-[#A1A1AA] whitespace-nowrap">
                             {isAction ? (
-                              <button className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8B5CF6] hover:text-[#C49AFF] cursor-pointer">
+                              <button className="inline-flex items-center gap-1 text-[11px] font-bold text-[var(--brand-primary)] hover:text-[var(--brand-hover)] cursor-pointer">
                                 {cleanCell}
                               </button>
                             ) : (
@@ -302,7 +302,7 @@ export const Chat: React.FC = () => {
         return (
           <div key={index} className="my-4 rounded border border-[#25262D] bg-[#111318] font-mono text-[11px]">
             <div className="flex items-center justify-between px-4 py-1.5 bg-[#11151D] border-b border-[#25262D] text-slate-400">
-              <span className="flex items-center gap-1.5 text-[9px] uppercase font-bold text-[#8B5CF6]">
+              <span className="flex items-center gap-1.5 text-[9px] uppercase font-bold text-[var(--brand-primary)]">
                 <Terminal className="w-3.5 h-3.5" />
                 {codeLang}
               </span>
@@ -348,7 +348,7 @@ export const Chat: React.FC = () => {
           />
           <button 
             type="submit" 
-            className="px-3 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded transition-all cursor-pointer flex items-center justify-center shrink-0"
+            className="px-3 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded transition-all cursor-pointer flex items-center justify-center shrink-0"
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -357,7 +357,7 @@ export const Chat: React.FC = () => {
         <div className="flex-1 overflow-y-auto space-y-1 pr-1 custom-scrollbar max-h-[350px]">
           {loadingConvs ? (
             <div className="text-center py-6">
-              <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6] mx-auto" />
+              <Loader2 className="w-5 h-5 animate-spin text-[var(--brand-primary)] mx-auto" />
             </div>
           ) : !conversations || conversations.length === 0 ? (
             <div className="text-center py-6">
@@ -376,7 +376,7 @@ export const Chat: React.FC = () => {
                 `}
               >
                 <div className="flex items-center gap-2 truncate">
-                  <MessageSquare className="w-4 h-4 shrink-0 text-[#8B5CF6]" />
+                  <MessageSquare className="w-4 h-4 shrink-0 text-[var(--brand-primary)]" />
                   <span className="truncate">{conv.title}</span>
                 </div>
                 <button
@@ -400,7 +400,7 @@ export const Chat: React.FC = () => {
         {/* Desktop & Mobile Header Bar */}
         <div className="p-3 border-b border-[#25262D] flex items-center justify-between gap-3 bg-[#111318]">
           <div className="flex items-center gap-2">
-            <Bot className="w-4 h-4 text-[#8B5CF6]" />
+            <Bot className="w-4 h-4 text-[var(--brand-primary)]" />
             <span className="text-xs font-bold text-[#F4F4F5]">
               {conversations?.find((c: any) => c.id === activeConvId)?.title || "Career Coach Assistant"}
             </span>
@@ -425,7 +425,7 @@ export const Chat: React.FC = () => {
                 className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-slate-400 hover:text-[#F4F4F5] bg-[#11151D] hover:bg-[#1A202C] border border-[#25262D] rounded transition-all cursor-pointer"
                 title="Export session as Markdown"
               >
-                <Download className="w-3 h-3 text-[#8B5CF6]" />
+                <Download className="w-3 h-3 text-[var(--brand-primary)]" />
                 <span className="hidden sm:inline">Export MD</span>
               </button>
             )}
@@ -437,7 +437,7 @@ export const Chat: React.FC = () => {
           {!activeConvId ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-3">
               <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-lg">
-                <MessageSquare className="w-8 h-8 text-[#8B5CF6]" />
+                <MessageSquare className="w-8 h-8 text-[var(--brand-primary)]" />
               </div>
               <h4 className="text-base font-bold text-[#F4F4F5]">VertexPath Career Coach</h4>
               <p className="text-xs text-[#A1A1AA] max-w-xs leading-normal">
@@ -446,12 +446,12 @@ export const Chat: React.FC = () => {
             </div>
           ) : loadingMessages ? (
             <div className="flex items-center justify-center h-full py-16">
-              <Loader2 className="w-6 h-6 animate-spin text-[#8B5CF6]" />
+              <Loader2 className="w-6 h-6 animate-spin text-[var(--brand-primary)]" />
             </div>
           ) : !messages || messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12 space-y-4">
               <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl w-fit mx-auto shadow-inner">
-                <Sparkles className="w-6 h-6 text-[#8B5CF6]" />
+                <Sparkles className="w-6 h-6 text-[var(--brand-primary)]" />
               </div>
               <div className="space-y-1">
                 <h5 className="text-sm font-bold text-[#F4F4F5]">Ask your Career Coach anything</h5>
@@ -474,7 +474,7 @@ export const Chat: React.FC = () => {
                         sendMessageMutation.mutate({ convId: activeConvId, content: promptText });
                       }
                     }}
-                    className="p-3 bg-[#11151D] hover:bg-[#1A202C] border border-[#25262D] hover:border-[#8B5CF6]/40 text-left text-[11px] text-[#F4F4F5] rounded-lg transition-all cursor-pointer shadow-sm hover:shadow-[#8B5CF6]/10"
+                    className="p-3 bg-[#11151D] hover:bg-[#1A202C] border border-[#25262D] hover:border-[var(--brand-primary)]/40 text-left text-[11px] text-[#F4F4F5] rounded-lg transition-all cursor-pointer shadow-sm hover:shadow-[var(--brand-primary)]/10"
                   >
                     {promptText}
                   </button>
@@ -506,8 +506,8 @@ export const Chat: React.FC = () => {
           {sendMessageMutation.isPending && (
             <div className="flex gap-3 items-start justify-start">
               <div className="bg-[#111318] border border-[#25262D] rounded-lg rounded-tl-none p-3.5 flex items-center gap-2 shadow-md">
-                <Loader2 className="w-4 h-4 animate-spin text-[#8B5CF6]" />
-                <span className="text-[11px] text-[#8B5CF6] font-semibold animate-pulse">VertexPath is thinking & formulating response...</span>
+                <Loader2 className="w-4 h-4 animate-spin text-[var(--brand-primary)]" />
+                <span className="text-[11px] text-[var(--brand-primary)] font-semibold animate-pulse">VertexPath is thinking & formulating response...</span>
               </div>
             </div>
           )}
@@ -524,12 +524,12 @@ export const Chat: React.FC = () => {
                 placeholder="Ask Career Coach coaching tips or architectural tradeoffs..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 min-w-0 px-4 py-3 bg-[#111318] border border-[#25262D] rounded-lg text-xs text-[#F4F4F5] focus:outline-none focus:border-[#8B5CF6] placeholder-slate-600"
+                className="flex-1 min-w-0 px-4 py-3 bg-[#111318] border border-[#25262D] rounded-lg text-xs text-[#F4F4F5] focus:outline-none focus:border-[var(--brand-primary)] placeholder-slate-600"
               />
               <button 
                 type="submit" 
                 disabled={!inputText.trim() || sendMessageMutation.isPending}
-                className="px-6 py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-lg shadow-[#8B5CF6]/20 shrink-0"
+                className="px-6 py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center shadow-lg shadow-[var(--brand-primary)]/20 shrink-0"
               >
                 <span>Send</span>
               </button>

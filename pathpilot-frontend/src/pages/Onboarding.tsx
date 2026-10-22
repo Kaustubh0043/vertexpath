@@ -257,14 +257,14 @@ export const Onboarding: React.FC = () => {
 
   if (showSummary) {
     return (
-      <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[#8B5CF6]/30 selection:text-[#C49AFF]">
+      <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[var(--brand-primary)]/30 selection:text-[#111318]">
         <div className="aurora-container">
           <div className="cyber-grid-2d" />
         </div>
 
         <div className="w-full max-w-2xl bg-[#15161C]/45 border border-[#25262D] rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
           <div className="space-y-2 text-center pb-4 border-b border-[#25262D]">
-            <span className="text-[10px] font-mono font-bold text-[#8B5CF6] tracking-[0.25em] uppercase">onboarding complete</span>
+            <span className="text-[10px] font-mono font-bold text-[var(--brand-primary)] tracking-[0.25em] uppercase">onboarding complete</span>
             <h2 className="text-3xl font-extrabold text-[#F4F4F5] font-display">YOUR PATH IS READY.</h2>
             <p className="text-xs text-[#A1A1AA] max-w-md mx-auto">
               VertexPath has configured a personalized dashboard, checklist blueprint, and interview mock coach to align with your targets.
@@ -306,31 +306,31 @@ export const Onboarding: React.FC = () => {
           </div>
 
           <div className="space-y-4">
-            <span className="text-[10px] font-mono font-bold text-[#8B5CF6] tracking-wider uppercase">YOUR FIRST PATH</span>
+            <span className="text-[10px] font-mono font-bold text-[var(--brand-primary)] tracking-wider uppercase">YOUR FIRST PATH</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
-                <span className="text-[#8B5CF6] font-mono text-xs font-bold">01</span>
+                <span className="text-[var(--brand-primary)] font-mono text-xs font-bold">01</span>
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F4F5]">Analyze Baseline Profile</p>
                   <p className="text-[10px] text-slate-500">Scan technical signals on your resume</p>
                 </div>
               </div>
               <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
-                <span className="text-[#8B5CF6] font-mono text-xs font-bold">02</span>
+                <span className="text-[var(--brand-primary)] font-mono text-xs font-bold">02</span>
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F4F5]">Close Skill Gaps</p>
                   <p className="text-[10px] text-slate-500">Build structure around {selectedGaps[0] || 'Technical Skills'}</p>
                 </div>
               </div>
               <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
-                <span className="text-[#8B5CF6] font-mono text-xs font-bold">03</span>
+                <span className="text-[var(--brand-primary)] font-mono text-xs font-bold">03</span>
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F4F5]">Build Blueprint Proof</p>
                   <p className="text-[10px] text-slate-500">Generate scaffolding for a target stack</p>
                 </div>
               </div>
               <div className="p-3.5 bg-[#111318] border border-[#25262D] rounded flex gap-3 items-start">
-                <span className="text-[#8B5CF6] font-mono text-xs font-bold">04</span>
+                <span className="text-[var(--brand-primary)] font-mono text-xs font-bold">04</span>
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#F4F4F5]">Technical Simulations</p>
                   <p className="text-[10px] text-slate-500">Practice mock questions with strict grader</p>
@@ -343,7 +343,7 @@ export const Onboarding: React.FC = () => {
             <button
               onClick={handleComplete}
               disabled={isSubmitting}
-              className="flex-1 flex items-center justify-center gap-1.5 px-6 py-3.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
+              className="flex-1 flex items-center justify-center gap-1.5 px-6 py-3.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
             >
               {isSubmitting ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -368,7 +368,7 @@ export const Onboarding: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[#8B5CF6]/30 selection:text-[#C49AFF]">
+    <div className="min-h-screen text-[#F4F4F5] flex flex-col items-center justify-center p-6 bg-[#111318] relative selection:bg-[var(--brand-primary)]/30 selection:text-[#111318]">
       
       {/* Background patterns */}
       <div className="aurora-container">
@@ -389,7 +389,7 @@ export const Onboarding: React.FC = () => {
         {/* Minimal Progress Line (Point 3) */}
         <div className="w-full h-[1px] bg-slate-900 relative">
           <div 
-            className="absolute left-0 top-0 h-full bg-[#8B5CF6] transition-all duration-300"
+            className="absolute left-0 top-0 h-full bg-[var(--brand-primary)] transition-all duration-300"
             style={{ width: `${(currentStep / 5) * 100}%` }}
           />
         </div>
@@ -401,7 +401,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHERE DO YOU WANT YOUR CAREER TO GO?</h3>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHERE DO YOU WANT YOUR CAREER TO GO?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose the direction you're currently aiming for. You can change this later.</p>
               </div>
 
@@ -412,7 +412,7 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setCareerGoal(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       careerGoal === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
@@ -441,7 +441,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHERE ARE YOU RIGHT NOW?</h3>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHERE ARE YOU RIGHT NOW?</h3>
                 <p className="text-xs text-slate-500 font-medium">Select your experience level parameters.</p>
               </div>
 
@@ -452,7 +452,7 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setExperienceLevel(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       experienceLevel === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
@@ -476,7 +476,7 @@ export const Onboarding: React.FC = () => {
                         onClick={() => handleTechToggle(tech)}
                         className={`px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
                           isSelected 
-                            ? 'border-[#8B5CF6] bg-[#8B5CF6]/15 text-[#8B5CF6]' 
+                            ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/15 text-[var(--brand-primary)]' 
                             : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                         }`}
                       >
@@ -497,7 +497,7 @@ export const Onboarding: React.FC = () => {
                   />
                   <button 
                     type="submit"
-                    className="p-2 bg-[#8B5CF6] text-[#111318] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
+                    className="p-2 bg-[var(--brand-primary)] text-[#111318] hover:bg-[var(--brand-hover)] rounded flex items-center justify-center cursor-pointer shrink-0"
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </button>
@@ -510,7 +510,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHAT ARE YOU TRYING TO ACHIEVE NEXT?</h3>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHAT ARE YOU TRYING TO ACHIEVE NEXT?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose your primary next destination goal.</p>
               </div>
 
@@ -521,7 +521,7 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setCareerObjective(opt)}
                     className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                       careerObjective === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
@@ -536,7 +536,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">WHAT'S HOLDING YOU BACK?</h3>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHAT'S HOLDING YOU BACK?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose the areas where you want VertexPath to help most.</p>
               </div>
 
@@ -549,7 +549,7 @@ export const Onboarding: React.FC = () => {
                       onClick={() => handleGapToggle(opt)}
                       className={`p-3 text-left border rounded text-xs transition-all cursor-pointer ${
                         isSelected 
-                          ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                          ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                           : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                       }`}
                     >
@@ -565,7 +565,7 @@ export const Onboarding: React.FC = () => {
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="text-xl font-extrabold text-[#F4F4F5] tracking-tight font-display">HOW MUCH TIME CAN YOU REALISTICALLY COMMIT?</h3>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">HOW MUCH TIME CAN YOU REALISTICALLY COMMIT?</h3>
                 <p className="text-xs text-slate-500 font-medium">Choose what you can consistently maintain, not your ideal schedule.</p>
               </div>
 
@@ -576,7 +576,7 @@ export const Onboarding: React.FC = () => {
                     onClick={() => setWeeklyCommitment(opt)}
                     className={`p-3 text-center border rounded text-xs transition-all cursor-pointer ${
                       weeklyCommitment === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                     }`}
                   >
@@ -632,7 +632,7 @@ export const Onboarding: React.FC = () => {
           <button
             onClick={handleNext}
             disabled={!isStepValid()}
-            className="flex items-center gap-1 px-4 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all"
+            className="flex items-center gap-1 px-4 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all"
           >
             <span>{currentStep === 5 ? 'SUMMARY' : 'NEXT'}</span>
             <ArrowRight className="w-3.5 h-3.5" />

@@ -137,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </div>
           <NavLink 
             to="/dashboard/profile"
-            className="text-[var(--text-muted)] hover:text-[#8B5CF6] hover:bg-[var(--card)] rounded-md transition-colors p-1.5"
+            className="text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:bg-[var(--card)] rounded-md transition-colors p-1.5"
             title="Career Profile"
           >
             <User className="w-3.5 h-3.5" />
@@ -165,9 +165,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                       }
                     }}
                     className={({ isActive }) => `
-                      relative flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-150 group
+                      relative flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-all duration-150 group
                       ${isActive && !item.path.includes('#')
-                        ? 'text-[var(--text-primary)] bg-[#8B5CF6]/10 border-l-2 border-[#8B5CF6] font-semibold' 
+                        ? 'text-[var(--text-primary)] bg-[var(--brand-primary)]/10 border-l-2 border-[var(--brand-primary)] font-semibold' 
                         : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] border-l-2 border-transparent'}
                     `}
                   >
@@ -184,7 +184,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         <div className="p-3 border-t border-[var(--border)] shrink-0 bg-[var(--bg-secondary)]">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-2.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[#EF4444] hover:bg-[var(--surface)] rounded-md transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-2.5 py-1.5 text-sm font-medium text-[var(--text-secondary)] hover:text-[#EF4444] hover:bg-[var(--surface)] rounded-md transition-colors cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>

@@ -111,7 +111,7 @@ export const Dashboard: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="w-7 h-7 border-2 border-[var(--border)] border-t-[#8B5CF6] rounded-full animate-spin" />
+        <div className="w-7 h-7 border-2 border-[var(--border)] border-t-[var(--brand-primary)] rounded-full animate-spin" />
       </div>
     );
   }
@@ -214,10 +214,10 @@ export const Dashboard: React.FC = () => {
   const getActivityColor = (level: number) => {
     switch (level) {
       case 0: return 'bg-[var(--card)] border border-[var(--border)]';
-      case 1: return 'bg-[#8B5CF6]/20 border border-[#8B5CF6]/20';
-      case 2: return 'bg-[#8B5CF6]/40 border border-[#8B5CF6]/30';
-      case 3: return 'bg-[#8B5CF6]/70 border border-[#8B5CF6]/40';
-      case 4: return 'bg-[#8B5CF6] border border-[#A78BFA]';
+      case 1: return 'bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20';
+      case 2: return 'bg-[var(--brand-primary)]/40 border border-[var(--brand-primary)]/30';
+      case 3: return 'bg-[var(--brand-primary)]/70 border border-[var(--brand-primary)]/40';
+      case 4: return 'bg-[var(--brand-primary)] border border-[var(--brand-hover)]';
       default: return 'bg-[var(--card)]';
     }
   };
@@ -245,18 +245,18 @@ export const Dashboard: React.FC = () => {
           <div className="text-xs text-[var(--text-secondary)] flex items-center gap-2 flex-wrap">
             <span>Your VertexPath journey</span>
             <span className="text-[var(--text-muted)]">•</span>
-            <span>Career profile completion — <span className="text-[#8B5CF6] font-semibold">{pathProgress}%</span></span>
+            <span>Career profile completion — <span className="text-[var(--brand-primary)] font-semibold">{pathProgress}%</span></span>
             <span className="text-[var(--text-muted)]">•</span>
             <div className="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0">
               <span className="text-[var(--text-muted)]">Target:</span>
               <button
                 type="button"
                 onClick={() => setShowTargetModal(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#8B5CF6] hover:bg-[#8B5CF6]/25 font-bold text-xs transition-colors cursor-pointer group"
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/25 font-bold text-xs transition-colors cursor-pointer group"
                 title="Change Target Career Track"
               >
                 <span>{careerGoal || 'Software Engineer'}</span>
-                <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[#8B5CF6]" />
+                <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[var(--brand-primary)]" />
               </button>
             </div>
           </div>
@@ -269,7 +269,7 @@ export const Dashboard: React.FC = () => {
             className="btn-secondary text-xs flex-1 sm:flex-initial justify-center py-2 px-3"
             title="Start Interactive Product Tour"
           >
-            <Compass className="w-3.5 h-3.5 text-[#8B5CF6]" />
+            <Compass className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
             <span>Take Tour</span>
           </button>
 
@@ -327,7 +327,7 @@ export const Dashboard: React.FC = () => {
                     m.isDone
                       ? 'bg-[var(--card)] border-[#34D399] text-[#34D399]'
                       : m.isActive
-                      ? 'bg-[var(--card)] border-[#8B5CF6] text-[#8B5CF6] ring-4 ring-[#8B5CF6]/20'
+                      ? 'bg-[var(--card)] border-[var(--brand-primary)] text-[var(--brand-primary)] ring-4 ring-[var(--brand-primary)]/20'
                       : 'bg-[var(--card)] border-[var(--border)] text-[var(--text-muted)] group-hover:border-[var(--brand-purple)]'
                   }`}>
                     {m.isDone ? '✓' : m.isActive ? '●' : '○'}
@@ -400,7 +400,7 @@ export const Dashboard: React.FC = () => {
                       : drillAnswered && selectedDrillOption === idx && idx !== 1
                       ? 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]'
                       : selectedDrillOption === idx
-                      ? 'bg-[#8B5CF6]/15 border-[#8B5CF6] text-[var(--text-primary)]'
+                      ? 'bg-[var(--brand-primary)]/15 border-[var(--brand-primary)] text-[var(--text-primary)]'
                       : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-secondary)] hover:border-[#353842] hover:text-[var(--text-primary)]'
                   }`}
                 >
@@ -476,7 +476,7 @@ export const Dashboard: React.FC = () => {
               <p className="eyebrow-text">YOUR SKILL MAP</p>
               <button
                 onClick={() => setShowAddSkill(!showAddSkill)}
-                className="text-xs text-[#8B5CF6] hover:text-[#A78BFA] transition-colors p-1"
+                className="text-xs text-[var(--brand-primary)] hover:text-[var(--brand-hover)] transition-colors p-1"
                 title="Add skill"
               >
                 <PlusCircle className="w-4 h-4" />
@@ -500,7 +500,7 @@ export const Dashboard: React.FC = () => {
                     max="100"
                     value={newSkillProgress}
                     onChange={(e) => setNewSkillProgress(Number(e.target.value))}
-                    className="flex-1 accent-[#8B5CF6]"
+                    className="flex-1 accent-[var(--brand-primary)]"
                   />
                 </div>
                 <div className="flex justify-end gap-2">
@@ -527,11 +527,11 @@ export const Dashboard: React.FC = () => {
                   <div key={idx} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-medium text-[var(--text-primary)]">{skill.skillName}</span>
-                      <span className="text-[#8B5CF6] font-mono text-[11px]">{skill.progressPercentage}%</span>
+                      <span className="text-[var(--brand-primary)] font-mono text-[11px]">{skill.progressPercentage}%</span>
                     </div>
                     <div className="w-full bg-[var(--surface)] h-1.5 rounded-full overflow-hidden border border-[var(--border)]">
                       <div
-                        className="bg-[#8B5CF6] h-full rounded-full transition-all duration-300"
+                        className="bg-[var(--brand-primary)] h-full rounded-full transition-all duration-300"
                         style={{ width: `${skill.progressPercentage}%` }}
                       />
                     </div>
@@ -592,8 +592,8 @@ export const Dashboard: React.FC = () => {
           <div className="relative w-full max-w-md bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 shadow-2xl space-y-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-[#8B5CF6]" />
-                <span className="text-xs font-mono uppercase tracking-wider text-[#8B5CF6] font-semibold">
+                <Award className="w-4 h-4 text-[var(--brand-primary)]" />
+                <span className="text-xs font-mono uppercase tracking-wider text-[var(--brand-primary)] font-semibold">
                   Verified Readiness
                 </span>
               </div>
@@ -607,7 +607,7 @@ export const Dashboard: React.FC = () => {
 
             {/* Badge Preview */}
             <div className="p-5 bg-[var(--card)] border border-[var(--border)] rounded-lg text-center space-y-2.5">
-              <div className="w-10 h-10 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center mx-auto text-[#A78BFA]">
+              <div className="w-10 h-10 rounded-full bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 flex items-center justify-center mx-auto text-[var(--brand-hover)]">
                 <Award className="w-5 h-5" />
               </div>
               <div>
@@ -645,7 +645,7 @@ export const Dashboard: React.FC = () => {
                 }}
                 className="btn-secondary w-full text-xs"
               >
-                <Share2 className="w-4 h-4 text-[#8B5CF6]" />
+                <Share2 className="w-4 h-4 text-[var(--brand-primary)]" />
                 <span>View Public Portfolio</span>
               </button>
             </div>

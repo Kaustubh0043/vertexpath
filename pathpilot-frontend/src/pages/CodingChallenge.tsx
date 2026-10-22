@@ -131,7 +131,7 @@ export const CodingChallenge: React.FC = () => {
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[var(--brand-primary)]"
           >
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
@@ -144,7 +144,7 @@ export const CodingChallenge: React.FC = () => {
           <select
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+            className="w-full text-xs bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] rounded-lg p-2.5 focus:border-[var(--brand-primary)]"
           >
             <option value="Algorithms & Data Structures">Algorithms & Data Structures</option>
             <option value="System Design & Rate Limiting">System Design & Rate Limiting</option>
@@ -158,7 +158,7 @@ export const CodingChallenge: React.FC = () => {
           <button
             type="submit"
             disabled={challengeMutation.isPending}
-            className="px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+            className="px-6 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
           >
             <Sparkles className="w-4 h-4" />
             <span>Generate Problem →</span>
@@ -184,7 +184,7 @@ export const CodingChallenge: React.FC = () => {
       {!challengeMutation.isPending && !challenge && (
         <div className="bg-[var(--card)] border border-[var(--border)]/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
           <div className="p-3 bg-[#11151D] border border-[var(--border)] rounded-xl">
-            <Terminal className="w-8 h-8 text-[#8B5CF6]" />
+            <Terminal className="w-8 h-8 text-[var(--brand-primary)]" />
           </div>
           <h5 className="text-base font-bold text-[var(--text-primary)]">No Coding Challenge Active</h5>
           <p className="text-xs text-[var(--text-secondary)] max-w-sm leading-relaxed">
@@ -200,7 +200,7 @@ export const CodingChallenge: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[var(--card)] border border-[var(--border)]/80 p-6 rounded-2xl space-y-4 shadow-xl">
               <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
-                <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
+                <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30">
                   {challenge.difficulty}
                 </span>
                 <span className="text-[10px] text-slate-500 font-mono">{challenge.category}</span>
@@ -218,7 +218,7 @@ export const CodingChallenge: React.FC = () => {
                 <div className="space-y-2">
                   {challenge.test_cases?.map((tc: any, idx: number) => (
                     <div key={idx} className="p-3 rounded-lg bg-[#11151D] border border-[var(--border)] text-[11px] font-mono space-y-1">
-                      <div className="text-slate-400"><span className="text-[#8B5CF6]">Input:</span> {tc.input}</div>
+                      <div className="text-slate-400"><span className="text-[var(--brand-primary)]">Input:</span> {tc.input}</div>
                       <div className="text-[#55D39A]"><span className="text-slate-400">Expected:</span> {tc.expected}</div>
                     </div>
                   ))}
@@ -249,7 +249,7 @@ export const CodingChallenge: React.FC = () => {
             <div className="bg-[var(--card)] border border-[var(--border)]/80 rounded-2xl overflow-hidden shadow-xl">
               <div className="flex items-center justify-between px-4 py-3 bg-[#11151D] border-b border-[var(--border)]">
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-[#8B5CF6]" />
+                  <Code2 className="w-4 h-4 text-[var(--brand-primary)]" />
                   <span className="text-xs font-bold text-[var(--text-primary)]">Solution Editor</span>
                 </div>
 
@@ -340,7 +340,7 @@ export const CodingChallenge: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[var(--border)] text-[11px] font-mono text-[#8B5CF6]">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#11151D] border border-[var(--border)] text-[11px] font-mono text-[var(--brand-primary)]">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{evaluation.time_complexity}</span>
                     </div>
@@ -390,7 +390,7 @@ export const CodingChallenge: React.FC = () => {
                           setCopiedCode(true);
                           setTimeout(() => setCopiedCode(false), 2000);
                         }}
-                        className="flex items-center gap-1 text-[11px] text-[#8B5CF6] hover:underline cursor-pointer font-bold"
+                        className="flex items-center gap-1 text-[11px] text-[var(--brand-primary)] hover:underline cursor-pointer font-bold"
                       >
                         {copiedCode ? <Check className="w-3 h-3 text-[#55D39A]" /> : <Copy className="w-3 h-3" />}
                         <span>{copiedCode ? 'Copied' : 'Copy Code'}</span>

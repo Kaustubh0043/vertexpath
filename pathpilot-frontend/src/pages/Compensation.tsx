@@ -136,14 +136,14 @@ Best,
         {/* Left Input Form */}
         <div className="lg:col-span-5 bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-6 shadow-xl">
           <div className="flex items-center gap-2 border-b border-[#25262D] pb-3">
-            <DollarSign className="w-4 h-4 text-[#8B5CF6]" />
+            <DollarSign className="w-4 h-4 text-[var(--brand-primary)]" />
             <span className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Offer & Benchmark Parameters</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <Briefcase className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                 Target Job Title *
               </label>
               <input
@@ -162,7 +162,7 @@ Best,
                 <select
                   value={level}
                   onChange={(e) => setLevel(e.target.value)}
-                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[var(--brand-primary)]"
                 >
                   <option value="Entry-Level (0-2 YOE)">Entry-Level (0-2 YOE)</option>
                   <option value="Mid-Level (2-5 YOE)">Mid-Level (2-5 YOE)</option>
@@ -173,7 +173,7 @@ Best,
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <MapPin className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                   Location
                 </label>
                 <input
@@ -203,7 +203,7 @@ Best,
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
-                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[var(--brand-primary)]"
                 >
                   <option value="USD">USD ($)</option>
                   <option value="INR">INR (₹)</option>
@@ -216,7 +216,7 @@ Best,
             <button
               type="submit"
               disabled={compMutation.isPending || !role.trim()}
-              className="w-full py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+              className="w-full py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
             >
               <TrendingUp className="w-4 h-4" />
               <span>Benchmark & Generate Negotiation Scripts →</span>
@@ -254,7 +254,7 @@ Best,
           {!compMutation.isPending && !data && (
             <div className="bg-[#15161C] border border-[#25262D]/80 rounded-2xl p-16 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
               <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl">
-                <BarChart3 className="w-8 h-8 text-[#8B5CF6]" />
+                <BarChart3 className="w-8 h-8 text-[var(--brand-primary)]" />
               </div>
               <h5 className="text-base font-bold text-[#F4F4F5]">No Compensation Benchmark Active</h5>
               <p className="text-xs text-[#A1A1AA] max-w-sm leading-relaxed">
@@ -271,7 +271,7 @@ Best,
                 <div className="bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-5 shadow-xl">
                   <div className="flex items-center justify-between border-b border-[#25262D] pb-3">
                     <span className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4 text-[#8B5CF6]" />
+                      <BarChart3 className="w-4 h-4 text-[var(--brand-primary)]" />
                       Market Compensation Percentiles
                     </span>
                     <span className="text-[10px] text-slate-500 font-mono">{benchmarks.currency} Annual Base</span>
@@ -295,12 +295,12 @@ Best,
                       <span className="text-[9px] text-slate-600 block">Market Average</span>
                     </div>
 
-                    <div className="p-3 bg-[#11151D] border border-[#8B5CF6]/30 rounded-xl space-y-1 bg-[#8B5CF6]/5">
-                      <span className="text-[10px] text-[#C49AFF] font-bold uppercase">75th %ile</span>
-                      <p className="text-sm font-bold font-mono text-[#C49AFF]">
+                    <div className="p-3 bg-[#11151D] border border-[var(--brand-primary)]/30 rounded-xl space-y-1 bg-[var(--brand-primary)]/5">
+                      <span className="text-[10px] text-[var(--brand-primary)] font-bold uppercase">75th %ile</span>
+                      <p className="text-sm font-bold font-mono text-[var(--brand-primary)]">
                         {benchmarks.p75?.toLocaleString()}
                       </p>
-                      <span className="text-[9px] text-[#8B5CF6] block">Target Zone</span>
+                      <span className="text-[9px] text-[var(--brand-primary)] block">Target Zone</span>
                     </div>
 
                     <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl space-y-1">
@@ -328,7 +328,7 @@ Best,
                   <ul className="space-y-1.5 text-xs text-slate-300">
                     {data.leverage_points.map((pt: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-2 bg-[#111318] p-2.5 rounded-lg border border-[#25262D]/80">
-                        <span className="text-[#8B5CF6] font-bold">&bull;</span>
+                        <span className="text-[var(--brand-primary)] font-bold">&bull;</span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -339,17 +339,17 @@ Best,
               {/* Negotiation Scripts */}
               <div className="space-y-4">
                 <h5 className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#8B5CF6]" />
+                  <Mail className="w-4 h-4 text-[var(--brand-primary)]" />
                   <span>Strategic Counter-Offer Email Scripts</span>
                 </h5>
 
                 {data.counter_offer_scripts?.map((script: any, idx: number) => {
                   const isCopied = copiedScriptIdx === idx;
                   return (
-                    <div key={idx} className="bg-[#15161C] border border-[#25262D]/80 hover:border-[#8B5CF6]/30 p-5 rounded-2xl space-y-3.5 shadow-xl transition-all">
+                    <div key={idx} className="bg-[#15161C] border border-[#25262D]/80 hover:border-[var(--brand-primary)]/30 p-5 rounded-2xl space-y-3.5 shadow-xl transition-all">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#25262D] pb-3">
                         <div>
-                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
+                          <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30">
                             {script.style}
                           </span>
                         </div>
@@ -368,7 +368,7 @@ ${script.body}`, idx)}
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                              <Copy className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                               <span>Copy Script</span>
                             </>
                           )}

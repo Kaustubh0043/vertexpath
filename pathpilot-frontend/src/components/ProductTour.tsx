@@ -314,7 +314,7 @@ export const ProductTour: React.FC = () => {
 
       {/* Popover Card */}
       <div
-        className="fixed pointer-events-auto z-50 bg-[#15161C] border border-[#8B5CF6]/50 rounded-xl p-5 shadow-[0_12px_48px_rgba(0,0,0,0.9),0_0_24px_rgba(139,92,246,0.25)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
+        className="fixed pointer-events-auto z-50 bg-[#15161C] border border-[var(--brand-primary)]/50 rounded-xl p-5 shadow-[0_12px_48px_rgba(0,0,0,0.9),0_0_24px_rgba(139,92,246,0.25)] space-y-3.5 animate-in fade-in zoom-in-95 duration-200"
         style={{
           top: `${popoverTop}px`,
           left: `${popoverLeft}px`,
@@ -397,8 +397,8 @@ export const ProductTour: React.FC = () => {
         {/* Card Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6] animate-pulse" />
-            <span className="text-[10px] font-mono font-bold uppercase text-[#A78BFA] tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-[var(--brand-primary)] animate-pulse" />
+            <span className="text-[10px] font-mono font-bold uppercase text-[var(--brand-hover)] tracking-wider">
               {current.badge}
             </span>
           </div>
@@ -447,7 +447,7 @@ export const ProductTour: React.FC = () => {
 
             <button
               onClick={handleNext}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow-[0_0_15px_rgba(139,92,246,0.35)] cursor-pointer active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-darker)] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow-[0_0_15px_rgba(139,92,246,0.35)] cursor-pointer active:scale-95 transition-all"
             >
               <span>{currentStep === steps.length - 1 ? "Finish Tour" : "Next"}</span>
               <ArrowRight className="w-3.5 h-3.5" />

@@ -36,44 +36,51 @@ export const DashboardLayout: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Fetch stats to render streak count in header dynamically
+  const [careerGoal, setCareerGoal] = useState(() => {
+    return localStorage.getItem('careerGoal') || 'Software Engineer';
+  });
+
+  // Fetch dashboard metrics and keep the existing refresh cadence.
   const { data: stats } = useQuery({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
       const res = await api.get('/api/dashboard/stats');
-
-  // Synchronize profile avatar & target goal across all devices
-  useQuery({
-    queryKey: ['userProfileSync'],
-    queryFn: async () => {
-      try {
-        const res = await api.get('/api/user/profile');
-        if (res.data?.avatarUrl) {
-          localStorage.setItem('userAvatar', res.data.avatarUrl);
-          window.dispatchEvent(new Event('userAvatarUpdated'));
-        }
-        if (res.data?.careerGoal) {
-          setCareerGoal(res.data.careerGoal);
-          localStorage.setItem('careerGoal', res.data.careerGoal);
-        }
-        return res.data;
-      } catch (e) {
-        return null;
-      }
-    },
-    staleTime: 60000,
-  });
-  useEffect(() => {
-    if (stats?.careerGoal) {
-      setCareerGoal(stats.careerGoal);
-      localStorage.setItem('careerGoal', stats.careerGoal);
-    }
-  }, [stats]);
       return res.data;
     },
     refetchInterval: 60000,
   });
 
+  // Synchronize profile avatar & target goal across all devices.
+  const { data: profile } = useQuery({
+    queryKey: ['userProfileSync'],
+    queryFn: async () => {
+      try {
+        const res = await api.get('/api/user/profile');
+        return res.data;
+      } catch {
+        return null;
+      }
+    },
+    staleTime: 60000,
+  });
+
+  useEffect(() => {
+    if (profile?.avatarUrl) {
+      localStorage.setItem('userAvatar', profile.avatarUrl);
+      window.dispatchEvent(new Event('userAvatarUpdated'));
+    }
+    if (profile?.careerGoal) {
+      setCareerGoal(profile.careerGoal);
+      localStorage.setItem('careerGoal', profile.careerGoal);
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    if (stats?.careerGoal) {
+      setCareerGoal(stats.careerGoal);
+      localStorage.setItem('careerGoal', stats.careerGoal);
+    }
+  }, [stats?.careerGoal]);
   const getPageTitle = () => {
     switch (location.pathname) {
       case '/dashboard': return 'Dashboard Overview';
@@ -91,10 +98,6 @@ export const DashboardLayout: React.FC = () => {
       default: return 'VertexPath';
     }
   };
-
-  const [careerGoal, setCareerGoal] = useState(() => {
-    return localStorage.getItem('careerGoal') || 'Software Engineer';
-  });
 
   useEffect(() => {
     const handleGoalUpdate = () => {
@@ -146,7 +149,7 @@ export const DashboardLayout: React.FC = () => {
               onClick={() => setPaletteOpen(true)}
               className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[var(--surface)] border border-[var(--border)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
             >
-              <Search className="w-3.5 h-3.5 text-[#8B5CF6]" />
+              <Search className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
               <span className="text-[11px]">Quick actions...</span>
               <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-[var(--card)] border border-[var(--border)] rounded text-[var(--text-muted)]">Ctrl K</kbd>
             </button>
@@ -161,10 +164,10 @@ export const DashboardLayout: React.FC = () => {
             <button
               type="button"
               onClick={() => setTargetModalOpen(true)}
-              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[#8B5CF6]/10 hover:bg-[#8B5CF6]/20 border border-[#8B5CF6]/20 rounded text-[#8B5CF6] font-semibold text-[10px] uppercase tracking-wider transition-colors cursor-pointer group"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-[var(--brand-primary)]/10 hover:bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20 rounded text-[var(--brand-primary)] font-semibold text-[10px] uppercase tracking-wider transition-colors cursor-pointer group"
               title="Click to change target track"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
               <span>{careerGoal}</span>
             </button>
 
@@ -194,7 +197,7 @@ export const DashboardLayout: React.FC = () => {
           to="/dashboard"
           end
           className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
-            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            isActive ? 'text-[var(--brand-primary)] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <LayoutDashboard className="w-4 h-4" />
@@ -204,7 +207,7 @@ export const DashboardLayout: React.FC = () => {
         <NavLink
           to="/dashboard/resume"
           className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
-            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            isActive ? 'text-[var(--brand-primary)] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <FileText className="w-4 h-4" />
@@ -214,7 +217,7 @@ export const DashboardLayout: React.FC = () => {
         <NavLink
           to="/dashboard/roadmaps"
           className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
-            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            isActive ? 'text-[var(--brand-primary)] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <Map className="w-4 h-4" />
@@ -224,7 +227,7 @@ export const DashboardLayout: React.FC = () => {
         <NavLink
           to="/dashboard/coding"
           className={({ isActive }) => `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
-            isActive ? 'text-[#8B5CF6] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+            isActive ? 'text-[var(--brand-primary)] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
           }`}
         >
           <Terminal className="w-4 h-4" />

@@ -144,7 +144,7 @@ export const Profile: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#8B5CF6]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[var(--brand-primary)]" />
       </div>
     );
   }
@@ -210,7 +210,7 @@ export const Profile: React.FC = () => {
           <div className="relative group cursor-pointer shrink-0" onClick={() => setShowAvatarModal(true)}>
             <UserAvatar name={user?.fullName || 'Developer'} size="2xl" showOnlineIndicator border />
             <div className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition-opacity">
-              <Camera className="w-5 h-5 mb-0.5 text-[#8B5CF6]" />
+              <Camera className="w-5 h-5 mb-0.5 text-[var(--brand-primary)]" />
               <span className="text-[9px] font-bold">Change</span>
             </div>
           </div>
@@ -223,7 +223,7 @@ export const Profile: React.FC = () => {
             </div>
             <p className="text-xs text-[var(--text-muted)] font-mono">{user?.email}</p>
             <p className="text-[11px] text-[var(--text-secondary)]">
-              Target Goal: <span className="font-semibold text-[#8B5CF6]">{profile?.careerGoal || 'Software Engineer'}</span>
+              Target Goal: <span className="font-semibold text-[var(--brand-primary)]">{profile?.careerGoal || 'Software Engineer'}</span>
             </p>
           </div>
         </div>
@@ -233,7 +233,7 @@ export const Profile: React.FC = () => {
           onClick={() => setShowAvatarModal(true)}
           className="btn-secondary text-xs py-2 px-4 flex items-center gap-2"
         >
-          <Camera className="w-3.5 h-3.5 text-[#8B5CF6]" />
+          <Camera className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
           <span>Change Avatar</span>
         </button>
       </div>
@@ -258,7 +258,7 @@ export const Profile: React.FC = () => {
                   onClick={() => setCareerGoal(opt)}
                   className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                     careerGoal === opt 
-                      ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                      ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                       : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                   }`}
                 >
@@ -294,7 +294,7 @@ export const Profile: React.FC = () => {
                     onClick={() => setExperienceLevel(opt)}
                     className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                       experienceLevel === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
@@ -316,7 +316,7 @@ export const Profile: React.FC = () => {
                       onClick={() => handleTechToggle(tech)}
                       className={`px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
                         isSelected 
-                          ? 'border-[#8B5CF6] bg-[#8B5CF6]/15 text-[#8B5CF6]' 
+                          ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/15 text-[var(--brand-primary)]' 
                           : 'border-[#25262D] bg-transparent text-slate-555 hover:border-[#25262D]'
                       }`}
                     >
@@ -338,7 +338,7 @@ export const Profile: React.FC = () => {
                 <button 
                   type="button"
                   onClick={handleAddCustomTech}
-                  className="p-2 bg-[#8B5CF6] text-[#111318] hover:bg-[#C49AFF] rounded flex items-center justify-center cursor-pointer shrink-0"
+                  className="p-2 bg-[var(--brand-primary)] text-[#111318] hover:bg-[var(--brand-hover)] rounded flex items-center justify-center cursor-pointer shrink-0"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -357,7 +357,7 @@ export const Profile: React.FC = () => {
                   onClick={() => setCareerObjective(opt)}
                   className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                     careerObjective === opt 
-                      ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                      ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                       : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                   }`}
                 >
@@ -380,7 +380,7 @@ export const Profile: React.FC = () => {
                     onClick={() => handleGapToggle(opt)}
                     className={`p-2.5 text-left border rounded text-xs transition-all cursor-pointer ${
                       isSelected 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
@@ -403,7 +403,7 @@ export const Profile: React.FC = () => {
                     onClick={() => setWeeklyCommitment(opt)}
                     className={`p-2.5 text-center border rounded text-xs transition-all cursor-pointer ${
                       weeklyCommitment === opt 
-                        ? 'border-[#8B5CF6] bg-[#8B5CF6]/5 text-[#F4F4F5]' 
+                        ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 text-[#F4F4F5]' 
                         : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
                     }`}
                   >
@@ -448,7 +448,7 @@ export const Profile: React.FC = () => {
             <button
               type="submit"
               disabled={updateProfileMutation.isPending}
-              className="flex items-center gap-1.5 px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
+              className="flex items-center gap-1.5 px-6 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded cursor-pointer transition-all"
             >
               {updateProfileMutation.isPending ? (
                 <RefreshCw className="w-4 h-4 animate-spin text-[#111318]" />

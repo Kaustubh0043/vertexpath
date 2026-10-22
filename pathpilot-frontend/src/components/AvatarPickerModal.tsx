@@ -77,7 +77,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6]">
+            <div className="w-8 h-8 rounded-lg bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 flex items-center justify-center text-[var(--brand-primary)]">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
@@ -108,7 +108,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
             onClick={() => setActiveTab('presets')}
             className={`pb-2.5 px-2 border-b-2 transition-colors cursor-pointer ${
               activeTab === 'presets'
-                ? 'border-[#8B5CF6] text-[#8B5CF6] font-semibold'
+                ? 'border-[var(--brand-primary)] text-[var(--brand-primary)] font-semibold'
                 : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
@@ -118,7 +118,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
             onClick={() => setActiveTab('upload')}
             className={`pb-2.5 px-2 border-b-2 transition-colors cursor-pointer ${
               activeTab === 'upload'
-                ? 'border-[#8B5CF6] text-[#8B5CF6] font-semibold'
+                ? 'border-[var(--brand-primary)] text-[var(--brand-primary)] font-semibold'
                 : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
@@ -128,7 +128,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
             onClick={() => setActiveTab('custom')}
             className={`pb-2.5 px-2 border-b-2 transition-colors cursor-pointer ${
               activeTab === 'custom'
-                ? 'border-[#8B5CF6] text-[#8B5CF6] font-semibold'
+                ? 'border-[var(--brand-primary)] text-[var(--brand-primary)] font-semibold'
                 : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
@@ -148,7 +148,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
                     onClick={() => setSelectedUrl(preset.url)}
                     className={`flex flex-col items-center gap-2 p-2.5 rounded-xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#8B5CF6]/15 border-[#8B5CF6] ring-2 ring-[#8B5CF6]/30'
+                        ? 'bg-[var(--brand-primary)]/15 border-[var(--brand-primary)] ring-2 ring-[var(--brand-primary)]/30'
                         : 'bg-[var(--surface)] border-[var(--border)] hover:border-[var(--brand-purple)]/50'
                     }`}
                   >
@@ -166,7 +166,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
 
           {activeTab === 'upload' && (
             <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-[var(--border)] rounded-2xl bg-[var(--surface)]/30 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#8B5CF6]/15 text-[#8B5CF6] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] flex items-center justify-center">
                 <Upload className="w-6 h-6" />
               </div>
               <div>
@@ -201,7 +201,7 @@ export const AvatarPickerModal: React.FC<AvatarPickerModalProps> = ({
                   placeholder="https://example.com/avatar.jpg"
                   value={customInputUrl}
                   onChange={(e) => setCustomInputUrl(e.target.value)}
-                  className="flex-1 px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[#8B5CF6]"
+                  className="flex-1 px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-primary)]"
                 />
                 <button
                   type="button"

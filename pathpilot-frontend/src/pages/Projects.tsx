@@ -97,7 +97,7 @@ export const Projects: React.FC = () => {
           <button
             type="submit"
             disabled={generateProjectMutation.isPending || !stackInput.trim()}
-            className="px-5 py-2 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded transition-all cursor-pointer flex items-center justify-center gap-2"
+            className="px-5 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             {generateProjectMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -136,7 +136,7 @@ export const Projects: React.FC = () => {
           <div className="bg-[#15161C] border border-[#25262D] p-6 rounded-lg md:col-span-2 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#25262D]/60 pb-3">
               <h5 className="text-xs font-bold text-[#F4F4F5] flex items-center gap-2">
-                <Cpu className="w-4.5 h-4.5 text-[#8B5CF6]" />
+                <Cpu className="w-4.5 h-4.5 text-[var(--brand-primary)]" />
                 <span>Project Concept & Overview</span>
               </h5>
 
@@ -155,7 +155,7 @@ export const Projects: React.FC = () => {
                   a.click();
                   URL.revokeObjectURL(url);
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 text-[#8B5CF6] text-xs font-bold rounded-md border border-[#8B5CF6]/30 transition-all cursor-pointer w-fit"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--brand-primary)]/15 hover:bg-[var(--brand-primary)]/25 text-[var(--brand-primary)] text-xs font-bold rounded-md border border-[var(--brand-primary)]/30 transition-all cursor-pointer w-fit"
                 title="Download Blueprint Scaffold"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -171,7 +171,7 @@ export const Projects: React.FC = () => {
           <div className="bg-[#15161C] border border-[#25262D] flex flex-col h-[380px] rounded-lg">
             <div className="flex items-center justify-between px-5 py-3 border-b border-[#25262D] bg-[#11151D]/40">
               <h5 className="text-[11px] font-bold text-[#A1A1AA] flex items-center gap-2 uppercase tracking-wide">
-                <FolderTree className="w-4 h-4 text-[#8B5CF6]" />
+                <FolderTree className="w-4 h-4 text-[var(--brand-primary)]" />
                 <span>Directory Layout</span>
               </h5>
               <button 
@@ -185,7 +185,7 @@ export const Projects: React.FC = () => {
                 )}
               </button>
             </div>
-            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[#C49AFF] leading-relaxed select-text bg-[#111318] custom-scrollbar">
+            <pre className="p-4 overflow-auto flex-1 font-mono text-[11px] text-[var(--brand-primary)] leading-relaxed select-text bg-[#111318] custom-scrollbar">
               <code>{result.folder_structure}</code>
             </pre>
           </div>

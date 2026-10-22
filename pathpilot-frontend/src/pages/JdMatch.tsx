@@ -85,7 +85,7 @@ export const JdMatch: React.FC = () => {
                 required
                 value={selectedResumeId}
                 onChange={(e) => setSelectedResumeId(e.target.value)}
-                className="w-full px-3 py-2.5 bg-[#111318] border border-[#25262D] rounded text-xs text-[#F4F4F5] focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full px-3 py-2.5 bg-[#111318] border border-[#25262D] rounded text-xs text-[#F4F4F5] focus:outline-none focus:border-[var(--brand-primary)]"
               >
                 <option value="">-- Choose Profile --</option>
                 {resumes.map((doc: any) => (
@@ -116,7 +116,7 @@ export const JdMatch: React.FC = () => {
           <button
             type="submit"
             disabled={matchJdMutation.isPending || !selectedResumeId || !jdText.trim()}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded transition-all cursor-pointer"
+            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded transition-all cursor-pointer"
           >
             {matchJdMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -142,7 +142,7 @@ export const JdMatch: React.FC = () => {
             </div>
             <div className="w-full h-1 bg-[#11151D] rounded overflow-hidden">
               <div 
-                className="h-full bg-[#8B5CF6] transition-all duration-500" 
+                className="h-full bg-[var(--brand-primary)] transition-all duration-500" 
                 style={{ width: `${result.match_percentage}%` }}
               />
             </div>
@@ -202,7 +202,7 @@ export const JdMatch: React.FC = () => {
                 <ul className="space-y-2">
                   {result.recommended_learning_path?.map((path: string, idx: number) => (
                     <li key={idx} className="flex gap-2 items-start text-xs text-[#A1A1AA] leading-relaxed">
-                      <span className="w-1 h-1 bg-[#8B5CF6] rounded-full shrink-0 mt-2" />
+                      <span className="w-1 h-1 bg-[var(--brand-primary)] rounded-full shrink-0 mt-2" />
                       <span>{path}</span>
                     </li>
                   ))}

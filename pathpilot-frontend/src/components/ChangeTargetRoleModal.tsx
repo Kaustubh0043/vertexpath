@@ -41,7 +41,7 @@ const ROLES: RoleOption[] = [
     id: 'fullstack',
     name: 'Full Stack Developer',
     icon: Layers,
-    color: 'from-violet-500/20 to-purple-500/20 text-[#A78BFA] border-[#8B5CF6]/30',
+    color: 'from-[var(--brand-primary)]/15 to-[var(--brand-hover)]/15 text-[var(--brand-primary)] border-[var(--brand-primary)]/30',
     badge: 'React • Node • SQL • Spring',
     desc: 'End-to-end web architectures, APIs, and modern frontends',
   },
@@ -169,7 +169,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
         {/* Header Bar */}
         <div className="px-6 py-4.5 border-b border-[var(--border)] flex items-center justify-between bg-[var(--surface)]/40">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#7C3AED]/30 to-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6] shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[var(--brand-darker)]/30 to-[var(--brand-primary)]/10 border border-[var(--brand-primary)]/30 flex items-center justify-center text-[var(--brand-primary)] shrink-0">
               <Target className="w-4 h-4" />
             </div>
             <div>
@@ -178,7 +178,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
               </h3>
               <p className="text-[11px] text-[var(--text-muted)]">
                 {step === 'select' ? (
-                  <>Active Goal: <span className="font-semibold text-[#8B5CF6]">{currentRole}</span></>
+                  <>Active Goal: <span className="font-semibold text-[var(--brand-primary)]">{currentRole}</span></>
                 ) : (
                   'Review track transition and progress recalibration'
                 )}
@@ -213,8 +213,8 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
                     onClick={() => handleRoleClick(r.name)}
                     className={`group relative flex items-start gap-3.5 p-3.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
                       isCurrent
-                        ? 'bg-[#8B5CF6]/10 border-[#8B5CF6] shadow-sm'
-                        : 'bg-[var(--surface)]/50 border-[var(--border)] hover:border-[#8B5CF6]/40 hover:bg-[var(--surface)]'
+                        ? 'bg-[var(--brand-primary)]/10 border-[var(--brand-primary)] shadow-sm'
+                        : 'bg-[var(--surface)]/50 border-[var(--border)] hover:border-[var(--brand-primary)]/40 hover:bg-[var(--surface)]'
                     }`}
                   >
                     <div className={`w-9 h-9 rounded-lg bg-gradient-to-tr ${r.color} border flex items-center justify-center shrink-0`}>
@@ -223,11 +223,11 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-1">
-                        <p className="text-xs font-bold text-[var(--text-primary)] truncate group-hover:text-[#8B5CF6] transition-colors">
+                        <p className="text-xs font-bold text-[var(--text-primary)] truncate group-hover:text-[var(--brand-primary)] transition-colors">
                           {r.name}
                         </p>
                         {isCurrent ? (
-                          <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#8B5CF6] text-white font-semibold">
+                          <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[var(--brand-primary)] text-white font-semibold">
                             Current
                           </span>
                         ) : (
@@ -254,7 +254,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
                   placeholder="e.g. Distributed Systems & Core Java Architect"
                   value={customRoleInput}
                   onChange={(e) => setCustomRoleInput(e.target.value)}
-                  className="flex-1 px-3.5 py-2 text-xs rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[#8B5CF6] transition-colors"
+                  className="flex-1 px-3.5 py-2 text-xs rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--brand-primary)] transition-colors"
                 />
                 <button
                   type="submit"
@@ -279,18 +279,18 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
                 <p className="text-xs font-bold text-[var(--text-primary)]">{currentRole}</p>
               </div>
 
-              <div className="w-8 h-8 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center text-[#8B5CF6] shrink-0 rotate-90 sm:rotate-0">
+              <div className="w-8 h-8 rounded-full bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 flex items-center justify-center text-[var(--brand-primary)] shrink-0 rotate-90 sm:rotate-0">
                 <ArrowRight className="w-4 h-4" />
               </div>
 
               <div className="space-y-0.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#8B5CF6]">New Target Track</span>
-                <p className="text-xs font-bold text-[#8B5CF6]">{selectedRole}</p>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--brand-primary)]">New Target Track</span>
+                <p className="text-xs font-bold text-[var(--brand-primary)]">{selectedRole}</p>
               </div>
             </div>
 
             {/* Warning Alert Banner */}
-            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-transparent border border-amber-500/30 flex items-start gap-3.5">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-[var(--brand-glow)] to-transparent border border-amber-500/30 flex items-start gap-3.5">
               <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
                 <AlertCircle className="w-4.5 h-4.5" />
               </div>
@@ -314,7 +314,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
               </div>
 
               <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--surface)]/40 border border-[var(--border)]">
-                <Sparkles className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                <Sparkles className="w-4 h-4 text-[var(--brand-primary)] shrink-0" />
                 <span className="text-[var(--text-secondary)]">
                   <strong className="text-[var(--text-primary)]">Personalized Syllabi & Architectures</strong> will calibrate for {selectedRole}.
                 </span>
@@ -335,7 +335,7 @@ export const ChangeTargetRoleModal: React.FC<ChangeTargetRoleModalProps> = ({
                 type="button"
                 onClick={handleConfirmSwitch}
                 disabled={isSubmitting}
-                className="btn-primary text-xs py-2.5 px-5 justify-center font-semibold bg-gradient-to-r from-[#7C3AED] to-[#6D28D9] shadow-lg shadow-purple-950/40"
+                className="btn-primary text-xs py-2.5 px-5 justify-center font-semibold bg-gradient-to-r from-[var(--brand-darker)] to-[var(--brand-darker)] shadow-lg shadow-black/40"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>{isSubmitting ? 'Switching...' : `Confirm & Begin 0% Journey`}</span>

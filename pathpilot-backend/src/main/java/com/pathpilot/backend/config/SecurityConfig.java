@@ -69,6 +69,11 @@ public class SecurityConfig {
         originPatterns.add("https://pathpilot-ai-gilt.vercel.app");
         originPatterns.add("http://localhost:[*]");
         originPatterns.add("http://127.0.0.1:[*]");
+        // Vite may choose 5174 when 5173 is already occupied; allow both local dev ports explicitly.
+        originPatterns.add("http://localhost:5173");
+        originPatterns.add("http://localhost:5174");
+        originPatterns.add("http://127.0.0.1:5173");
+        originPatterns.add("http://127.0.0.1:5174");
         originPatterns.add("https://*.onrender.com");
 
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {

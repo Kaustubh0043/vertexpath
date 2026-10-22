@@ -125,14 +125,14 @@ Best,
         {/* Left Form Panel */}
         <div className="lg:col-span-5 bg-[#15161C] border border-[#25262D]/80 p-6 rounded-2xl space-y-6 shadow-xl">
           <div className="flex items-center gap-2 border-b border-[#25262D] pb-3">
-            <Mail className="w-4 h-4 text-[#8B5CF6]" />
+            <Mail className="w-4 h-4 text-[var(--brand-primary)]" />
             <span className="text-xs font-bold text-[#F4F4F5] uppercase tracking-wider">Target Opportunity Details</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <Building2 className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                 Target Company *
               </label>
               <input
@@ -147,7 +147,7 @@ Best,
 
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <Briefcase className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                 Target Role *
               </label>
               <input
@@ -163,7 +163,7 @@ Best,
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <User className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                   Recipient Name
                 </label>
                 <input
@@ -177,13 +177,13 @@ Best,
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sliders className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <Sliders className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                   Recipient Role
                 </label>
                 <select
                   value={recipientType}
                   onChange={(e) => setRecipientType(e.target.value)}
-                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[#8B5CF6]"
+                  className="w-full text-xs bg-[#111318] border border-[#25262D] text-[#F4F4F5] rounded-lg p-2.5 focus:border-[var(--brand-primary)]"
                 >
                   <option value="Hiring Manager">Engineering Manager / Lead</option>
                   <option value="Technical Recruiter">Technical Recruiter / Sourcer</option>
@@ -195,7 +195,7 @@ Best,
 
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <Sparkles className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                 Featured Project or Superpower
               </label>
               <input
@@ -210,7 +210,7 @@ Best,
             <button
               type="submit"
               disabled={outreachMutation.isPending || !company.trim() || !role.trim()}
-              className="w-full py-3 bg-[#8B5CF6] hover:bg-[#C49AFF] text-[#111318] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#8B5CF6]/20"
+              className="w-full py-3 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[var(--brand-primary)]/20"
             >
               <Send className="w-4 h-4" />
               <span>Generate 3 High-Impact Outreach Scripts →</span>
@@ -248,7 +248,7 @@ Best,
           {!outreachMutation.isPending && templates.length === 0 && (
             <div className="bg-[#15161C] border border-[#25262D]/80 rounded-2xl p-12 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px] shadow-xl">
               <div className="p-3 bg-[#11151D] border border-[#25262D] rounded-xl">
-                <Mail className="w-8 h-8 text-[#8B5CF6]" />
+                <Mail className="w-8 h-8 text-[var(--brand-primary)]" />
               </div>
               <h5 className="text-base font-bold text-[#F4F4F5]">No Outreach Templates Generated Yet</h5>
               <p className="text-xs text-[#A1A1AA] max-w-sm leading-relaxed">
@@ -262,12 +262,12 @@ Best,
               {templates.map((tpl: any, idx: number) => {
                 const isCopied = copiedIdx === idx;
                 return (
-                  <div key={idx} className="bg-[#15161C] border border-[#25262D]/80 hover:border-[#8B5CF6]/30 p-6 rounded-2xl space-y-4 shadow-xl transition-all">
+                  <div key={idx} className="bg-[#15161C] border border-[#25262D]/80 hover:border-[var(--brand-primary)]/30 p-6 rounded-2xl space-y-4 shadow-xl transition-all">
                     
                     {/* Header bar */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#25262D] pb-3">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30">
+                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold font-mono bg-[var(--brand-primary)]/15 text-[var(--brand-primary)] border border-[var(--brand-primary)]/30">
                           {tpl.type}
                         </span>
                         <span className="text-[10px] text-slate-500 font-mono">{tpl.channel}</span>
@@ -287,7 +287,7 @@ ${tpl.body}`, idx)}
                           </>
                         ) : (
                           <>
-                            <Copy className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                            <Copy className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                             <span>1-Click Copy</span>
                           </>
                         )}
