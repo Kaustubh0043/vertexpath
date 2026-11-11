@@ -144,7 +144,8 @@
 .auth-form-heading h2 { margin: 12px 0 8px; color: var(--text-primary); font-family: var(--font-display); font-size: clamp(28px, 3vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -.045em; }
 .auth-form-heading p { margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.55; }
 .auth-provider-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 18px; }
-.auth-provider-buttons button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text-primary); font: 600 14px/1 var(--font-sans); opacity: .72; cursor: not-allowed; }
+.auth-provider-buttons button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text-primary); font: 600 14px/1 var(--font-sans); cursor: pointer; transition: all 0.2s ease; }
+.auth-provider-buttons button:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(85, 211, 154, 0.4); transform: translateY(-1px); }
 .auth-provider-buttons svg { width: 18px; height: 18px; flex: none; }
 .auth-email-divider { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; color: var(--text-muted); font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: .08em; white-space: nowrap; }
 .auth-email-divider::before,.auth-email-divider::after { height: 1px; flex: 1; background: var(--border); content: ""; }
