@@ -175,7 +175,7 @@ export const Landing: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="w-8 h-8 rounded-lg bg-[#15161C] border border-[#25262D] p-1 flex items-center justify-center shadow-sm shrink-0">
-              <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain" />
+              <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain logo-glow-breathing" />
             </div>
             <span className="text-base font-bold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           </div>
@@ -487,7 +487,7 @@ export const Landing: React.FC = () => {
           <div className="flex flex-col gap-1 text-center sm:text-left">
             <div className="flex items-center gap-2 justify-center sm:justify-start">
               <div className="w-6 h-6 rounded-md bg-[#15161C] border border-[#25262D] p-0.5 flex items-center justify-center shadow-sm shrink-0">
-                <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain" />
+                <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain logo-glow-breathing" />
               </div>
               <span className="font-bold text-sm text-[var(--text-primary)] font-display">VertexPath</span>
             </div>
