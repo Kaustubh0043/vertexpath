@@ -1,0 +1,14 @@
+export interface Env {
+  DB: D1Database;
+  JWT_SECRET?: string;
+  GEMINI_API_KEY?: string;
+  GROQ_API_KEY?: string;
+  RESEND_API_KEY?: string;
+}
+
+export interface JwtPayload {
+  sub: string; // user id
+  email: string;
+  fullName: string;
+  exp: number;
+}

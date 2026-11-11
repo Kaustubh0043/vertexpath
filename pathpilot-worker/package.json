@@ -1,0 +1,22 @@
+{
+  "name": "pathpilot-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker Backend for PathPilot AI",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "hono": "^4.7.4",
+    "jose": "^5.9.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261110.1",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.7.3",
+    "wrangler": "^4.160.0"
+  }
+}

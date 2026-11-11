@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pathpilot-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-10",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "pathpilot-db",
+      "database_id": "pathpilot-db"
+    }
+  ]
+}
