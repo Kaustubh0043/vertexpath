@@ -16,6 +16,7 @@ interface AuthContextType {
   verifyCode: (email: string, code: string) => Promise<void>;
   resendCode: (email: string) => Promise<void>;
   loginWithGoogle: (credential: string) => Promise<void>;
+  loginWithGithub: (code: string) => Promise<void>;
   logout: () => void;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
@@ -94,6 +95,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(userData);
   };
 
+  const loginWithGithub = async (code: string) => {
+    const response = await api.post('/api/auth/github', { code });
+    const { token, refreshToken, userId, fullName, email, onboardingCompleted, avatarUrl, careerGoal } = response.data;
+    if (avatarUrl) localStorage.setItem('userAvatar', avatarUrl);
+    if (careerGoal) localStorage.setItem('careerGoal', careerGoal);
+
+    const userData = { userId, email, fullName, onboardingCompleted };
+    localStorage.setItem('token', token);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
@@ -102,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, verifyCode, resendCode, loginWithGoogle, logout, setUser }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, verifyCode, resendCode, loginWithGoogle, loginWithGithub, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );

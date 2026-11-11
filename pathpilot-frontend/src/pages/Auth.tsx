@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LegalModal } from '../components/LegalModal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
@@ -37,7 +37,29 @@ export const Auth: React.FC = () => {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { login, signup, verifyCode, resendCode, loginWithGoogle } = useAuth();
+  const { login, signup, verifyCode, resendCode, loginWithGoogle, loginWithGithub } = useAuth();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const githubCode = urlParams.get('code');
+    if (githubCode) {
+      setLoading(true);
+      loginWithGithub(githubCode)
+        .then(() => {
+          navigate('/dashboard');
+        })
+        .catch((err: any) => {
+          setError(err.response?.data?.message || 'GitHub sign-in failed. Please try again.');
+          setLoading(false);
+        });
+    }
+  }, []);
+
+  const handleGithubSignIn = () => {
+    const clientId = 'Ov23liFtildAp0Qiyj6l';
+    const redirectUri = encodeURIComponent(window.location.origin + '/auth');
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
+  };
 
   const handleGoogleSignIn = () => {
     setError(null);
@@ -369,7 +391,7 @@ export const Auth: React.FC = () => {
                 <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v9.02h12.87a11 11 0 0 1-4.77 7.22l7.73 6C44.34 38.12 47 31.95 47 24.55Z"/><path fill="#FBBC05" d="M10.54 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.2A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.98-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.76l-7.73-6c-2.14 1.44-4.88 2.3-8.17 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48Z"/></svg>
                 <span>Google</span>
               </button>
-              <button type="button" disabled aria-label="GitHub sign-in is being set up">
+              <button type="button" onClick={handleGithubSignIn} className="cursor-pointer hover:bg-white/5 transition-all" aria-label="Sign in with GitHub">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.08c-3.1.67-3.76-1.32-3.76-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.73 2.2 3.28 1.57.1-.73.39-1.22.7-1.5-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.06 1.15a10.63 10.63 0 0 1 5.57 0c2.12-1.45 3.05-1.15 3.05-1.15.61 1.54.23 2.68.12 2.96.71.78 1.14 1.78 1.14 3 0 4.29-2.61 5.23-5.1 5.51.4.35.75 1.03.75 2.08v3.1c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
                 <span>GitHub</span>
               </button>

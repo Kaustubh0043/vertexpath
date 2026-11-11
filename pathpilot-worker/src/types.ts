@@ -4,6 +4,9 @@ export interface Env {
   GEMINI_API_KEY?: string;
   GROQ_API_KEY?: string;
   RESEND_API_KEY?: string;
+  BREVO_API_KEY?: string;
+  GITHUB_CLIENT_ID?: string;
+  GITHUB_CLIENT_SECRET?: string;
 }
 
 export interface JwtPayload {
@@ -12,3 +15,4 @@ export interface JwtPayload {
   fullName: string;
   exp: number;
 }
+
