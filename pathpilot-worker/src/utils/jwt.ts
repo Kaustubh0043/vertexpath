@@ -52,3 +52,4 @@ export async function authMiddleware(c: Context<{ Bindings: Env; Variables: { us
   c.set('user', payload);
   await next();
 }
+

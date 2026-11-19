@@ -106,3 +106,4 @@ chatRouter.delete('/conversations/:id', async (c) => {
   await c.env.DB.prepare('DELETE FROM conversations WHERE id = ?').bind(conversationId).run();
   return c.body(null, 204);
 });
+

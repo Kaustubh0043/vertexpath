@@ -47,3 +47,4 @@ app.route('/api/ai', aiRouter);
 app.route('/api/documents', documentRouter);
 
 export default app;
+

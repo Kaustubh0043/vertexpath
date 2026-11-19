@@ -107,3 +107,4 @@ CREATE TABLE IF NOT EXISTS documents (
 );
 
 CREATE INDEX IF NOT EXISTS idx_documents_user ON documents(user_id);
+

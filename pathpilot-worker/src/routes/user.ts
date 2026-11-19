@@ -112,3 +112,4 @@ userRouter.post('/profile', async (c) => {
     onboardingCompletedAt
   });
 });
+

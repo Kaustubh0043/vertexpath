@@ -100,3 +100,4 @@ documentRouter.delete('/:id', async (c) => {
   await c.env.DB.prepare('DELETE FROM documents WHERE id = ? AND user_id = ?').bind(docId, user.sub).run();
   return c.body(null, 204);
 });
+
