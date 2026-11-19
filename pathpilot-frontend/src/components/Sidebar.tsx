@@ -20,7 +20,7 @@ import {
   User, 
   LogOut 
 } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import { NeonLogo } from './NeonLogo';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -109,9 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       `}>
         {/* Logo Section */}
         <div className="flex items-center gap-2.5 px-5 h-16 border-b border-[var(--border)] shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-[#15161C] border border-[#25262D] p-1 flex items-center justify-center shadow-sm shrink-0">
-            <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain logo-glow-breathing" />
-          </div>
+          <NeonLogo className="w-8 h-8" />
           <span className="text-base font-extrabold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           <span className="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)]">
             v2.4

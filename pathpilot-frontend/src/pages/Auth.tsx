@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LegalModal } from '../components/LegalModal';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logoImg from '../assets/logo.png';
+import { NeonLogo } from '../components/NeonLogo';
 import { useAuth } from '../context/AuthContext';
 import { Compass, AlertCircle, RefreshCw, KeyRound, ArrowLeft, CheckCircle } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export const Auth: React.FC = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   
-  // Form fields (Preserving existing logic)
+  // Form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -23,7 +23,7 @@ export const Auth: React.FC = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [code, setCode] = useState('');
   
-  // Terms & Privacy Modal states (Preserving existing logic)
+  // Terms & Privacy Modal states
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [activeModalTab, setActiveModalTab] = useState<'terms' | 'privacy'>('terms');
 
@@ -32,7 +32,7 @@ export const Auth: React.FC = () => {
     setShowTermsModal(true);
   };
   
-  // Feedback states (Preserving existing logic)
+  // Feedback states
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -40,6 +40,7 @@ export const Auth: React.FC = () => {
   const { login, signup, verifyCode, resendCode, loginWithGoogle, loginWithGithub } = useAuth();
 
   useEffect(() => {
+    // 1. GitHub Callback (?code=...)
     const urlParams = new URLSearchParams(window.location.search);
     const githubCode = urlParams.get('code');
     if (githubCode) {
@@ -52,44 +53,31 @@ export const Auth: React.FC = () => {
           setError(err.response?.data?.message || 'GitHub sign-in failed. Please try again.');
           setLoading(false);
         });
+      return;
     }
 
-    const initGoogle = () => {
-      const google = (window as any).google;
-      const btnContainer = document.getElementById('googleNativeBtn');
-      if (google?.accounts?.id && btnContainer && !btnContainer.hasChildNodes()) {
-        google.accounts.id.initialize({
-          client_id: '383035276055-1v8e39r9oocpm47rrnqr64ssp0uv05u7.apps.googleusercontent.com',
-          callback: async (res: { credential: string }) => {
-            try {
-              setLoading(true);
-              await loginWithGoogle(res.credential);
-              navigate('/dashboard');
-            } catch (err: any) {
-              setError(err.response?.data?.message || 'Google sign-in failed. Please try again.');
-            } finally {
-              setLoading(false);
-            }
-          }
-        });
-        google.accounts.id.renderButton(btnContainer, {
-          theme: 'outline',
-          size: 'large',
-          width: 250
-        });
+    // 2. Google Callback (#id_token=... from direct OAuth redirect)
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      const hashParams = new URLSearchParams(hash);
+      const googleIdToken = hashParams.get('id_token') || urlParams.get('credential');
+      if (googleIdToken) {
+        setLoading(true);
+        loginWithGoogle(googleIdToken)
+          .then(() => {
+            navigate('/dashboard');
+          })
+          .catch((err: any) => {
+            setError(err.response?.data?.message || 'Google sign-in failed. Please try again.');
+            setLoading(false);
+          });
+        return;
       }
-    };
-
-    initGoogle();
-    const interval = setInterval(initGoogle, 500);
-    const timeout = setTimeout(() => clearInterval(interval), 4000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
+    }
   }, []);
 
   const handleGithubSignIn = () => {
+    setError(null);
     const clientId = 'Ov23liFtildAp0Qiyj6l';
     const redirectUri = encodeURIComponent(window.location.origin + '/auth');
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
@@ -97,28 +85,11 @@ export const Auth: React.FC = () => {
 
   const handleGoogleSignIn = () => {
     setError(null);
-    const google = (window as any).google;
-    if (!google?.accounts?.id) {
-      setError('Google Sign-In is initializing. Please try again in 2 seconds.');
-      return;
-    }
-
-    google.accounts.id.initialize({
-      client_id: '383035276055-1v8e39r9oocpm47rrnqr64ssp0uv05u7.apps.googleusercontent.com',
-      callback: async (res: { credential: string }) => {
-        try {
-          setLoading(true);
-          await loginWithGoogle(res.credential);
-          navigate('/dashboard');
-        } catch (err: any) {
-          setError(err.response?.data?.message || 'Google sign-in failed. Please try again.');
-        } finally {
-          setLoading(false);
-        }
-      }
-    });
-
-    google.accounts.id.prompt();
+    const clientId = '383035276055-1v8e39r9oocpm47rrnqr64ssp0uv05u7.apps.googleusercontent.com';
+    const redirectUri = encodeURIComponent(window.location.origin + '/auth');
+    const nonce = Math.random().toString(36).substring(2);
+    // Direct, bulletproof Google OAuth page redirect
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token%20id_token&scope=openid%20email%20profile&nonce=${nonce}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -217,11 +188,11 @@ export const Auth: React.FC = () => {
     <div className="auth-shell min-h-screen text-[var(--text-primary)] bg-[var(--bg-primary)]">
       <aside className="auth-story" aria-label="About VertexPath">
         <button onClick={() => navigate('/')} className="auth-brand" aria-label="VertexPath home">
-          <span className="auth-brand-mark"><img src={logoImg} alt="" /></span>
+          <NeonLogo className="w-9 h-9" />
           <span>VertexPath</span>
         </button>
         <div className="auth-story-copy">
-          <span className="auth-eyebrow"><span /> YOUR NEXT CHAPTER STARTS HERE</span>
+          <span className="auth-eyebrow flex items-center gap-2"><span className="glowing-yellow-dot w-2 h-2 rounded-full shrink-0" /> Your next chapter starts here</span>
           <h1>Build a career<br />that moves you<br /><em>forward.</em></h1>
           <p>Turn your skills into a clear path forward. Learn, build, and prepare for the work you want to do.</p>
         </div>
@@ -230,7 +201,7 @@ export const Auth: React.FC = () => {
           <span className="auth-route-point point-one"><CheckCircle /></span>
           <span className="auth-route-point point-two"><Compass /></span>
           <span className="auth-route-point point-three"><KeyRound /></span>
-          <div className="auth-route-caption"><strong>YOUR CAREER, IN MOTION</strong><span>One focused step at a time</span></div>
+          <div className="auth-route-caption"><strong>Your career, in motion</strong><span>One focused step at a time</span></div>
         </div>
         <p className="auth-story-foot">A career operating system for developers</p>
       </aside>
@@ -238,7 +209,7 @@ export const Auth: React.FC = () => {
       <main className="auth-main">
         <div className="auth-content">
           <div className="auth-mobile-brand">
-            <span className="auth-brand-mark"><img src={logoImg} alt="" /></span>
+            <NeonLogo className="w-9 h-9" />
             <span>VertexPath</span>
           </div>
 
@@ -396,7 +367,7 @@ export const Auth: React.FC = () => {
           /* Login/Signup Screen */
           <div className="auth-panel bg-[var(--card)] border border-[var(--border)] p-8 rounded-lg space-y-6">
             <div className="auth-form-heading">
-              <span>{isLogin ? 'WELCOME BACK' : 'YOUR NEXT STEP'}</span>
+              <span>{isLogin ? 'Welcome back' : 'Your next step'}</span>
               <h2>{isLogin ? 'Sign in to VertexPath' : 'Create your account'}</h2>
               <p>{isLogin ? 'Pick up where your career journey left off.' : 'Create an account and start building your path.'}</p>
             </div>
@@ -404,16 +375,16 @@ export const Auth: React.FC = () => {
             <div className="flex border-b border-[var(--border)] mb-6">
               <button
                 onClick={() => { setIsLogin(true); setError(null); setSuccessMsg(null); }}
-                className={`flex-1 pb-3 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-all ${
-                  isLogin ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-slate-500 hover:text-slate-200'
+                className={`flex-1 pb-3 text-xs font-semibold border-b-2 cursor-pointer transition-all ${
+                  isLogin ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-slate-200'
                 }`}
               >
                 Sign In
               </button>
               <button
                 onClick={() => { setIsLogin(false); setError(null); setSuccessMsg(null); }}
-                className={`flex-1 pb-3 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-all ${
-                  !isLogin ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-slate-500 hover:text-slate-200'
+                className={`flex-1 pb-3 text-xs font-semibold border-b-2 cursor-pointer transition-all ${
+                  !isLogin ? 'border-[var(--brand-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-slate-200'
                 }`}
               >
                 Create Account
@@ -421,19 +392,16 @@ export const Auth: React.FC = () => {
             </div>
 
             <div className="auth-provider-buttons" aria-label="Social sign-in providers">
-              <div className="relative overflow-hidden rounded-[9px] flex items-center justify-center">
-                <div id="googleNativeBtn" className="absolute inset-0 opacity-0 z-20 cursor-pointer overflow-hidden flex items-center justify-center scale-150"></div>
-                <button type="button" onClick={handleGoogleSignIn} className="w-full h-full cursor-pointer hover:bg-white/5 transition-all z-10" aria-label="Sign in with Google">
-                  <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v9.02h12.87a11 11 0 0 1-4.77 7.22l7.73 6C44.34 38.12 47 31.95 47 24.55Z"/><path fill="#FBBC05" d="M10.54 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.2A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.98-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.76l-7.73-6c-2.14 1.44-4.88 2.3-8.17 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48Z"/></svg>
-                  <span>Google</span>
-                </button>
-              </div>
+              <button type="button" onClick={handleGoogleSignIn} className="cursor-pointer hover:bg-white/5 transition-all flex items-center justify-center gap-2" aria-label="Sign in with Google">
+                <svg viewBox="0 0 48 48" className="w-4.5 h-4.5 shrink-0" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v9.02h12.87a11 11 0 0 1-4.77 7.22l7.73 6C44.34 38.12 47 31.95 47 24.55Z"/><path fill="#FBBC05" d="M10.54 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.2A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.98-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.76l-7.73-6c-2.14 1.44-4.88 2.3-8.17 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48Z"/></svg>
+                <span>Google</span>
+              </button>
               <button type="button" onClick={handleGithubSignIn} className="cursor-pointer hover:bg-white/5 transition-all" aria-label="Sign in with GitHub">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.08c-3.1.67-3.76-1.32-3.76-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.73 2.2 3.28 1.57.1-.73.39-1.22.7-1.5-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.06 1.15a10.63 10.63 0 0 1 5.57 0c2.12-1.45 3.05-1.15 3.05-1.15.61 1.54.23 2.68.12 2.96.71.78 1.14 1.78 1.14 3 0 4.29-2.61 5.23-5.1 5.51.4.35.75 1.03.75 2.08v3.1c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
                 <span>GitHub</span>
               </button>
             </div>
-            <div className="auth-email-divider"><span>OR CONTINUE WITH EMAIL</span></div>
+            <div className="auth-email-divider"><span>or continue with email</span></div>
 
             {error && (
               <div className="flex items-start gap-2 p-3 bg-[#FF6577]/10 border border-[#FF6577]/20 text-[#FF6577] text-xs rounded">
@@ -454,7 +422,7 @@ export const Auth: React.FC = () => {
               {!isLogin && (
                 /* FULL NAME (Signup only) */
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Full Name</label>
+                  <label className="text-xs font-medium text-[var(--text-secondary)]">Full Name</label>
                   <input
                     type="text"
                     required
@@ -468,7 +436,7 @@ export const Auth: React.FC = () => {
 
               {/* EMAIL */}
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Email Address</label>
+                <label className="text-xs font-medium text-[var(--text-secondary)]">Email Address</label>
                 <input
                   type="email"
                   required
@@ -482,12 +450,12 @@ export const Auth: React.FC = () => {
               {/* PASSWORD */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Password</label>
+                  <label className="text-xs font-medium text-[var(--text-secondary)]">Password</label>
                   {isLogin && (
                     <button
                       type="button"
                       onClick={() => { setIsForgotPassword(true); setError(null); setSuccessMsg(null); }}
-                      className="text-[11px] text-[var(--brand-primary)] hover:text-[var(--brand-hover)] font-bold transition-colors cursor-pointer"
+                      className="text-[11px] text-[var(--brand-primary)] hover:text-[var(--brand-hover)] font-medium transition-colors cursor-pointer"
                     >
                       Forgot?
                     </button>
@@ -506,7 +474,7 @@ export const Auth: React.FC = () => {
               {!isLogin && (
                 /* CONFIRM PASSWORD (Signup only) */
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Confirm Password</label>
+                  <label className="text-xs font-medium text-[var(--text-secondary)]">Confirm Password</label>
                   <input
                     type="password"
                     required

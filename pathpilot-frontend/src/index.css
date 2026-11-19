@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
 
 /* VertexPath Design System: graphite, lime accents, and crisp neutral typography. */
 :root,
 [data-theme="dark"] {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Inter Tight', sans-serif;
 
   --bg-primary: #0C0D10;
   --bg-secondary: #111318;
@@ -273,11 +275,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .eyebrow-text {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: var(--brand-primary);
 }
 
@@ -710,4 +712,70 @@ footer a { font-size: 0.9375rem; }
   .ai-loading-sweep {
     animation-duration: 3.5s;
   }
+}
+
+/* TYPOGRAPHY AND GLOW ANIMATIONS */
+h1, h2 {
+  font-family: 'Instrument Serif', Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+}
+
+body, button, nav, p, a, input, select, textarea, span, div, label {
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-mono {
+  font-family: 'Inter Tight', sans-serif !important;
+  text-transform: none;
+}
+
+@media (min-width: 768px) {
+  .hero-heading,
+  h1.hero-title,
+  .hero-title,
+  .landing-hero-h1 {
+    font-size: clamp(72px, 7vw, 88px) !important;
+    line-height: 1.02 !important;
+    font-family: 'Instrument Serif', Georgia, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.02em !important;
+  }
+}
+
+@keyframes yellowDotPulse {
+  0%, 100% {
+    box-shadow: 0 0 4px #C2F84F, 0 0 10px rgba(194, 248, 79, 0.75), 0 0 18px rgba(194, 248, 79, 0.4);
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    box-shadow: 0 0 8px #C2F84F, 0 0 20px rgba(194, 248, 79, 1), 0 0 35px rgba(194, 248, 79, 0.75);
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+.glowing-yellow-dot,
+.auth-eyebrow > span,
+.landing-badge-dot {
+  background-color: #C2F84F !important;
+  border-radius: 50% !important;
+  animation: yellowDotPulse 2.2s ease-in-out infinite !important;
+  display: inline-block !important;
+}
+
+@keyframes neonContinuousPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(194, 248, 79, 0.55)) drop-shadow(0 0 18px rgba(85, 211, 154, 0.35));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(194, 248, 79, 0.95)) drop-shadow(0 0 30px rgba(85, 211, 154, 0.7));
+    transform: scale(1.05);
+  }
+}
+
+.neon-logo-svg {
+  animation: neonContinuousPulse 2.6s ease-in-out infinite !important;
 }

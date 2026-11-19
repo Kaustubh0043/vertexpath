@@ -22,6 +22,7 @@ import {
   Check 
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import { NeonLogo } from '../components/NeonLogo';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { CareerJourneyLine } from '../components/CareerJourneyLine';
 
@@ -56,7 +57,7 @@ export const Landing: React.FC = () => {
 
   const featureSections = [
     {
-      category: 'BUILD YOUR PATH',
+      category: 'Build Your Path',
       tagline: 'Build the foundation of your developer career.',
       features: [
         {
@@ -80,7 +81,7 @@ export const Landing: React.FC = () => {
       ]
     },
     {
-      category: 'PRACTICE',
+      category: 'Practice',
       tagline: 'Build technical confidence through deliberate practice.',
       features: [
         {
@@ -104,7 +105,7 @@ export const Landing: React.FC = () => {
       ]
     },
     {
-      category: 'GET HIRED',
+      category: 'Get Hired',
       tagline: 'Turn your preparation into a real job search.',
       features: [
         {
@@ -128,7 +129,7 @@ export const Landing: React.FC = () => {
       ]
     },
     {
-      category: 'CAREER & NEGOTIATION',
+      category: 'Career & Negotiation',
       tagline: 'Track progress and make informed career decisions.',
       features: [
         {
@@ -174,9 +175,7 @@ export const Landing: React.FC = () => {
       <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-8 h-8 rounded-lg bg-[#15161C] border border-[#25262D] p-1 flex items-center justify-center shadow-sm shrink-0">
-              <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain logo-glow-breathing" />
-            </div>
+            <NeonLogo className="w-8 h-8" />
             <span className="text-base font-bold tracking-tight text-[var(--text-primary)] font-display">VertexPath</span>
           </div>
 
@@ -222,14 +221,14 @@ export const Landing: React.FC = () => {
         
         {/* Left Headline Column */}
         <div className="lg:col-span-7 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[var(--card)] border border-[var(--border)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--card)] border border-[var(--border)]">
+            <span className="w-2 h-2 rounded-full glowing-yellow-dot shrink-0" />
+            <span className="text-xs font-medium text-[var(--text-secondary)]">
               Career Operating System
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight font-display text-[var(--text-primary)]">
+          <h1 className="hero-heading text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-normal leading-[1.02] tracking-[-0.02em] font-display text-[var(--text-primary)]">
             Your career<br />isn't a straight line.
           </h1>
 
@@ -260,8 +259,8 @@ export const Landing: React.FC = () => {
         {/* Right Subtle Career Journey Flow Visual (Section 6) */}
         <div className="lg:col-span-5 card-surface ai-gradient-border p-6 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">CAREER WORKFLOW</span>
-            <span className="text-[10px] text-[#34D399] font-mono font-semibold">● ACTIVE SYSTEM</span>
+            <span className="text-xs font-medium text-[var(--text-muted)]">Career Workflow</span>
+            <span className="text-xs text-[#34D399] font-medium flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" /> Active System</span>
           </div>
 
           <div className="space-y-3 relative pl-4 border-l border-[var(--border)]">
@@ -284,9 +283,9 @@ export const Landing: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase">{step.stage}</span>
+                    <span className="text-xs font-semibold text-[var(--text-secondary)] capitalize">{step.stage.toLowerCase()}</span>
                     {step.active && (
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[var(--brand-primary)]/15 text-[var(--brand-purple)] font-mono">
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-[var(--brand-primary)]/15 text-[var(--brand-purple)] font-medium">
                         Active Stage
                       </span>
                     )}
@@ -301,12 +300,12 @@ export const Landing: React.FC = () => {
       </section>
 
       
-      {/* 2.5 Scroll-driven Career Journey (Skiper 19 SVG Line Integration) */}
+      {/* 2.5 Scroll-driven Career Journey */}
       <section id="journey" className="relative w-full max-w-6xl mx-auto px-6 py-20 space-y-12 overflow-hidden">
 
         
         <div className="relative z-10 text-center space-y-3 max-w-2xl mx-auto">
-          <p className="eyebrow-text">CAREER PROGRESSION LIFECYCLE</p>
+          <p className="eyebrow-text">Career Progression Lifecycle</p>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight font-display">
             The Guided Path to Senior Engineering
           </h2>
@@ -325,8 +324,8 @@ export const Landing: React.FC = () => {
             <div key={idx} className="card-surface card-surface-hover p-5 flex flex-col justify-between space-y-3 bg-[var(--card)]/90 backdrop-blur-sm">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-extrabold text-[var(--brand-primary)]">{item.step}</span>
-                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)] uppercase">{item.tag}</span>
+                  <span className="text-xs font-semibold text-[var(--brand-primary)]">{item.step}</span>
+                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)]">{item.tag}</span>
                 </div>
                 <h3 className="text-sm font-bold text-[var(--text-primary)] font-display">{item.title}</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
@@ -340,11 +339,11 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Structured Feature Sections (Section 7) */}
+      {/* 3. Structured Feature Sections */}
       <section id="features" className="w-full max-w-6xl mx-auto px-6 py-16 space-y-16">
         
         <div className="space-y-2 text-center max-w-2xl mx-auto">
-          <p className="eyebrow-text">MODULAR SUITE</p>
+          <p className="eyebrow-text">Modular Suite</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight">
             Everything you need in one unified workspace.
           </h2>
@@ -357,7 +356,7 @@ export const Landing: React.FC = () => {
           {featureSections.map((sec, sIdx) => (
             <div key={sIdx} className="space-y-4">
               <div className="border-b border-[var(--border)] pb-2">
-                <span className="text-[11px] font-mono font-bold text-[var(--brand-primary)] uppercase tracking-wider">
+                <span className="text-[11px] font-semibold text-[var(--brand-primary)] tracking-wide">
                   {sec.category}
                 </span>
                 <p className="text-xs text-[var(--text-muted)] mt-0.5">{sec.tagline}</p>
@@ -430,13 +429,13 @@ export const Landing: React.FC = () => {
       {/* 5. Contact Section */}
       <section id="contact" className="w-full max-w-xl mx-auto px-6 py-16 space-y-4">
         <div className="text-center space-y-1">
-          <p className="eyebrow-text">GET IN TOUCH</p>
+          <p className="eyebrow-text">Get In Touch</p>
           <h2 className="text-xl font-bold text-[var(--text-primary)]">Have a question or feedback?</h2>
         </div>
 
         <form onSubmit={handleContactSubmit} className="card-surface p-6 space-y-3.5">
           <div>
-            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Your Name</label>
+            <label className="text-xs font-medium text-[var(--text-secondary)]">Your Name</label>
             <input
               type="text"
               placeholder="Alex Smith"
@@ -446,7 +445,7 @@ export const Landing: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Email Address</label>
+            <label className="text-xs font-medium text-[var(--text-secondary)]">Email Address</label>
             <input
               type="email"
               required
@@ -457,7 +456,7 @@ export const Landing: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-[10px] font-mono text-[var(--text-muted)] uppercase">Message</label>
+            <label className="text-xs font-medium text-[var(--text-secondary)]">Message</label>
             <textarea
               required
               rows={3}
@@ -486,9 +485,7 @@ export const Landing: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
           <div className="flex flex-col gap-1 text-center sm:text-left">
             <div className="flex items-center gap-2 justify-center sm:justify-start">
-              <div className="w-6 h-6 rounded-md bg-[#15161C] border border-[#25262D] p-0.5 flex items-center justify-center shadow-sm shrink-0">
-                <img src={logoImg} alt="VertexPath Logo" className="w-full h-full object-contain logo-glow-breathing" />
-              </div>
+              <NeonLogo className="w-7 h-7" />
               <span className="font-bold text-sm text-[var(--text-primary)] font-display">VertexPath</span>
             </div>
             <p className="text-[11px] text-[var(--text-muted)] font-medium">
