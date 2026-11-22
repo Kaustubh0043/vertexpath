@@ -96,7 +96,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const loginWithGithub = async (code: string) => {
-    const response = await api.post('/api/auth/github', { code });
+    const response = await api.post('/api/auth/github', { 
+      code,
+      redirect_uri: window.location.origin + '/auth'
+    });
     const { token, refreshToken, userId, fullName, email, onboardingCompleted, avatarUrl, careerGoal } = response.data;
     if (avatarUrl) localStorage.setItem('userAvatar', avatarUrl);
     if (careerGoal) localStorage.setItem('careerGoal', careerGoal);

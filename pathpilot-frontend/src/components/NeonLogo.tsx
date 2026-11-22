@@ -5,23 +5,23 @@ interface NeonLogoProps {
   size?: number;
 }
 
-export const NeonLogo: React.FC<NeonLogoProps> = ({ className = 'w-8 h-8', size = 32 }) => {
+export const NeonLogo: React.FC<NeonLogoProps> = ({ className = 'w-8 h-8', size }) => {
   return (
-    <div className={`relative flex items-center justify-center shrink-0 ${className}`}>
+    <div className={`relative inline-flex items-center justify-center shrink-0 ${className}`}>
       <svg
-        viewBox="0 0 100 100"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full neon-logo-svg"
+        className="w-full h-full neon-vertex-brand"
         style={{ overflow: 'visible' }}
         width={size}
         height={size}
       >
         <defs>
-          {/* Intense Continuous Neon Glow Filters */}
-          <filter id="neonGlowOuter" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur2" />
+          {/* Multi-layered Neon Ambient Glow */}
+          <filter id="vertexGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
             <feMerge>
               <feMergeNode in="blur2" />
               <feMergeNode in="blur1" />
@@ -29,100 +29,74 @@ export const NeonLogo: React.FC<NeonLogoProps> = ({ className = 'w-8 h-8', size 
             </feMerge>
           </filter>
 
-          <filter id="coreGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+          <filter id="pointPulse" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="pointBlur" />
             <feMerge>
-              <feMergeNode in="blur" />
+              <feMergeNode in="pointBlur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
 
           {/* Gradients */}
-          <linearGradient id="neonLeftFacet" x1="20" y1="20" x2="50" y2="85" gradientUnits="userSpaceOnUse">
+          <linearGradient id="leftArmGrad" x1="8" y1="10" x2="24" y2="38" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stopColor="#10B981" />
-            <stop offset="60%" stopColor="#059669" />
-            <stop offset="100%" stopColor="#022C22" />
-          </linearGradient>
-
-          <linearGradient id="neonRightFacet" x1="80" y1="20" x2="50" y2="85" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#E2FF6F" />
-            <stop offset="50%" stopColor="#C2F84F" />
-            <stop offset="100%" stopColor="#10B981" />
-          </linearGradient>
-
-          <linearGradient id="neonCapLeft" x1="15" y1="20" x2="35" y2="15" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#34D399" />
-            <stop offset="100%" stopColor="#A7F3D0" />
-          </linearGradient>
-
-          <linearGradient id="neonCapRight" x1="65" y1="15" x2="85" y2="20" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="50%" stopColor="#34D399" />
             <stop offset="100%" stopColor="#C2F84F" />
           </linearGradient>
 
-          <radialGradient id="centralCrystal" cx="50%" cy="50%" r="50%">
+          <linearGradient id="rightArmGrad" x1="40" y1="10" x2="24" y2="38" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#E2FF6F" />
+            <stop offset="50%" stopColor="#C2F84F" />
+            <stop offset="100%" stopColor="#34D399" />
+          </linearGradient>
+
+          <linearGradient id="coreBeamGrad" x1="16" y1="14" x2="32" y2="14" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#34D399" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#FFFFFF" />
+            <stop offset="100%" stopColor="#C2F84F" stopOpacity="0.8" />
+          </linearGradient>
+
+          <radialGradient id="centerBloom" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="40%" stopColor="#C2F84F" />
+            <stop offset="45%" stopColor="#C2F84F" />
             <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
           </radialGradient>
         </defs>
 
-        {/* Ambient Neon Back-Glow Halo */}
-        <circle cx="50" cy="54" r="32" fill="url(#centralCrystal)" opacity="0.65" filter="url(#neonGlowOuter)" className="neon-pulse-halo" />
+        {/* Ambient Bloom Aura */}
+        <circle cx="24" cy="36" r="10" fill="url(#centerBloom)" opacity="0.45" filter="url(#vertexGlow)" className="neon-bloom-pulse" />
 
-        {/* 3D Geometric Vertex Chevron Facets */}
-        {/* Left Wing Face */}
+        {/* Left Sweeping Cyber Arm */}
         <path
-          d="M18 24 L36 24 L50 78 L38 84 Z"
-          fill="url(#neonLeftFacet)"
-          stroke="#34D399"
-          strokeWidth="1.2"
+          d="M10 12 L24 37 L20 38 L6 13 Z"
+          fill="url(#leftArmGrad)"
+          opacity="0.9"
         />
 
-        {/* Right Wing Face (High Luminance) */}
+        {/* Right Sweeping Luminous Arm */}
         <path
-          d="M82 24 L64 24 L50 78 L62 84 Z"
-          fill="url(#neonRightFacet)"
-          stroke="#C2F84F"
-          strokeWidth="1.2"
-          filter="url(#coreGlow)"
+          d="M38 12 L24 37 L28 38 L42 13 Z"
+          fill="url(#rightArmGrad)"
+          filter="url(#vertexGlow)"
         />
 
-        {/* Top 3D Isometric Bevel Caps */}
+        {/* Inner Apex Convergence Core */}
         <path
-          d="M18 24 L26 16 L44 16 L36 24 Z"
-          fill="url(#neonCapLeft)"
-          opacity="0.95"
-        />
-        <path
-          d="M64 24 L72 16 L90 16 L82 24 Z"
-          fill="url(#neonCapRight)"
-          filter="url(#coreGlow)"
-        />
-
-        {/* Floating Center Vertex Core Crystal */}
-        <polygon
-          points="50,44 58,56 50,68 42,56"
-          fill="#FFFFFF"
-          filter="url(#coreGlow)"
-          className="neon-crystal-core"
-        />
-
-        {/* Electric Accent Edges */}
-        <path
-          d="M26 16 L44 16 L50 44 L56 16 L74 16"
-          stroke="#FFFFFF"
-          strokeWidth="1.5"
+          d="M13 14 L24 34 L35 14"
+          stroke="url(#coreBeamGrad)"
+          strokeWidth="2.5"
           strokeLinecap="round"
-          opacity="0.8"
+          strokeLinejoin="round"
+          filter="url(#pointPulse)"
         />
-        <path
-          d="M50 44 L50 82"
-          stroke="#C2F84F"
-          strokeWidth="2"
-          strokeLinecap="round"
-          filter="url(#coreGlow)"
-        />
+
+        {/* Top Floating Orbit Nodes */}
+        <circle cx="10" cy="12" r="2.5" fill="#34D399" filter="url(#pointPulse)" />
+        <circle cx="38" cy="12" r="2.5" fill="#C2F84F" filter="url(#pointPulse)" />
+
+        {/* Focal Vertex Apex Crystal (Pulsing Center) */}
+        <circle cx="24" cy="35" r="3.2" fill="#FFFFFF" filter="url(#pointPulse)" className="vertex-core-crystal" />
+        <circle cx="24" cy="35" r="1.5" fill="#C2F84F" />
       </svg>
     </div>
   );

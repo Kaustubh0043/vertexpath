@@ -134,20 +134,48 @@ authRouter.post('/google', async (c) => {
     return c.json({ message: 'Google credential token is required' }, 400);
   }
 
-  const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
-  if (!googleRes.ok) {
-    return c.json({ message: 'Invalid Google authentication token' }, 401);
+  let payload: { email?: string; name?: string; sub?: string; picture?: string } | null = null;
+
+  // 1. If it looks like an OAuth access_token (e.g. starts with ya29 or isn't a 3-segment JWT)
+  if (credential.startsWith('ya29') || credential.split('.').length !== 3) {
+    try {
+      const userinfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${credential}` }
+      });
+      if (userinfoRes.ok) {
+        payload = (await userinfoRes.json()) as any;
+      }
+    } catch (e) {
+      console.error('Error fetching Google userinfo with access_token:', e);
+    }
   }
 
-  const payload = (await googleRes.json()) as {
-    email?: string;
-    name?: string;
-    sub?: string;
-    picture?: string;
-  };
+  // 2. If not resolved yet, try as id_token JWT
+  if (!payload || !payload.email) {
+    try {
+      const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+      if (googleRes.ok) {
+        payload = (await googleRes.json()) as any;
+      }
+    } catch (e) {
+      console.error('Error validating id_token via Google tokeninfo:', e);
+    }
+  }
 
-  if (!payload.email) {
-    return c.json({ message: 'Google account has no associated email address' }, 400);
+  // 3. Fallback: try tokeninfo with access_token parameter
+  if (!payload || !payload.email) {
+    try {
+      const tokenInfoRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${credential}`);
+      if (tokenInfoRes.ok) {
+        payload = (await tokenInfoRes.json()) as any;
+      }
+    } catch (e) {
+      console.error('Error validating access_token via Google tokeninfo:', e);
+    }
+  }
+
+  if (!payload || !payload.email) {
+    return c.json({ message: 'Invalid Google authentication token' }, 401);
   }
 
   const email = payload.email.toLowerCase();
@@ -193,7 +221,7 @@ authRouter.post('/google', async (c) => {
 });
 
 authRouter.post('/github', async (c) => {
-  const { code } = await c.req.json<{ code?: string }>();
+  const { code, redirect_uri } = await c.req.json<{ code?: string; redirect_uri?: string }>();
   if (!code) {
     return c.json({ message: 'GitHub authorization code is required' }, 400);
   }
@@ -201,22 +229,29 @@ authRouter.post('/github', async (c) => {
   const clientId = c.env.GITHUB_CLIENT_ID || 'Ov23liFtildAp0Qiyj6l';
   const clientSecret = c.env.GITHUB_CLIENT_SECRET || '244ad087f1db12845c8b48b94603ea5963f1d8c5';
 
+  const githubTokenParams: Record<string, string> = {
+    client_id: clientId,
+    client_secret: clientSecret,
+    code
+  };
+  if (redirect_uri) {
+    githubTokenParams.redirect_uri = redirect_uri;
+  }
+
   const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'User-Agent': 'VertexPath-App'
     },
-    body: JSON.stringify({
-      client_id: clientId,
-      client_secret: clientSecret,
-      code
-    })
+    body: JSON.stringify(githubTokenParams)
   });
 
-  const tokenData = (await tokenRes.json()) as { access_token?: string; error?: string };
+  const tokenData = (await tokenRes.json()) as { access_token?: string; error?: string; error_description?: string };
   if (!tokenData.access_token) {
-    return c.json({ message: tokenData.error || 'Failed to exchange GitHub authorization code' }, 401);
+    console.error('[GitHub Exchange Error]', tokenData);
+    return c.json({ message: tokenData.error_description || tokenData.error || 'Failed to exchange GitHub authorization code' }, 401);
   }
 
   const userRes = await fetch('https://api.github.com/user', {

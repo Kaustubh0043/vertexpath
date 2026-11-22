@@ -45,34 +45,36 @@ export const Auth: React.FC = () => {
     const githubCode = urlParams.get('code');
     if (githubCode) {
       setLoading(true);
+      window.history.replaceState({}, document.title, window.location.pathname);
       loginWithGithub(githubCode)
         .then(() => {
           navigate('/dashboard');
         })
         .catch((err: any) => {
-          setError(err.response?.data?.message || 'GitHub sign-in failed. Please try again.');
+          console.error('GitHub auth error:', err);
+          setError(err.response?.data?.message || err.message || 'GitHub sign-in failed. Please try again.');
           setLoading(false);
         });
       return;
     }
 
-    // 2. Google Callback (#id_token=... from direct OAuth redirect)
+    // 2. Google Callback (#access_token=... or #id_token=... or ?credential=...)
     const hash = window.location.hash.substring(1);
-    if (hash) {
-      const hashParams = new URLSearchParams(hash);
-      const googleIdToken = hashParams.get('id_token') || urlParams.get('credential');
-      if (googleIdToken) {
-        setLoading(true);
-        loginWithGoogle(googleIdToken)
-          .then(() => {
-            navigate('/dashboard');
-          })
-          .catch((err: any) => {
-            setError(err.response?.data?.message || 'Google sign-in failed. Please try again.');
-            setLoading(false);
-          });
-        return;
-      }
+    const hashParams = new URLSearchParams(hash);
+    const googleToken = hashParams.get('access_token') || hashParams.get('id_token') || urlParams.get('credential');
+    if (googleToken) {
+      setLoading(true);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      loginWithGoogle(googleToken)
+        .then(() => {
+          navigate('/dashboard');
+        })
+        .catch((err: any) => {
+          console.error('Google auth error:', err);
+          setError(err.response?.data?.message || err.message || 'Google sign-in failed. Please try again.');
+          setLoading(false);
+        });
+      return;
     }
   }, []);
 
@@ -365,11 +367,11 @@ export const Auth: React.FC = () => {
           </div>
         ) : (
           /* Login/Signup Screen */
-          <div className="auth-panel bg-[var(--card)] border border-[var(--border)] p-8 rounded-lg space-y-6">
+          <div className="auth-panel bg-[var(--card)] border border-[var(--border)] p-5 sm:p-8 rounded-xl space-y-6">
             <div className="auth-form-heading">
-              <span>{isLogin ? 'Welcome back' : 'Your next step'}</span>
-              <h2>{isLogin ? 'Sign in to VertexPath' : 'Create your account'}</h2>
-              <p>{isLogin ? 'Pick up where your career journey left off.' : 'Create an account and start building your path.'}</p>
+              <span className="text-xs font-semibold text-[var(--brand-primary)] uppercase tracking-wider">{isLogin ? 'Welcome back' : 'Your next step'}</span>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)] mt-2 mb-1">{isLogin ? 'Sign in to VertexPath' : 'Create your account'}</h2>
+              <p className="text-sm text-[var(--text-secondary)]">{isLogin ? 'Pick up where your career journey left off.' : 'Create an account and start building your path.'}</p>
             </div>
             {/* Header Tabs */}
             <div className="flex border-b border-[var(--border)] mb-6">

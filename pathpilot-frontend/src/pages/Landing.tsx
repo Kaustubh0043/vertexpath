@@ -228,8 +228,11 @@ export const Landing: React.FC = () => {
             </span>
           </div>
 
-          <h1 className="hero-heading text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-normal leading-[1.02] tracking-[-0.02em] font-display text-[var(--text-primary)]">
-            Your career<br />isn't a straight line.
+          <h1 className="hero-heading text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-bold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)]">
+            Your career<br />
+            <span className="bg-gradient-to-r from-[var(--text-primary)] via-[var(--brand-primary)] to-[#34D399] bg-clip-text text-transparent">
+              isn't a straight line.
+            </span>
           </h1>
 
           <p className="text-base sm:text-lg text-[var(--brand-purple)] font-medium">
