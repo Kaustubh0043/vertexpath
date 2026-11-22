@@ -10,7 +10,7 @@ import {
   Loader2, 
   Compass
 } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import { NeonLogo } from '../components/NeonLogo';
 
 export const Onboarding: React.FC = () => {
   const { user, setUser } = useAuth();
@@ -264,8 +264,8 @@ export const Onboarding: React.FC = () => {
 
         <div className="w-full max-w-2xl bg-[#15161C]/45 border border-[#25262D] rounded-lg p-8 space-y-8 relative z-10 animate-fade-up-header backdrop-blur-md">
           <div className="space-y-2 text-center pb-4 border-b border-[#25262D]">
-            <span className="text-[10px] font-mono font-bold text-[var(--brand-primary)] tracking-[0.25em] uppercase">onboarding complete</span>
-            <h2 className="text-3xl font-extrabold text-[#F4F4F5] font-display">YOUR PATH IS READY.</h2>
+            <span className="text-[10px] font-bold text-[var(--brand-primary)] tracking-[0.2em] uppercase">Onboarding Complete</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#F4F4F5] tracking-tight">Your path is ready.</h2>
             <p className="text-xs text-[#A1A1AA] max-w-md mx-auto">
               VertexPath has configured a personalized dashboard, checklist blueprint, and interview mock coach to align with your targets.
             </p>
@@ -379,14 +379,14 @@ export const Onboarding: React.FC = () => {
         
         {/* Onboarding Header */}
         <div className="flex justify-between items-center border-b border-[#25262D] pb-4">
-          <div className="flex items-center gap-2">
-            <img src={logoImg} alt="VertexPath Logo" className="w-18 h-18 object-contain -mr-4" />
-            <span className="text-xs font-extrabold tracking-tight text-[#F4F4F5] font-display">VertexPath Setup</span>
+          <div className="flex items-center gap-2.5">
+            <NeonLogo className="w-7 h-7" />
+            <span className="text-sm font-bold tracking-tight text-[#F4F4F5]">VertexPath Setup</span>
           </div>
-          <span className="text-[11px] font-mono text-slate-500 font-bold">{progressSteps[currentStep - 1].num} / 05</span>
+          <span className="text-xs text-slate-400 font-semibold">{progressSteps[currentStep - 1].num} / 05</span>
         </div>
 
-        {/* Minimal Progress Line (Point 3) */}
+        {/* Minimal Progress Line */}
         <div className="w-full h-[1px] bg-slate-900 relative">
           <div 
             className="absolute left-0 top-0 h-full bg-[var(--brand-primary)] transition-all duration-300"
@@ -394,15 +394,15 @@ export const Onboarding: React.FC = () => {
           />
         </div>
 
-        {/* Dynamic Wizard Steps (Points 4, 5, 6, 7, 8) */}
+        {/* Dynamic Wizard Steps */}
         <div className="min-h-[280px] flex flex-col justify-center py-4">
           
           {/* STEP 1: CAREER GOAL */}
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHERE DO YOU WANT YOUR CAREER TO GO?</h3>
-                <p className="text-xs text-slate-500 font-medium">Choose the direction you're currently aiming for. You can change this later.</p>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">Where do you want your career to go?</h3>
+                <p className="text-xs text-slate-400 font-medium">Choose the direction you're currently aiming for. You can change this later.</p>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -423,7 +423,7 @@ export const Onboarding: React.FC = () => {
 
               {careerGoal === 'Other' && (
                 <div className="space-y-1 text-left animate-fade-in">
-                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">What role are you targeting?</span>
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">What role are you targeting?</span>
                   <input
                     type="text"
                     required
@@ -441,8 +441,8 @@ export const Onboarding: React.FC = () => {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHERE ARE YOU RIGHT NOW?</h3>
-                <p className="text-xs text-slate-500 font-medium">Select your experience level parameters.</p>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">Where are you right now?</h3>
+                <p className="text-xs text-slate-400 font-medium">Select your experience level parameters.</p>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -463,8 +463,8 @@ export const Onboarding: React.FC = () => {
 
               <div className="space-y-3 text-left border-t border-[#25262D] pt-6">
                 <div>
-                  <h4 className="text-xs font-bold text-[#F4F4F5]">WHAT ARE YOU CURRENTLY WORKING WITH?</h4>
-                  <p className="text-[10px] text-slate-500 font-medium">Select languages or frameworks you know. (Optional)</p>
+                  <h4 className="text-xs font-bold text-[#F4F4F5]">What are you currently working with?</h4>
+                  <p className="text-[10px] text-slate-400 font-medium">Select languages or frameworks you know. (Optional)</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-1 border border-[#25262D] rounded bg-slate-950/20 custom-scrollbar">
@@ -477,7 +477,7 @@ export const Onboarding: React.FC = () => {
                         className={`px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
                           isSelected 
                             ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/15 text-[var(--brand-primary)]' 
-                            : 'border-[#25262D] bg-transparent text-slate-500 hover:border-[#25262D]'
+                            : 'border-[#25262D] bg-transparent text-slate-400 hover:border-[#25262D]'
                         }`}
                       >
                         {isSelected && <Check className="w-3 h-3" />}
@@ -510,8 +510,8 @@ export const Onboarding: React.FC = () => {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHAT ARE YOU TRYING TO ACHIEVE NEXT?</h3>
-                <p className="text-xs text-slate-500 font-medium">Choose your primary next destination goal.</p>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">What are you trying to achieve next?</h3>
+                <p className="text-xs text-slate-400 font-medium">Choose your primary next destination goal.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -536,8 +536,8 @@ export const Onboarding: React.FC = () => {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="onboarding-step-heading text-[#F4F4F5]">WHAT'S HOLDING YOU BACK?</h3>
-                <p className="text-xs text-slate-500 font-medium">Choose the areas where you want VertexPath to help most.</p>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">What's holding you back?</h3>
+                <p className="text-xs text-slate-400 font-medium">Choose the areas where you want VertexPath to help most.</p>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -565,8 +565,8 @@ export const Onboarding: React.FC = () => {
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="space-y-1.5 text-left">
-                <h3 className="onboarding-step-heading text-[#F4F4F5]">HOW MUCH TIME CAN YOU REALISTICALLY COMMIT?</h3>
-                <p className="text-xs text-slate-500 font-medium">Choose what you can consistently maintain, not your ideal schedule.</p>
+                <h3 className="onboarding-step-heading text-[#F4F4F5]">How much time can you realistically commit?</h3>
+                <p className="text-xs text-slate-400 font-medium">Choose what you can consistently maintain, not your ideal schedule.</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">

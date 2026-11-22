@@ -58,10 +58,10 @@ export const Auth: React.FC = () => {
       return;
     }
 
-    // 2. Google Callback (#access_token=... or #id_token=... or ?credential=...)
+    // 2. Google Callback (#id_token=... or #access_token=... or ?credential=...)
     const hash = window.location.hash.substring(1);
     const hashParams = new URLSearchParams(hash);
-    const googleToken = hashParams.get('access_token') || hashParams.get('id_token') || urlParams.get('credential');
+    const googleToken = hashParams.get('id_token') || urlParams.get('credential') || hashParams.get('access_token');
     if (googleToken) {
       setLoading(true);
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -194,7 +194,13 @@ export const Auth: React.FC = () => {
           <span>VertexPath</span>
         </button>
         <div className="auth-story-copy">
-          <span className="auth-eyebrow flex items-center gap-2"><span className="glowing-yellow-dot w-2 h-2 rounded-full shrink-0" /> Your next chapter starts here</span>
+          <span className="auth-eyebrow flex items-center gap-2">
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EAB308] opacity-80" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FACC15] shadow-[0_0_8px_#FACC15]" />
+            </span>
+            Your next chapter starts here
+          </span>
           <h1>Build a career<br />that moves you<br /><em>forward.</em></h1>
           <p>Turn your skills into a clear path forward. Learn, build, and prepare for the work you want to do.</p>
         </div>

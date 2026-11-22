@@ -221,16 +221,19 @@ export const Landing: React.FC = () => {
         
         {/* Left Headline Column */}
         <div className="lg:col-span-7 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--card)] border border-[var(--border)]">
-            <span className="w-2 h-2 rounded-full glowing-yellow-dot shrink-0" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-[0_0_12px_rgba(250,204,21,0.15)]">
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EAB308] opacity-80" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FACC15] shadow-[0_0_8px_#FACC15]" />
+            </span>
             <span className="text-xs font-medium text-[var(--text-secondary)]">
               Career Operating System
             </span>
           </div>
 
-          <h1 className="hero-heading text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-bold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)]">
+          <h1 className="hero-heading text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-normal leading-[1.05] tracking-[-0.02em] text-[var(--text-primary)]">
             Your career<br />
-            <span className="bg-gradient-to-r from-[var(--text-primary)] via-[var(--brand-primary)] to-[#34D399] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[var(--text-primary)] via-[var(--brand-primary)] to-[#34D399] bg-clip-text text-transparent italic">
               isn't a straight line.
             </span>
           </h1>
