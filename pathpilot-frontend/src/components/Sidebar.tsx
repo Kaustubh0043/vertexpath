@@ -63,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       items: [
         { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal, tourId: 'tour-coding' },
         { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck, tourId: 'tour-interviews' },
-        { name: 'Technical Drills', path: '/dashboard?drill=true#daily-drill', icon: Zap, tourId: 'tour-daily-drill' }
+        { name: 'Technical Drills', path: '/dashboard#daily-drill', icon: Zap, tourId: 'tour-daily-drill' }
       ]
     },
     {
@@ -78,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       title: 'CAREER',
       items: [
         { name: 'Salary & Negotiation', path: '/dashboard/compensation', icon: DollarSign, tourId: 'tour-compensation' },
-        { name: 'Career Badge', path: '/dashboard?badge=true#career-badge', icon: Award, tourId: 'tour-career-badge' }
+        { name: 'Career Badge', path: '/dashboard#career-badge', icon: Award, tourId: 'tour-career-badge' }
       ]
     },
     {
@@ -173,6 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                         document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
+                    end={item.path === '/dashboard'}
                     className={({ isActive }) => `
                       relative flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-all duration-150 group
                       ${isActive && !item.path.includes('#')

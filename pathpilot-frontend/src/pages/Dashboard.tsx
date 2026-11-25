@@ -26,11 +26,12 @@ import {
   Briefcase,
   ChevronRight
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showAddSkill, setShowAddSkill] = useState(false);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillProgress, setNewSkillProgress] = useState(50);
@@ -530,12 +531,12 @@ export const Dashboard: React.FC = () => {
             )}
 
             <div className="space-y-3">
-              {stats?.skills && stats.skills.length > 0 ? (
+              {Array.isArray(stats?.skills) && stats.skills.length > 0 ? (
                 stats.skills.map((skill: any, idx: number) => {
-                  const sName = skill.skillName || skill.name;
-                  const sProgress = skill.progressPercentage !== undefined 
+                  const sName = skill?.skillName || skill?.name || 'Skill';
+                  const sProgress = skill?.progressPercentage !== undefined 
                     ? skill.progressPercentage 
-                    : Math.min(100, Math.round(((skill.level || 1) / (skill.targetLevel || 5)) * 100));
+                    : Math.min(100, Math.round(((skill?.level || 1) / (skill?.targetLevel || 5)) * 100));
                   return (
                     <div key={idx} className="space-y-1">
                       <div className="flex items-center justify-between text-xs">

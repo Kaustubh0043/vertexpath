@@ -19,6 +19,48 @@ import { CodingChallenge } from './pages/CodingChallenge';
 import { Compensation } from './pages/Compensation';
 import { PublicPortfolio } from './pages/PublicPortfolio';
 
+// Global Error Boundary
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean; error: Error | null }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('App uncaught render error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#0C0D10] text-[#F5F5F2] flex flex-col items-center justify-center p-6 text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 flex items-center justify-center text-[var(--brand-primary)] text-xl font-bold">
+            !
+          </div>
+          <h2 className="text-xl font-bold">Something went wrong</h2>
+          <p className="text-sm text-slate-400 max-w-md">
+            {this.state.error?.message || 'An unexpected rendering error occurred.'}
+          </p>
+          <button
+            onClick={() => {
+              this.setState({ hasError: false, error: null });
+              window.location.href = '/dashboard';
+            }}
+            className="px-4 py-2 bg-[var(--brand-primary)] text-black text-xs font-semibold rounded-lg hover:opacity-90 transition-opacity cursor-pointer"
+          >
+            Reload Dashboard
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // Private Route Guard Component
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -70,53 +112,55 @@ function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <Routes>
-            {/* Public Home Landing Page */}
-            <Route path="/" element={<Landing />} />
+          <ErrorBoundary>
+            <Routes>
+              {/* Public Home Landing Page */}
+              <Route path="/" element={<Landing />} />
 
-            {/* Public Auth Routes */}
-            <Route path="/auth" element={<Auth />} />
+              {/* Public Auth Routes */}
+              <Route path="/auth" element={<Auth />} />
 
-            {/* Public Developer Profile Portfolio */}
-            <Route path="/p/:username" element={<PublicPortfolio />} />
-            <Route path="/portfolio/:username" element={<PublicPortfolio />} />
+              {/* Public Developer Profile Portfolio */}
+              <Route path="/p/:username" element={<PublicPortfolio />} />
+              <Route path="/portfolio/:username" element={<PublicPortfolio />} />
 
-            {/* Onboarding Flow Page */}
-            <Route 
-              path="/onboarding" 
-              element={
-                <OnboardingRoute>
-                  <Onboarding />
-                </OnboardingRoute>
-              } 
-            />
+              {/* Onboarding Flow Page */}
+              <Route 
+                path="/onboarding" 
+                element={
+                  <OnboardingRoute>
+                    <Onboarding />
+                  </OnboardingRoute>
+                } 
+              />
 
-            {/* Secure Dashboard Shell */}
-            <Route 
-              path="/dashboard" 
-              element={
-                <PrivateRoute>
-                  <DashboardLayout />
-                </PrivateRoute>
-              }
-            >
-              <Route index element={<Dashboard />} />
-              <Route path="chat" element={<Chat />} />
-              <Route path="resume" element={<Resume />} />
-              <Route path="jd-match" element={<JdMatch />} />
-              <Route path="roadmaps" element={<Roadmaps />} />
-              <Route path="learning" element={<Roadmaps />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="interviews" element={<Interviews />} />
-              <Route path="coding" element={<CodingChallenge />} />
-              <Route path="outreach" element={<Outreach />} />
-              <Route path="compensation" element={<Compensation />} />
-              <Route path="profile" element={<Profile />} />
-            </Route>
+              {/* Secure Dashboard Shell */}
+              <Route 
+                path="/dashboard" 
+                element={
+                  <PrivateRoute>
+                    <DashboardLayout />
+                  </PrivateRoute>
+                } 
+              >
+                <Route index element={<Dashboard />} />
+                <Route path="chat" element={<Chat />} />
+                <Route path="resume" element={<Resume />} />
+                <Route path="jd-match" element={<JdMatch />} />
+                <Route path="roadmaps" element={<Roadmaps />} />
+                <Route path="learning" element={<Roadmaps />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="interviews" element={<Interviews />} />
+                <Route path="coding" element={<CodingChallenge />} />
+                <Route path="outreach" element={<Outreach />} />
+                <Route path="compensation" element={<Compensation />} />
+                <Route path="profile" element={<Profile />} />
+              </Route>
 
-            {/* Fallback Catch-all Route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              {/* Fallback Catch-all Route */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </ErrorBoundary>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
