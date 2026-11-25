@@ -25,14 +25,26 @@ dashboardRouter.get('/stats', async (c) => {
     streakCount: userRecord?.streak_count || 0,
     totalSkills: skills.results.length,
     activeRoadmaps: roadmapsCount?.count || 0,
-    skills: skills.results
+    skills: skills.results.map((s: any) => ({
+      id: s.id,
+      name: s.name,
+      skillName: s.name,
+      level: s.level,
+      targetLevel: s.targetLevel,
+      progressPercentage: Math.min(100, Math.round(((s.level || 1) / (s.targetLevel || 5)) * 100))
+    }))
   });
 });
 
 dashboardRouter.post('/skills', async (c) => {
   const user = c.get('user');
-  const { name, level = 1, targetLevel = 5 } = await c.req.json<{ name?: string; level?: number; targetLevel?: number }>();
-  if (!name) return c.json({ error: 'Skill name is required' }, 400);
+  const body = await c.req.json<{ name?: string; skillName?: string; level?: number; targetLevel?: number; progressPercentage?: number }>();
+  const name = body.name || body.skillName;
+  if (!name || !name.trim()) return c.json({ error: 'Skill name is required' }, 400);
+
+  const progress = body.progressPercentage !== undefined ? body.progressPercentage : 50;
+  const level = body.level || Math.max(1, Math.min(5, Math.round((progress / 100) * 5)));
+  const targetLevel = body.targetLevel || 5;
 
   const existing = await c.env.DB.prepare(
     'SELECT id FROM user_skills WHERE user_id = ? AND LOWER(name) = LOWER(?)'
@@ -49,7 +61,7 @@ dashboardRouter.post('/skills', async (c) => {
     ).bind(id, user.sub, name.trim(), level, targetLevel).run();
   }
 
-  return c.json({ success: true });
+  return c.json({ success: true, name: name.trim(), skillName: name.trim(), level, targetLevel, progressPercentage: progress });
 });
 
 dashboardRouter.post('/streak', async (c) => {

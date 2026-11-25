@@ -150,6 +150,18 @@ export const Resume: React.FC = () => {
     formData.append('fileType', 'RESUME');
 
     try {
+      // Attempt client-side text extraction from PDF/text/markdown
+      try {
+        const rawContent = await selectedFile.text();
+        const readableMatches = rawContent.match(/[a-zA-Z0-9\s.,;:\-+/()#]{4,}/g);
+        if (readableMatches && readableMatches.length > 0) {
+          const extractedText = readableMatches.join(' ').replace(/\s+/g, ' ').slice(0, 3500);
+          formData.append('resumeText', extractedText);
+        }
+      } catch {
+        // file reading fallback
+      }
+
       const res = await api.post('/api/documents/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });

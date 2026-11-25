@@ -11,7 +11,7 @@ export async function callGemini(
 
   // Try Gemini first if key available
   if (apiKey) {
-    const models = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash'];
+    const models = ['gemini-3.5-flash', 'gemini-3-flash-preview', 'gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-3.8-flash'];
     for (const model of models) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -46,6 +46,9 @@ export async function callGemini(
           };
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
           if (text) return text;
+        } else {
+          const errText = await res.text();
+          console.warn(`Gemini model ${model} failed (${res.status}):`, errText);
         }
       } catch (e) {
         console.warn(`Gemini model ${model} request failed:`, e);

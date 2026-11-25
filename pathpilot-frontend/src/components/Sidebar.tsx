@@ -63,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       items: [
         { name: 'Code Challenge', path: '/dashboard/coding', icon: Terminal, tourId: 'tour-coding' },
         { name: 'Mock Interviews', path: '/dashboard/interviews', icon: UserCheck, tourId: 'tour-interviews' },
-        { name: 'Technical Drills', path: '/dashboard#daily-drill', icon: Zap, tourId: 'tour-daily-drill' }
+        { name: 'Technical Drills', path: '/dashboard?drill=true#daily-drill', icon: Zap, tourId: 'tour-daily-drill' }
       ]
     },
     {
@@ -78,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       title: 'CAREER',
       items: [
         { name: 'Salary & Negotiation', path: '/dashboard/compensation', icon: DollarSign, tourId: 'tour-compensation' },
-        { name: 'Career Badge', path: '/dashboard#career-badge', icon: Award, tourId: 'tour-career-badge' }
+        { name: 'Career Badge', path: '/dashboard?badge=true#career-badge', icon: Award, tourId: 'tour-career-badge' }
       ]
     },
     {
@@ -157,6 +157,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                     data-tour={item.tourId}
                     onClick={() => {
                       setIsOpen(false);
+                      if (item.name === 'Career Badge') {
+                        window.dispatchEvent(new CustomEvent('open-career-badge'));
+                      }
+                      if (item.name === 'Technical Drills') {
+                        const el = document.getElementById('daily-drill');
+                        if (el) {
+                          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          el.classList.add('ring-2', 'ring-[var(--brand-primary)]');
+                          setTimeout(() => el.classList.remove('ring-2', 'ring-[var(--brand-primary)]'), 3000);
+                        }
+                      }
                       if (item.path.includes('#')) {
                         const hash = item.path.split('#')[1];
                         document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });

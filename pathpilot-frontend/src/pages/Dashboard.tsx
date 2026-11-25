@@ -80,7 +80,11 @@ export const Dashboard: React.FC = () => {
   // Mutate skills
   const addSkillMutation = useMutation({
     mutationFn: async (payload: { skillName: string; progressPercentage: number }) => {
-      return api.post('/api/dashboard/skills', payload);
+      return api.post('/api/dashboard/skills', {
+        name: payload.skillName,
+        skillName: payload.skillName,
+        progressPercentage: payload.progressPercentage,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
@@ -209,18 +213,29 @@ export const Dashboard: React.FC = () => {
     nextStepBtn = 'View Public Portfolio →';
   }
 
-  // Activity Heatmap generator
-  const activityMap = stats?.dailyActivity || {};
-  const getActivityColor = (level: number) => {
-    switch (level) {
-      case 0: return 'bg-[var(--card)] border border-[var(--border)]';
-      case 1: return 'bg-[var(--brand-primary)]/20 border border-[var(--brand-primary)]/20';
-      case 2: return 'bg-[var(--brand-primary)]/40 border border-[var(--brand-primary)]/30';
-      case 3: return 'bg-[var(--brand-primary)]/70 border border-[var(--brand-primary)]/40';
-      case 4: return 'bg-[var(--brand-primary)] border border-[var(--brand-hover)]';
-      default: return 'bg-[var(--card)]';
+  // Listen to hash and custom events for Career Badge and Technical Drills from sidebar
+  useEffect(() => {
+    const handleOpenBadge = () => setShowBadgeModal(true);
+    window.addEventListener('open-career-badge', handleOpenBadge);
+
+    const searchParams = new URLSearchParams(location.search);
+    if (location.hash === '#career-badge' || searchParams.get('modal') === 'badge' || searchParams.get('badge') === 'true') {
+      setShowBadgeModal(true);
     }
-  };
+
+    if (location.hash === '#daily-drill' || searchParams.get('drill') === 'true') {
+      setTimeout(() => {
+        const el = document.getElementById('daily-drill');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-[var(--brand-primary)]');
+          setTimeout(() => el.classList.remove('ring-2', 'ring-[var(--brand-primary)]'), 3000);
+        }
+      }, 150);
+    }
+
+    return () => window.removeEventListener('open-career-badge', handleOpenBadge);
+  }, [location.hash, location.search]);
 
   const journeyMilestones = [
     { id: 'profile', name: 'Profile', desc: 'Initial setup', isDone: true, isActive: false, path: '/dashboard/profile' },
@@ -262,22 +277,14 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Controls - responsive grid for mobile */}
-        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2.5 w-full sm:w-auto">
-          <button
-            onClick={() => window.dispatchEvent(new Event('startVertexTour'))}
-            className="btn-secondary text-xs flex-1 sm:flex-initial justify-center py-2 px-3"
-            title="Start Interactive Product Tour"
-          >
-            <Compass className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
-            <span>Take Tour</span>
-          </button>
-
+        {/* Action Controls */}
+        <div className="flex items-center gap-2.5 flex-wrap">
           <button
             id="career-badge"
             data-tour="tour-career-badge"
             onClick={() => setShowBadgeModal(true)}
-            className="btn-secondary text-xs flex-1 sm:flex-initial justify-center py-2 px-3"
+            className="btn-secondary text-xs py-2 px-3.5 flex items-center gap-2"
+            title="View & Share Verified Career Badge"
           >
             <Award className="w-3.5 h-3.5 text-[#F59E0B]" />
             <span>Career Badge</span>
@@ -285,7 +292,8 @@ export const Dashboard: React.FC = () => {
 
           <button
             onClick={() => incrementStreakMutation.mutate()}
-            className="btn-primary text-xs col-span-2 sm:col-auto justify-center py-2 px-4"
+            className="btn-primary text-xs py-2 px-3.5 flex items-center gap-2"
+            title="Log today's activity and maintain streak"
           >
             <Flame className="w-3.5 h-3.5 text-[#F59E0B]" />
             <span>Sync Daily Log</span>
@@ -523,20 +531,26 @@ export const Dashboard: React.FC = () => {
 
             <div className="space-y-3">
               {stats?.skills && stats.skills.length > 0 ? (
-                stats.skills.map((skill: any, idx: number) => (
-                  <div key={idx} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-[var(--text-primary)]">{skill.skillName}</span>
-                      <span className="text-[var(--brand-primary)] font-mono text-[11px]">{skill.progressPercentage}%</span>
+                stats.skills.map((skill: any, idx: number) => {
+                  const sName = skill.skillName || skill.name;
+                  const sProgress = skill.progressPercentage !== undefined 
+                    ? skill.progressPercentage 
+                    : Math.min(100, Math.round(((skill.level || 1) / (skill.targetLevel || 5)) * 100));
+                  return (
+                    <div key={idx} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-[var(--text-primary)]">{sName}</span>
+                        <span className="text-[var(--brand-primary)] font-mono text-[11px]">{sProgress}%</span>
+                      </div>
+                      <div className="w-full bg-[var(--surface)] h-1.5 rounded-full overflow-hidden border border-[var(--border)]">
+                        <div
+                          className="bg-[var(--brand-primary)] h-full rounded-full transition-all duration-300"
+                          style={{ width: `${sProgress}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="w-full bg-[var(--surface)] h-1.5 rounded-full overflow-hidden border border-[var(--border)]">
-                      <div
-                        className="bg-[var(--brand-primary)] h-full rounded-full transition-all duration-300"
-                        style={{ width: `${skill.progressPercentage}%` }}
-                      />
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="text-center py-4 text-xs text-[var(--text-muted)] space-y-1.5">
                   <p>No skills mapped yet.</p>
@@ -548,37 +562,6 @@ export const Dashboard: React.FC = () => {
                   </button>
                 </div>
               )}
-            </div>
-          </div>
-
-          {/* Activity Heatmap (Section 16) */}
-          <div className="card-surface p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <p className="eyebrow-text">ACTIVITY HEATMAP</p>
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">35-day window</span>
-            </div>
-            
-            <div className="grid grid-cols-7 gap-1.5">
-              {Array.from({ length: 35 }).map((_, idx) => {
-                const level = idx % 5;
-                return (
-                  <div
-                    key={idx}
-                    className={`w-full aspect-square rounded-sm ${getActivityColor(level)}`}
-                    title={`Activity Level ${level}`}
-                  />
-                );
-              })}
-            </div>
-
-            <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono pt-1">
-              <span>Less</span>
-              <div className="flex items-center gap-1">
-                {[0, 1, 2, 3, 4].map((lvl) => (
-                  <div key={lvl} className={`w-2.5 h-2.5 rounded-sm ${getActivityColor(lvl)}`} />
-                ))}
-              </div>
-              <span>More</span>
             </div>
           </div>
 
