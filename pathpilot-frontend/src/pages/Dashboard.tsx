@@ -104,6 +104,30 @@ export const Dashboard: React.FC = () => {
     },
   });
 
+  // Listen to hash and custom events for Career Badge and Technical Drills from sidebar (placed before early return)
+  useEffect(() => {
+    const handleOpenBadge = () => setShowBadgeModal(true);
+    window.addEventListener('open-career-badge', handleOpenBadge);
+
+    const searchParams = new URLSearchParams(location.search);
+    if (location.hash === '#career-badge' || searchParams.get('modal') === 'badge' || searchParams.get('badge') === 'true') {
+      setShowBadgeModal(true);
+    }
+
+    if (location.hash === '#daily-drill' || searchParams.get('drill') === 'true') {
+      setTimeout(() => {
+        const el = document.getElementById('daily-drill');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-[var(--brand-primary)]');
+          setTimeout(() => el.classList.remove('ring-2', 'ring-[var(--brand-primary)]'), 3000);
+        }
+      }, 150);
+    }
+
+    return () => window.removeEventListener('open-career-badge', handleOpenBadge);
+  }, [location.hash, location.search]);
+
   const handleAddSkill = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSkillName.trim()) return;
@@ -213,30 +237,6 @@ export const Dashboard: React.FC = () => {
     nextStepLink = '/portfolio/me';
     nextStepBtn = 'View Public Portfolio →';
   }
-
-  // Listen to hash and custom events for Career Badge and Technical Drills from sidebar
-  useEffect(() => {
-    const handleOpenBadge = () => setShowBadgeModal(true);
-    window.addEventListener('open-career-badge', handleOpenBadge);
-
-    const searchParams = new URLSearchParams(location.search);
-    if (location.hash === '#career-badge' || searchParams.get('modal') === 'badge' || searchParams.get('badge') === 'true') {
-      setShowBadgeModal(true);
-    }
-
-    if (location.hash === '#daily-drill' || searchParams.get('drill') === 'true') {
-      setTimeout(() => {
-        const el = document.getElementById('daily-drill');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.classList.add('ring-2', 'ring-[var(--brand-primary)]');
-          setTimeout(() => el.classList.remove('ring-2', 'ring-[var(--brand-primary)]'), 3000);
-        }
-      }, 150);
-    }
-
-    return () => window.removeEventListener('open-career-badge', handleOpenBadge);
-  }, [location.hash, location.search]);
 
   const journeyMilestones = [
     { id: 'profile', name: 'Profile', desc: 'Initial setup', isDone: true, isActive: false, path: '/dashboard/profile' },
