@@ -68,10 +68,22 @@ export const Resume: React.FC = () => {
     queryFn: async () => {
       if (!activeDocId) return null;
       const res = await api.post(`/api/documents/${activeDocId}/analyze`);
+      if (res.data?.ats_score) {
+        localStorage.setItem('last_ats_score', String(res.data.ats_score));
+        localStorage.setItem('resumeCompleted', 'true');
+        queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+      }
       return res.data;
     },
     enabled: !!activeDocId,
   });
+
+  React.useEffect(() => {
+    if (resumes.length > 0) {
+      localStorage.setItem('resumeCompleted', 'true');
+      queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+    }
+  }, [resumes.length, queryClient]);
 
   // Delete document mutation (Preserving existing logic)
   const deleteDocMutation = useMutation({

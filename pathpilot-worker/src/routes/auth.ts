@@ -7,9 +7,44 @@ import { sendOtpEmail } from '../utils/email';
 export const authRouter = new Hono<{ Bindings: Env }>();
 
 authRouter.post('/signup', async (c) => {
-  const { email, password, fullName } = await c.req.json<{ email?: string; password?: string; fullName?: string }>();
+  const { email, password, fullName, dateOfBirth, parentalConsent } = await c.req.json<{ 
+    email?: string; 
+    password?: string; 
+    fullName?: string;
+    dateOfBirth?: string;
+    parentalConsent?: boolean;
+  }>();
   if (!email || !password || !fullName) {
     return c.json({ message: 'Email, password, and full name are required' }, 400);
+  }
+
+  // Government Guidelines & Child Protection Compliance (COPPA, GDPR-K, India DPDP Act 2023)
+  let isMinor = 0;
+  if (dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    if (!isNaN(birthDate.getTime())) {
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      if (age < 13) {
+        return c.json({ 
+          message: 'In compliance with government child online safety regulations (COPPA / GDPR / DPDP), users under 13 are not permitted to register directly.' 
+        }, 403);
+      }
+
+      if (age < 18) {
+        isMinor = 1;
+        if (!parentalConsent) {
+          return c.json({ 
+            message: 'Under DPDP & digital safety guidelines, users under 18 require parental or legal guardian consent.' 
+          }, 400);
+        }
+      }
+    }
   }
 
   const existing = await c.env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(email.toLowerCase()).first();
@@ -21,11 +56,12 @@ authRouter.post('/signup', async (c) => {
   const passwordHash = await bcrypt.hash(password, 10);
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+  const now = new Date().toISOString();
 
   await c.env.DB.prepare(
-    `INSERT INTO users (id, email, password_hash, full_name, verification_code, verification_code_expires_at, enabled)
-     VALUES (?, ?, ?, ?, ?, ?, 0)`
-  ).bind(id, email.toLowerCase(), passwordHash, fullName, code, expiresAt).run();
+    `INSERT INTO users (id, email, password_hash, full_name, verification_code, verification_code_expires_at, enabled, date_of_birth, is_minor, parental_consent, terms_accepted_at)
+     VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?)`
+  ).bind(id, email.toLowerCase(), passwordHash, fullName, code, expiresAt, dateOfBirth || null, isMinor, parentalConsent ? 1 : 0, now).run();
 
   await sendOtpEmail(email, code, c.env);
 

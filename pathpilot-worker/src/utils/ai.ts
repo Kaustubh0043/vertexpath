@@ -1,17 +1,25 @@
 import type { Env } from '../types';
 
+export interface AiOptions {
+  maxTokens?: number;
+  temperature?: number;
+}
+
 export async function callGemini(
   prompt: string,
   env: Env,
   jsonMode: boolean = false,
-  systemInstruction?: string
+  systemInstruction?: string,
+  options?: AiOptions
 ): Promise<string> {
   const apiKey = env.GEMINI_API_KEY?.trim();
   const groqKey = env.GROQ_API_KEY?.trim();
+  const maxTokens = options?.maxTokens || 1024;
+  const temp = options?.temperature ?? 0.2;
 
   // Try Gemini first if key available
   if (apiKey) {
-    const models = ['gemini-3.5-flash', 'gemini-3-flash-preview', 'gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-3.8-flash'];
+    const models = ['gemini-3.5-flash', 'gemini-3-flash-preview', 'gemini-2.5-flash'];
     for (const model of models) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -23,7 +31,8 @@ export async function callGemini(
             }
           ],
           generationConfig: {
-            temperature: 0.3,
+            temperature: temp,
+            maxOutputTokens: maxTokens,
             ...(jsonMode ? { responseMimeType: 'application/json' } : {})
           }
         };
@@ -67,6 +76,8 @@ export async function callGemini(
         },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
+          max_tokens: maxTokens,
+          temperature: temp,
           messages: [
             ...(systemInstruction ? [{ role: 'system', content: systemInstruction }] : []),
             { role: 'user', content: prompt }
@@ -93,9 +104,10 @@ export async function callGemini(
 export async function generateJson<T>(
   prompt: string,
   env: Env,
-  systemInstruction?: string
+  systemInstruction?: string,
+  options?: AiOptions
 ): Promise<T> {
-  const raw = await callGemini(prompt, env, true, systemInstruction);
+  const raw = await callGemini(prompt, env, true, systemInstruction, options);
   let cleaned = raw.trim();
   if (cleaned.startsWith('```')) {
     const lines = cleaned.split('\n');

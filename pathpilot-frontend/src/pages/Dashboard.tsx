@@ -150,7 +150,7 @@ export const Dashboard: React.FC = () => {
   const totalDocuments = stats?.totalDocuments || 0;
   const totalSkills = stats?.skills?.length || 0;
 
-  const isResumeDone = totalDocuments > 0;
+  const isResumeDone = totalDocuments > 0 || localStorage.getItem('resumeCompleted') === 'true' || localStorage.getItem('last_ats_score') !== null;
   const isSkillsDone = totalSkills > 0;
   const isRoadmapsDone = totalRoadmaps > 0;
   const isProjectsDone = projectCompleted || (stats?.totalProjects && stats.totalProjects > 0);
@@ -367,7 +367,7 @@ export const Dashboard: React.FC = () => {
         <div className="lg:col-span-7 space-y-6">
           
           {/* Daily 5-Minute Technical Drill (Section 14) */}
-          <div id="daily-drill" data-tour="tour-daily-drill" className="card-surface p-6 space-y-4">
+          <div id="daily-drill" data-tour="tour-daily-drill" className="card-3d p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="p-1 rounded bg-[var(--surface)] border border-[var(--border)]">
@@ -427,7 +427,7 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Next Recommended Step Card (Section 44) */}
-          <div className="card-surface p-6 space-y-3">
+          <div className="card-3d p-6 space-y-3">
             <p className="eyebrow-text">YOUR NEXT STEP</p>
             <h3 className="card-title text-[var(--text-primary)]">
               {nextStepTitle}
@@ -480,7 +480,7 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Skill Map Section (Section 15) */}
-          <div id="skills-section" className="card-surface p-5 space-y-4">
+          <div id="skills-section" className="card-3d p-5 space-y-4">
             <div className="flex items-center justify-between">
               <p className="eyebrow-text">YOUR SKILL MAP</p>
               <button

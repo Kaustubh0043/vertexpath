@@ -21,10 +21,16 @@ dashboardRouter.get('/stats', async (c) => {
     'SELECT COUNT(*) as count FROM roadmaps WHERE user_id = ?'
   ).bind(user.sub).first<{ count: number }>();
 
+  const docsCount = await c.env.DB.prepare(
+    'SELECT COUNT(*) as count FROM documents WHERE user_id = ?'
+  ).bind(user.sub).first<{ count: number }>();
+
   return c.json({
     streakCount: userRecord?.streak_count || 0,
     totalSkills: skills.results.length,
+    totalRoadmaps: roadmapsCount?.count || 0,
     activeRoadmaps: roadmapsCount?.count || 0,
+    totalDocuments: docsCount?.count || 0,
     skills: skills.results.map((s: any) => ({
       id: s.id,
       name: s.name,

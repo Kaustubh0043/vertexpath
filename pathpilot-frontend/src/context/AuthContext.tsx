@@ -12,7 +12,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: String) => Promise<void>;
-  signup: (email: string, password: String, fullName: string) => Promise<{ requiresVerification: boolean }>;
+  signup: (email: string, password: string, fullName: string, dateOfBirth?: string, parentalConsent?: boolean) => Promise<{ requiresVerification: boolean }>;
   verifyCode: (email: string, code: string) => Promise<void>;
   resendCode: (email: string) => Promise<void>;
   loginWithGoogle: (credential: string) => Promise<void>;
@@ -49,8 +49,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(userData);
   };
 
-  const signup = async (email: string, password: String, fullName: string) => {
-    const response = await api.post('/api/auth/signup', { email, password, fullName });
+  const signup = async (email: string, password: string, fullName: string, dateOfBirth?: string, parentalConsent?: boolean) => {
+    const response = await api.post('/api/auth/signup', { email, password, fullName, dateOfBirth, parentalConsent });
     const { token, refreshToken, userId, message, onboardingCompleted } = response.data;
     
     if (message === 'verification_required') {

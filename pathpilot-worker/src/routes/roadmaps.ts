@@ -46,7 +46,7 @@ Return valid JSON matching this schema:
 
   let aiData: GeneratedRoadmap;
   try {
-    aiData = await generateJson<GeneratedRoadmap>(prompt, c.env);
+    aiData = await generateJson<GeneratedRoadmap>(prompt, c.env, undefined, { maxTokens: 1200 });
   } catch {
     // High-quality mock fallback if AI API keys are not yet configured
     aiData = {

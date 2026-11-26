@@ -21,7 +21,25 @@ export const Auth: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [parentalConsent, setParentalConsent] = useState(false);
   const [code, setCode] = useState('');
+
+  // Government Guidelines & Child Protection Age Calculator
+  const calculateAge = (dobString: string): number | null => {
+    if (!dobString) return null;
+    const dob = new Date(dobString);
+    if (isNaN(dob.getTime())) return null;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const userAge = calculateAge(dateOfBirth);
   
   // Terms & Privacy Modal states
   const [showTermsModal, setShowTermsModal] = useState(false);
@@ -105,7 +123,19 @@ export const Auth: React.FC = () => {
         return;
       }
       if (!agreeTerms) {
-        setError('You must agree to the Terms & Conditions to create an account.');
+        setError('You must agree to the Terms & Conditions and Privacy Policy.');
+        return;
+      }
+      if (!dateOfBirth) {
+        setError('Date of birth is required for government regulatory age verification.');
+        return;
+      }
+      if (userAge !== null && userAge < 13) {
+        setError('Under COPPA, GDPR, and DPDP digital safety regulations, users under 13 cannot register for an account.');
+        return;
+      }
+      if (userAge !== null && userAge < 18 && !parentalConsent) {
+        setError('In compliance with child data protection laws, minors under 18 must confirm parental/guardian consent.');
         return;
       }
     }
@@ -117,7 +147,7 @@ export const Auth: React.FC = () => {
         await login(email.trim().toLowerCase(), password);
         navigate('/dashboard');
       } else {
-        const res = await signup(email.trim().toLowerCase(), password, fullName.trim());
+        const res = await signup(email.trim().toLowerCase(), password, fullName.trim(), dateOfBirth, parentalConsent);
         if (res?.requiresVerification) {
           setIsVerify(true);
         } else {
@@ -501,6 +531,66 @@ export const Auth: React.FC = () => {
               )}
 
               {!isLogin && (
+                /* DATE OF BIRTH & AGE GUIDELINE COMPLIANCE (COPPA / GDPR / DPDP) */
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-medium text-[var(--text-secondary)]">Date of Birth</label>
+                    {userAge !== null && (
+                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                        userAge < 13
+                          ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                          : userAge < 18
+                          ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                          : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                      }`}>
+                        {userAge < 13 ? `Age ${userAge} • Under 13` : userAge < 18 ? `Age ${userAge} • Minor Developer` : `Age ${userAge} • Verified 18+`}
+                      </span>
+                    )}
+                  </div>
+                  <input
+                    type="date"
+                    required
+                    max={new Date().toISOString().split('T')[0]}
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    className="w-full text-xs"
+                  />
+
+                  {/* Under 13 COPPA Restriction */}
+                  {userAge !== null && userAge < 13 && (
+                    <div className="p-3 bg-rose-500/10 border border-rose-500/25 rounded-lg text-xs text-rose-300 space-y-1">
+                      <p className="font-semibold text-rose-400">Government Age Restriction (COPPA / GDPR / DPDP)</p>
+                      <p className="text-[11px] leading-relaxed text-rose-200/80">
+                        In accordance with digital child data privacy regulations, users under 13 cannot register for an independent career account.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Minor 13-17 DPDP Consent Notice */}
+                  {userAge !== null && userAge >= 13 && userAge < 18 && (
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/25 rounded-lg text-xs text-amber-200 space-y-2">
+                      <p className="font-semibold text-amber-300">Parental / Guardian Consent Required</p>
+                      <p className="text-[11px] leading-relaxed text-amber-200/80">
+                        Under Digital Personal Data Protection (DPDP) and child privacy guidelines, minors under 18 may use VertexPath for educational career training with parental or guardian consent.
+                      </p>
+                      <label className="flex items-start gap-2 pt-1 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          required
+                          checked={parentalConsent}
+                          onChange={(e) => setParentalConsent(e.target.checked)}
+                          className="w-3.5 h-3.5 rounded border-[var(--border)] bg-[var(--bg-primary)] text-[var(--brand-primary)] focus:ring-[var(--brand-primary)] mt-0.5"
+                        />
+                        <span className="text-[11px] font-medium text-amber-100">
+                          My parent or legal guardian has reviewed and approved my registration.
+                        </span>
+                      </label>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {!isLogin && (
                 /* TERMS AND CONDITIONS CHECKBOX (Signup only) */
                 <div className="flex items-start gap-3 mt-4 pt-1 text-left">
                   <input
@@ -532,8 +622,8 @@ export const Auth: React.FC = () => {
               {/* SUBMIT BUTTON */}
               <button
                 type="submit"
-                disabled={loading || (!isLogin && password !== confirmPassword)}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer mt-6"
+                disabled={loading || (!isLogin && (password !== confirmPassword || (userAge !== null && userAge < 13) || (userAge !== null && userAge < 18 && !parentalConsent)))}
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[var(--brand-primary)] hover:bg-[var(--brand-hover)] text-[#111318] rounded text-xs font-bold transition-all cursor-pointer mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />

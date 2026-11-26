@@ -17,7 +17,7 @@ Return valid JSON matching this schema:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -40,7 +40,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -63,7 +63,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -87,7 +87,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -116,7 +116,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -148,7 +148,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
@@ -178,7 +178,7 @@ Return valid JSON matching:
 }`;
 
   try {
-    const data = await generateJson(prompt, c.env);
+    const data = await generateJson(prompt, c.env, undefined, { maxTokens: 900 });
     return c.json(data);
   } catch {
     return c.json({
