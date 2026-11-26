@@ -17,6 +17,21 @@ export default {
     }
 
     // Serve static frontend assets with automatic SPA fallback
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    
+    // Prevent browser from caching index.html so updates are immediate
+    if (url.pathname === '/' || url.pathname.startsWith('/dashboard') || url.pathname.startsWith('/auth')) {
+      const headers = new Headers(response.headers);
+      headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      headers.set('Pragma', 'no-cache');
+      headers.set('Expires', '0');
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
+    return response;
   }
 };

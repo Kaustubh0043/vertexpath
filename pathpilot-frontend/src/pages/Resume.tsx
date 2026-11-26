@@ -163,7 +163,7 @@ export const Resume: React.FC = () => {
       }
 
       const res = await api.post('/api/documents/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': undefined },
       });
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       setSelectedFile(null);
@@ -188,7 +188,7 @@ export const Resume: React.FC = () => {
 
     try {
       await api.post('/api/documents/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': undefined },
       });
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       setRagFile(null);
