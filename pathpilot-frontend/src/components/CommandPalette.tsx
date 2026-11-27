@@ -71,25 +71,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
     },
     {
       id: 'theme-dark',
-      title: 'Switch to Dark Mode',
-      description: 'Sleek low-glare Raycast dark aesthetic',
+      title: 'Light Mode Active',
+      description: 'VertexPath uses a clean white & black design',
       category: 'Appearance',
       icon: Moon,
-      action: () => {
-        setTheme('dark');
-      },
+      action: () => {},
       shortcut: 'T D'
-    },
-    {
-      id: 'theme-system',
-      title: 'Use System Default Theme',
-      description: 'Automatically match operating system preferences',
-      category: 'Appearance',
-      icon: Laptop,
-      action: () => {
-        setTheme('system');
-      },
-      shortcut: 'T S'
     },
     {
       id: 'dashboard',

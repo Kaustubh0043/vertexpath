@@ -75,6 +75,9 @@ public class SecurityConfig {
         originPatterns.add("http://127.0.0.1:5173");
         originPatterns.add("http://127.0.0.1:5174");
         originPatterns.add("https://*.onrender.com");
+        originPatterns.add("https://*.workers.dev");
+        originPatterns.add("https://app.vertexpath.workers.dev");
+        originPatterns.add("https://vertexpath.workers.dev");
 
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
             for (String origin : allowedOrigins.split(",")) {

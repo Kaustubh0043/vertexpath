@@ -1,78 +1,132 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* VertexPath 3D Design System (inspired by kokonutui, reactbites, and ui.watermelon) */
+/* VertexPath Clean White & Black Design System (Medesk-inspired) */
 :root,
+[data-theme="light"],
+:root.light,
 [data-theme="dark"] {
+  --vp-img: url(/assets/vertexpath-icon.png);
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Luxury Obsidian Depth Palette */
-  --bg-primary: #08090D;
-  --bg-secondary: #0E1017;
-  --surface: #141722;
-  --card: #181C28;
-  --card-elevated: #1F2433;
-
-  /* Refined Glassmorphism 1px Borders */
-  --border: rgba(255, 255, 255, 0.09);
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  --border-focus: #10B981;
-
-  /* Ultra-Crisp Developer Typography */
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-
-  /* Radiant Emerald & Cyber Accents */
-  --brand-primary: #10B981;
-  --brand-secondary: #059669;
-  --brand-hover: #34D399;
-  --brand-darker: #064E3B;
-  --brand-glow: rgba(16, 185, 129, 0.25);
-  --brand-purple: #8B5CF6;
-  --brand-cyan: #38BDF8;
-
-  --color-success: #34D399;
-  --color-info: #38BDF8;
-  --color-warning: #FBBF24;
-  --color-error: #FB7185;
-
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-}
-
-[data-theme="light"],
-:root.light {
-  --bg-primary: #F8FAFC;
+  /* Crisp Light Slate & Pure White Palette */
+  --bg-primary: #F8F9FA;
   --bg-secondary: #FFFFFF;
   --surface: #F1F5F9;
   --card: #FFFFFF;
   --card-elevated: #FFFFFF;
 
-  --border: #E2E8F0;
+  /* Subtle 1px Borders */
+  --border: #E5E7EB;
   --border-subtle: #F1F5F9;
-  --border-focus: #10B981;
+  --border-focus: #0F172A;
 
+  /* Jet-Black & Muted Slate Typography */
   --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --text-secondary: #64748B;
   --text-muted: #94A3B8;
 
-  --brand-primary: #059669;
-  --brand-secondary: #10B981;
-  --brand-hover: #047857;
-  --brand-darker: #064E3B;
-  --brand-glow: rgba(16, 185, 129, 0.15);
-  --brand-purple: #7C3AED;
+  /* Monochrome Black Accent */
+  --brand-primary: #0F172A;
+  --brand-secondary: #1E293B;
+  --brand-hover: #1E293B;
+  --brand-darker: #020617;
+  --brand-glow: rgba(15, 23, 42, 0.08);
+  --brand-purple: #6366F1;
   --brand-cyan: #0284C7;
 
-  --color-success: #059669;
+  --color-success: #10B981;
   --color-info: #0284C7;
-  --color-warning: #D97706;
-  --color-error: #E11D48;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+}
+
+/* ===== VertexPath Official 3D Logo ===== */
+.vp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  text-decoration: none;
+  color: #0F172A;
+}
+
+.vp-mark {
+  position: relative;
+  height: 2.2em;
+  aspect-ratio: 531 / 540;
+  flex: none;
+  background: var(--vp-img) center / contain no-repeat;
+  transform: perspective(500px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.12s ease-out;
+  filter: drop-shadow(0 0.12em 0.14em rgba(15, 23, 42, 0.22));
+  animation: vp-float 4.5s ease-in-out infinite;
+}
+
+.vp-mark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask: var(--vp-img) center / contain no-repeat;
+  mask: var(--vp-img) center / contain no-repeat;
+  background: linear-gradient(105deg, transparent 44%, rgba(255, 255, 255, 0.55) 50%, transparent 56%) 130% 0 / 260% 100% no-repeat;
+  animation: vp-shine 3.6s ease-in-out infinite;
+}
+
+.vp-spark {
+  position: absolute;
+  left: 87%;
+  top: 9%;
+  width: 55%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background:
+    radial-gradient(circle, #fff 0 5%, rgba(255, 255, 255, 0.85) 9%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 50%, transparent) center / 100% 2.5% no-repeat,
+    linear-gradient(0deg, transparent, rgba(255, 255, 255, 0.95) 50%, transparent) center / 2.5% 100% no-repeat;
+  animation: vp-twinkle 2.6s ease-in-out infinite;
+}
+
+.vp-logo span {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.vp-logo.sm .vp-mark {
+  height: 1.9em;
+  animation: none;
+}
+
+.vp-logo.sm .vp-spark,
+.vp-logo.sm .vp-mark::before {
+  display: none;
+}
+
+@keyframes vp-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -0.07em; }
+}
+
+@keyframes vp-shine {
+  0%, 35% { background-position: 130% 0; }
+  100% { background-position: -30% 0; }
+}
+
+@keyframes vp-twinkle {
+  0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.6); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1) rotate(20deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vp-mark, .vp-mark::before, .vp-spark { animation: none; }
 }
 
 /* Split-screen sign-in and sign-up experience. */
@@ -327,36 +381,30 @@ h3, h4, h5, h6 {
 
 /* Card System */
 .card-surface {
-  background-color: var(--card);
-  border: 1px solid var(--border);
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 4px 20px -2px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
 }
 
 .card-surface:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 12px 32px -4px rgba(0, 0, 0, 0.45);
+  border-color: #CBD5E1;
+  box-shadow: 0 6px 18px -4px rgba(15, 23, 42, 0.08);
 }
 
 .card-3d {
-  background: linear-gradient(135deg, rgba(24, 28, 40, 0.8) 0%, rgba(14, 16, 23, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(16px);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 8px 32px -8px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-3d:hover {
-  transform: translateY(-3px) scale(1.005);
-  border-color: rgba(16, 185, 129, 0.35);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 20px 40px -10px rgba(16, 185, 129, 0.18);
-}
-
-[data-theme="light"] .card-surface,
-.light .card-surface {
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+  transform: translateY(-2px);
+  border-color: #0F172A;
+  box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.1);
 }
 
 .card-surface-hover {
@@ -364,44 +412,41 @@ h3, h4, h5, h6 {
 }
 
 .card-surface-hover:hover {
-  border-color: var(--brand-primary);
+  border-color: #0F172A;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px var(--brand-glow);
+  box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.1);
 }
 
 .card-elevated {
-  background-color: var(--card-elevated);
-  border: 1px solid var(--border);
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: var(--radius-lg);
 }
 
-/* Button System */
+/* Button System (Clean Black & White Medesk Style) */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.5625rem 1.125rem;
-  background-color: var(--brand-primary);
-  color: #04101A;
-  font-weight: 700;
+  background-color: #0F172A;
+  color: #FFFFFF;
+  font-weight: 600;
   font-size: 0.8125rem;
   border-radius: var(--radius-md);
-  border: 1px solid transparent;
+  border: 1px solid #0F172A;
   cursor: pointer;
   letter-spacing: -0.01em;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px var(--brand-glow);
-}
-
-[data-theme="light"] .btn-primary {
-  color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
 }
 
 .btn-primary:hover {
-  background-color: var(--brand-hover);
+  background-color: #1E293B;
+  border-color: #1E293B;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px var(--brand-glow);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
 }
 
 .btn-primary:active {
@@ -414,26 +459,21 @@ h3, h4, h5, h6 {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.5625rem 1.125rem;
-  background-color: var(--surface);
-  color: var(--text-primary);
+  background-color: #FFFFFF;
+  color: #0F172A;
   font-weight: 600;
   font-size: 0.8125rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
+  border: 1px solid #E2E8F0;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
 .btn-secondary:hover {
-  background-color: var(--card);
-  border-color: var(--border-focus);
-  color: var(--text-primary);
-}
-
-[data-theme="light"] .btn-secondary:hover,
-.light .btn-secondary:hover {
+  background-color: #F8FAFC;
   border-color: #CBD5E1;
-  background-color: #FFFFFF;
+  color: #0F172A;
 }
 
 .btn-tertiary {

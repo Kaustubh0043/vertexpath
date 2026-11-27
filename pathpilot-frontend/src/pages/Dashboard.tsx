@@ -1,5 +1,5 @@
 import { ChangeTargetRoleModal } from '../components/ChangeTargetRoleModal';
-import { Pencil } from 'lucide-react';
+import { Pencil, Calendar } from 'lucide-react';
 import { UserAvatar } from '../components/UserAvatar';
 import { AvatarPickerModal } from '../components/AvatarPickerModal';
 import React, { useState, useEffect } from 'react';
@@ -101,6 +101,15 @@ export const Dashboard: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+      window.dispatchEvent(
+        new CustomEvent('vertexpath:notify', {
+          detail: {
+            title: 'Daily Log Synced',
+            message: 'Your study streak and activity log have been updated.',
+            type: 'streak',
+          },
+        })
+      );
     },
   });
 
@@ -248,31 +257,43 @@ export const Dashboard: React.FC = () => {
     { id: 'launch', name: 'Launch', desc: 'Job search', isDone: isOutreachDone, isActive: activeStage === 'Launch', path: '/dashboard/outreach' },
   ];
 
+  const currentHour = new Date().getHours();
+  const greetingText =
+    currentHour < 12 ? 'Good Morning' : currentHour < 17 ? 'Good Afternoon' : 'Good Evening';
+  const formattedDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  });
+
   return (
     <div className="space-y-8">
       
-      {/* 1. Dashboard Hero Header (Section 12) */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
+      {/* 1. Dashboard Hero Header (Medesk Clean Style) */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#E5E7EB]">
         <div className="space-y-1.5">
-          <p className="eyebrow-text">OVERVIEW</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight">
-            Good evening, {stats?.fullName || 'Developer'}.
+          <h2 className="text-2xl sm:text-[28px] font-bold text-[#0F172A] tracking-tight">
+            {greetingText} {stats?.fullName || 'Developer'}
           </h2>
-          <div className="text-xs text-[var(--text-secondary)] flex items-center gap-2 flex-wrap">
-            <span>Your VertexPath journey</span>
-            <span className="text-[var(--text-muted)]">•</span>
-            <span>Career profile completion — <span className="text-[var(--brand-primary)] font-semibold">{pathProgress}%</span></span>
-            <span className="text-[var(--text-muted)]">•</span>
+          <div className="text-xs text-[#64748B] flex items-center gap-2.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 font-medium text-[#64748B]">
+              <Calendar className="w-3.5 h-3.5 text-[#94A3B8]" />
+              <span>{formattedDate}</span>
+            </span>
+            <span className="text-[#CBD5E1]">•</span>
+            <span>Career profile — <span className="text-[#0F172A] font-semibold">{pathProgress}%</span></span>
+            <span className="text-[#CBD5E1]">•</span>
             <div className="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0">
-              <span className="text-[var(--text-muted)]">Target:</span>
+              <span className="text-[#64748B]">Target:</span>
               <button
                 type="button"
                 onClick={() => setShowTargetModal(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[var(--brand-primary)]/15 border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/25 font-bold text-xs transition-colors cursor-pointer group"
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#F1F5F9] border border-[#E5E7EB] text-[#0F172A] hover:bg-[#E2E8F0] font-semibold text-xs transition-colors cursor-pointer group"
                 title="Change Target Career Track"
               >
                 <span>{careerGoal || 'Software Engineer'}</span>
-                <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[var(--brand-primary)]" />
+                <Pencil className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity text-[#0F172A]" />
               </button>
             </div>
           </div>
@@ -287,7 +308,7 @@ export const Dashboard: React.FC = () => {
             className="btn-secondary text-xs py-2 px-3.5 flex items-center gap-2"
             title="View & Share Verified Career Badge"
           >
-            <Award className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <Award className="w-3.5 h-3.5 text-[#0F172A]" />
             <span>Career Badge</span>
           </button>
 
